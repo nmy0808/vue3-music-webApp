@@ -910,6 +910,13 @@
   dependencies:
     "@better-scroll/shared-utils" "^2.4.2"
 
+"@better-scroll/observe-dom@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.nlark.com/@better-scroll/observe-dom/download/@better-scroll/observe-dom-2.4.2.tgz#cc1e6d82a8f53525c282c9a4bcea5d1be8c21c95"
+  integrity sha1-zB5tgqj1NSXCgsmkvOpdG+jCHJU=
+  dependencies:
+    "@better-scroll/core" "^2.4.2"
+
 "@better-scroll/shared-utils@^2.4.2":
   version "2.4.2"
   resolved "https://registry.nlark.com/@better-scroll/shared-utils/download/@better-scroll/shared-utils-2.4.2.tgz#1ac5c97495727093a22a8009560795dd5e3c18da"

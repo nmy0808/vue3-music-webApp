@@ -2,7 +2,7 @@
   <div class="header">
     <span class="icon" />
     <h1 class="text">
-      Chicken Music
+      Promise Music
     </h1>
   </div>
 </template>
