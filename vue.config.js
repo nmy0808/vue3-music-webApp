@@ -1,5 +1,6 @@
+const registerRouter = require('./backend/router')
 /**
- * @type {import('vue-router').RouteRecordRaw[]}
+ * @type {import('@vue/cli-service').ProjectOptions}
  * */
 module.exports = {
   css: {
@@ -10,6 +11,11 @@ module.exports = {
         @import "~@/assets/scss/variable.scss";
         `
       }
+    }
+  },
+  devServer: {
+    before(app) {
+      registerRouter(app)
     }
   }
 }
