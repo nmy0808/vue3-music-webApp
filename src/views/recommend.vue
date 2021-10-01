@@ -1,14 +1,14 @@
 <template>
-  <scroll class='scroll-wrapper'>
+  <scroll class='scroll-wrapper' v-loading:[loadingText]='isLoading'>
     <div>
       <div class='slider-wrapper'>
         <slider v-if='sliders.length' :sliders='sliders' />
       </div>
-      <h1 class='list-title'>热门歌单推荐</h1>
+      <h2 v-show='!isLoading' class='list-title'>热门歌单推荐</h2>
       <ul class='list-wrapper'>
         <li class='list-group' v-for='item in albums' :key='item.id'>
           <div class='list-cover'>
-            <img :src='item.pic'>
+            <img v-lazy='item.pic'>
           </div>
           <div class='list-info'>
             <div class='name'>{{ item.username }}</div>
@@ -24,17 +24,21 @@
 
 import { getRecommend } from '../service/recommend'
 import slider from '@/components/base/slider/slider'
-import scroll from '@/components/base/scroll/scroll'
 
 export default {
   components: {
-    slider,
-    scroll
+    slider
   },
   data() {
     return {
       sliders: [],
-      albums: []
+      albums: [],
+      loadingText: '请稍等..'
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.sliders.length === 0 && this.albums.length === 0
     }
   },
   async created() {
@@ -49,20 +53,29 @@ export default {
 .list-title {
   font-size: $font-size-medium;
   color: $color-theme;
-  text-align: center;
-  height: 65px;
-  line-height: 65px;
+  height: 60px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .scroll-wrapper {
-  height: calc(100vh - 65px);
+  width: 100%;
+  position: absolute;
+  top: 88px;
+  bottom: 0;
   overflow: hidden;
+}
+
+.slider-wrapper {
+  height: 150px;
 }
 
 .list-wrapper {
   .list-group {
     display: flex;
-    padding: 20px 0 20px 20px;
+    padding:  0 20px 20px 20px;
 
     .list-cover {
       width: 60px;
