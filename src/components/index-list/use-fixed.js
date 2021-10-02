@@ -17,7 +17,7 @@ export default function(props) {
       res = distance - FIXED_HEIGHT
     }
     return {
-      transform: `translateY(${res}px)`
+      transform: `translate3d(0,${res}px,1px)`
     }
   })
   watch(() => props.data, () => {

@@ -16,6 +16,7 @@
         <h2 class='title'>{{ group.title }}</h2>
         <ul>
           <li
+            @click='onSingerSelected(item)'
             v-for='item in group.list'
             :key='item.id'
             class='item'
@@ -72,6 +73,9 @@ export default {
   },
   emits: ['select'],
   setup(props, { emit }) {
+    const onSingerSelected = (singer) => {
+      emit('select', singer)
+    }
     const {
       groupRef,
       onFixedScroll,
@@ -86,6 +90,7 @@ export default {
       onShortcutTouchMove
     } = useShortcut(props, groupRef)
     return {
+      onSingerSelected,
       // useFixed
       groupRef,
       onFixedScroll,
@@ -147,7 +152,7 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-
+    z-index: 222;
     .fixed-title {
       height: 30px;
       line-height: 30px;
@@ -162,7 +167,7 @@ export default {
     position: absolute;
     right: 4px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate3d(0,-50%,1px);
     width: 20px;
     padding: 20px 0;
     border-radius: 10px;

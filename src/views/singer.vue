@@ -1,7 +1,8 @@
 <template>
   <div>
-    <index-list :data='singers'></index-list>
+    <index-list :data='singers' @select='onSingerSelected'></index-list>
   </div>
+  <router-view :singer='singerSelected'></router-view>
 </template>
 
 <script>
@@ -12,16 +13,24 @@ export default {
   components: { IndexList },
   data() {
     return {
-      singers: []
+      singers: [],
+      singerSelected: null
     }
   },
   async created() {
     const data = await getSingerList()
     this.singers = data.singers
   },
-  setup() {
-    return {}
+  methods: {
+    onSingerSelected: function(slider) {
+      this.singerSelected = slider
+      this.$router.push({
+        name: 'SingerDetail',
+        params: { mid: slider.mid }
+      })
+    }
   }
+
 }
 </script>
 

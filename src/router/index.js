@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import recommend from '../views/recommend.vue'
+
 /**
  * @type {import('vue-router').RouteRecordRaw[]}
  * */
@@ -22,7 +23,14 @@ const routes = [
   {
     path: '/singer',
     name: 'Singer',
-    component: () => import('@/views/singer.vue')
+    component: () => import('@/views/singer.vue'),
+    children: [
+      {
+        path: ':mid',
+        name: 'SingerDetail',
+        component: () => import('@/views/singer-detail.vue')
+      }
+    ]
   },
   {
     path: '/top-list',
