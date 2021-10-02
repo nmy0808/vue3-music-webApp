@@ -1,12 +1,14 @@
 <template>
-  <div class='header' :style='calcCoverStyle'>
-    <div class='filter'></div>
+  <div class='header' ref='headerRef'>
+    <div class='cover' :style='calcCoverStyleRef'>
+      <div class='filter'></div>
+    </div>
     <div class='navigator'>
       <i class='icon-back' @click='$router.back()'></i>
       <h1 class='title'>{{ singer.name }}</h1>
     </div>
   </div>
-  <scroll class='scroll'>
+  <scroll class='scroll' ref='scrollRef' :probe-type='3' @scroll='onListScroll'>
     <ul>
       <li class='song-item' v-for='item in songs' :key='item.id'>
         <h2>{{ item.name }}</h2>
@@ -17,8 +19,10 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+
 import Scroll from '@/components/base/scroll/scroll'
+import useNavigator from './use-navigator'
+import useScroll from './use-scroll'
 
 export default {
   name: 'MusicList',
@@ -34,14 +38,17 @@ export default {
     }
   },
   setup(props) {
-    console.log(props.songs)
-    const calcCoverStyle = computed(() => {
-      return {
-        backgroundImage: `url(${props.singer.pic})`
-      }
-    })
+    const { calcCoverStyleRef } = useNavigator(props)
+    const {
+      scrollRef,
+      headerRef,
+      onListScroll
+    } = useScroll(props)
     return {
-      calcCoverStyle
+      calcCoverStyleRef,
+      scrollRef,
+      headerRef,
+      onListScroll
     }
   }
 }
@@ -52,8 +59,26 @@ export default {
 .header {
   position: relative;
   height: 0;
-  padding-bottom: 70%;
-  background-size: cover;
+
+  &.small-show {
+    position: fixed;
+    width: 100%;
+    height: 40px;
+    padding-bottom: 0;
+    z-index: 20;
+    overflow: hidden;
+    background: #212121;
+  }
+
+  .cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 70%;
+    background-size: cover;
+    transform-origin: top center;
+  }
 
   .filter {
     position: absolute;
@@ -61,7 +86,7 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
   }
 
   .navigator {
@@ -72,7 +97,6 @@ export default {
     height: 40px;
     box-sizing: border-box;
     position: relative;
-
     .icon-back {
       font-size: $font-size-large-x;
       color: $color-theme;
