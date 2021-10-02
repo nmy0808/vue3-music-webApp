@@ -43,7 +43,6 @@ export default {
       await this.$router.push({ name: 'Singer' })
       return
     }
-    console.log(this.calcSinger)
     const result = await getSingerDetail(this.calcSinger)
     const songs = await processSongs(result.songs)
     this.songs = songs
