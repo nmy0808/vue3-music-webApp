@@ -9,11 +9,11 @@
 import { ref } from 'vue'
 
 export default {
-  name: 'loading',
+  name: 'no-detail',
   setup() {
-    const pic = require('@/assets/images/loading.gif')
+    const pic = require('@/assets/images/no-detail.png')
     const isShow = ref(true)
-    const message = ref('请稍等...')
+    const message = ref('抱歉, 暂无数据')
     const setMessage = (msg) => {
       message.value = msg
     }
@@ -34,9 +34,8 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
-  width: 90px;
-  height: 90px;
-  background: #ffffff20;
+  width: 190px;
+  height: 190px;
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -45,9 +44,10 @@ export default {
 }
 
 .pic {
-  width: 20px;
-  height: 20px;
-  margin-bottom: 10px;
+  width: 90px;
+  height: 90px;
+  margin-bottom: 30px;
+  opacity: 0.7;
 }
 
 .message {

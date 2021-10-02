@@ -26,7 +26,6 @@ export default function() {
       const scale = 1 + scrollY / COVER_HEIGHT
       coverEl.style.transform = `scale3d(${scale},${scale},1)`
       const alpha = -scrollY / COVER_HEIGHT + 0.4
-      console.log(alpha, '?')
       filterEl.style.background = `rgba(0, 0, 0, ${alpha})`
     } else if (-scrollY < COVER_HEIGHT) {
       // 如果上滑

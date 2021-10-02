@@ -1,6 +1,6 @@
 <template>
   <div class='wrapper'>
-    <music-list :songs='songs' :singer='calcSinger'></music-list>
+    <music-list :songs='songs' :singer='calcSinger' :isLoading='isLoading'></music-list>
   </div>
 </template>
 
@@ -24,7 +24,8 @@ export default {
   },
   data() {
     return {
-      songs: []
+      songs: [],
+      isLoading: true
     }
   },
   computed: {
@@ -45,6 +46,7 @@ export default {
     }
     const result = await getSingerDetail(this.calcSinger)
     const songs = await processSongs(result.songs)
+    this.isLoading = false
     this.songs = songs
   }
 }

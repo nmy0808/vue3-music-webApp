@@ -8,7 +8,9 @@
       <h1 class='title'>{{ singer.name }}</h1>
     </div>
   </div>
-  <scroll class='scroll' ref='scrollRef' :probe-type='3' @scroll='onListScroll'>
+  <scroll class='scroll' ref='scrollRef' :probe-type='3' @scroll='onListScroll'
+          v-no-detail='!isLoading && songs.length === 0'
+          v-loading='isLoading'>
     <ul>
       <li class='song-item' v-for='item in songs' :key='item.id'>
         <h2>{{ item.name }}</h2>
@@ -35,6 +37,10 @@ export default {
     singer: {
       type: Object,
       default: () => ({})
+    },
+    isLoading: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props) {
@@ -45,7 +51,9 @@ export default {
       onListScroll
     } = useScroll(props)
     return {
+      // useNavigator
       calcCoverStyleRef,
+      // useScroll
       scrollRef,
       headerRef,
       onListScroll
@@ -97,6 +105,7 @@ export default {
     height: 40px;
     box-sizing: border-box;
     position: relative;
+
     .icon-back {
       font-size: $font-size-large-x;
       color: $color-theme;
