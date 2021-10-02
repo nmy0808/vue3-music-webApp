@@ -6,13 +6,14 @@ export default function() {
   const scrollRef = ref(null)
   const headerRef = ref(null)
   const scrollYRef = ref(0)
-  let filterEl, coverEl
+  let filterEl, coverEl, randomEl
   const onListScroll = (e) => {
     scrollYRef.value = e.y
   }
   onMounted(() => {
     filterEl = headerRef.value.querySelector('.filter')
     coverEl = headerRef.value.querySelector('.cover')
+    randomEl = headerRef.value.querySelector('.random')
   })
   watch(scrollYRef, (scrollY) => {
     // 如果滑到顶部极限距离, 导航样式变化 防止快速滑动+4误差
@@ -31,6 +32,13 @@ export default function() {
       // 如果上滑
       const blur = (-scrollY / COVER_HEIGHT) * 10
       coverEl.style.filter = `blur(${blur}px)`
+    }
+    //
+    if (scrollY >= -15) {
+      randomEl.classList.remove('hide')
+    } else if (-scrollY > 15) {
+      // 如果上滑
+      randomEl.classList.add('hide')
     }
   })
 

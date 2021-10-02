@@ -2,6 +2,10 @@
   <div class='header' ref='headerRef'>
     <div class='cover' :style='calcCoverStyleRef'>
       <div class='filter'></div>
+      <div class='random' @click='onRandom' v-show='!isLoading'>
+        <i class='icon-play'></i>
+        <span>随机播放全部</span>
+      </div>
     </div>
     <div class='navigator'>
       <i class='icon-back' @click='$router.back()'></i>
@@ -50,13 +54,17 @@ export default {
       headerRef,
       onListScroll
     } = useScroll(props)
+    const onRandom = () => {
+      console.log(1)
+    }
     return {
       // useNavigator
       calcCoverStyleRef,
       // useScroll
       scrollRef,
       headerRef,
-      onListScroll
+      onListScroll,
+      onRandom
     }
   }
 }
@@ -86,6 +94,27 @@ export default {
     padding-bottom: 70%;
     background-size: cover;
     transform-origin: top center;
+
+    .random {
+      padding: 8px 18px;
+      display: flex;
+      justify-content: center;
+      border: 1px solid $color-theme;
+      border-radius: 20px;
+      color: $color-theme;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translate3d(-50%, 0, 1px);
+
+      .icon-play {
+        margin-right: 10px;
+      }
+
+      &.hide {
+        display: none;
+      }
+    }
   }
 
   .filter {

@@ -2,7 +2,11 @@
   <div>
     <index-list :data='singers' @select='onSingerSelected'></index-list>
   </div>
-  <router-view :singer='singerSelected'></router-view>
+  <router-view v-slot='{Component}'>
+    <transition name='slide'>
+      <component :is='Component' :singer='singerSelected'></component>
+    </transition>
+  </router-view>
 </template>
 
 <script>
