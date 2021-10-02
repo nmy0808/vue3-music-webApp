@@ -8,8 +8,11 @@
 <script>
 import { getSingerList } from '@/service/singer'
 import IndexList from '@/components/index-list/index-list'
+import goodStorage from 'good-storage'
+import { SINGER_KEY } from '@/assets/js/constant'
 
 export default {
+  name: 'Singer',
   components: { IndexList },
   data() {
     return {
@@ -24,6 +27,7 @@ export default {
   methods: {
     onSingerSelected: function(slider) {
       this.singerSelected = slider
+      goodStorage.session.set(SINGER_KEY, slider)
       this.$router.push({
         name: 'SingerDetail',
         params: { mid: slider.mid }

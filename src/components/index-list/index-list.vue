@@ -38,9 +38,9 @@
       class='shortcut'
       v-show='shortcutsRef.length'
     >
+      <!--      @touchstart.stop.prevent='onShortcutTouchStart'-->
+      <!--      @touchmove.stop.prevent='onShortcutTouchMove'-->
       <ul
-        @touchstart.stop.prevent='onShortcutTouchStart'
-        @touchmove.stop.prevent='onShortcutTouchMove'
       >
         <li
           v-for='(item, index) in shortcutsRef'
@@ -153,6 +153,7 @@ export default {
     left: 0;
     width: 100%;
     z-index: 222;
+
     .fixed-title {
       height: 30px;
       line-height: 30px;
@@ -167,7 +168,7 @@ export default {
     position: absolute;
     right: 4px;
     top: 50%;
-    transform: translate3d(0,-50%,1px);
+    transform: translate3d(0, -50%, 1px);
     width: 20px;
     padding: 20px 0;
     border-radius: 10px;
