@@ -20,15 +20,19 @@ export default {
       default: 0
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
     const wrapRef = ref(null)
-    const { bScrollRef } = useScroll(wrapRef, {
+    const { scrollRef } = useScroll(wrapRef, {
       click: props.click,
-      default: props.probeType
-    })
+      default: props.probeType,
+      ...props
+    }, emit)
+    // onMounted(() => {
+    //   console.log(scrollRef.value)
+    // })
     return {
       wrapRef,
-      bScrollRef
+      scrollRef
     }
   }
 }

@@ -6,7 +6,7 @@ const RELATIVE_CLASS = 'g-relative'
 export default {
   mounted(el, binding) {
     const instance = el.instance = createApp(Loading).mount(document.createElement('div'))
-    instance.setMessage(binding.arg)
+    binding.arg && instance.setMessage(binding.arg)
     if (binding.value) {
       append(el)
     }

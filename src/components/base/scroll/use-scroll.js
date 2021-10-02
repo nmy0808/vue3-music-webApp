@@ -4,15 +4,20 @@ import ObserveDOM from '@better-scroll/observe-dom'
 
 BScroll.use(ObserveDOM)
 
-export default function(wrapRef, options) {
-  const bScrollRef = ref(null)
+export default function(wrapRef, options, emit) {
+  const scrollRef = ref(null)
   onMounted(() => {
-    bScrollRef.value = new BScroll(wrapRef.value, {
+    scrollRef.value = new BScroll(wrapRef.value, {
       ...options,
       observeDOM: true
     })
+    if (options.probeType) {
+      scrollRef.value.on('scroll', (position) => {
+        emit('scroll', position)
+      })
+    }
   })
   return {
-    bScrollRef
+    scrollRef
   }
 }
