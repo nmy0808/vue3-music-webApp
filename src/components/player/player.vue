@@ -89,7 +89,7 @@
           <!--          </div>-->
           <div class='operators'>
             <div class='icon i-left'>
-              <i class='icon-sequence'></i>
+              <i :class='playModeIconClass' @click='onSwitchPlayMode'></i>
             </div>
             <div class='icon i-left'>
               <i class='icon-prev' @click='onPrev'></i>
@@ -132,7 +132,9 @@ export default {
       currentName,
       currentSinger,
       playIconClass,
+      playModeIconClass,
       // isShow,
+      onSwitchPlayMode,
       onCancelFullScreen,
       onSwitchPlayState,
       onNext,
@@ -151,6 +153,8 @@ export default {
       currentName,
       currentSinger,
       playIconClass,
+      playModeIconClass,
+      onSwitchPlayMode,
       onCancelFullScreen,
       onSwitchPlayState,
       onNext,
