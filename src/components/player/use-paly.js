@@ -7,6 +7,7 @@ import { computed, ref, watchEffect, toRaw, watch } from 'vue'
 export default () => {
   const store = useStore()
   const audioRef = ref(null)
+  const isCanplay = ref(false) // 是否缓存了一部分
   const {
     sequenceList,
     playlist,
@@ -37,6 +38,9 @@ export default () => {
     }
     return 'icon-loop'
   })
+  const operateStateClass = computed(() => {
+    return isCanplay.value ? '' : 'disable'
+  })
   // watch
   // 监听当前播放状态
   // watchEffect(() => {
@@ -53,6 +57,10 @@ export default () => {
       audioVal.play()
     }
   })
+  watch(currentIndex, () => {
+    // 处理缓存bug
+    isCanplay.value = false
+  })
   // methods
   const onCancelFullScreen = () => {
     store.commit('setFullScreen', false)
@@ -68,6 +76,7 @@ export default () => {
     }
   }
   const onNext = () => {
+    if (!isCanplay.value) return
     const audioVal = audioRef.value
     let currentIndexVal = currentIndex.value
     const maxNum = playlist.value.length - 1
@@ -88,6 +97,7 @@ export default () => {
     store.commit('setCurrentIndex', currentIndexVal)
   }
   const onPrev = () => {
+    if (!isCanplay.value) return
     const audioVal = audioRef.value
     let currentIndexVal = currentIndex.value
     const maxNum = playlist.value.length - 1
@@ -112,6 +122,20 @@ export default () => {
     const currMode = (oldMode + 1) % 3
     store.dispatch('changeMode', currMode)
   }
+  const onCanplay = () => {
+    if (!isCanplay.value) {
+      isCanplay.value = true
+    }
+  }
+  const onPlayPause = () => {
+    store.commit('setPlayingState', false)
+    audioRef.value.pause()
+  }
+  const onPlayError = () => {
+    store.commit('setPlayingState', false)
+    isCanplay.value = false
+    audioRef.value.pause()
+  }
   return {
     audioRef,
     sequenceList,
@@ -130,6 +154,10 @@ export default () => {
     onPrev,
     currentName,
     currentSinger,
+    onCanplay,
+    onPlayError,
+    onPlayPause,
+    operateStateClass,
     ...mapActions(['selectPlay', 'randomPlay'])
   }
 }

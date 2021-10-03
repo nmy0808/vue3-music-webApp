@@ -108,6 +108,9 @@
       </div>
     </transition>
     <audio ref='audioRef'
+           @canplay='onCanplay'
+           @error='onPlayError'
+           @pause='onPlayPause'
     ></audio>
   </div>
 </template>
@@ -138,7 +141,11 @@ export default {
       onCancelFullScreen,
       onSwitchPlayState,
       onNext,
-      onPrev
+      onPrev,
+      onCanplay,
+      onPlayError,
+      onPlayPause,
+      operateStateClass
     } = usePlay()
     console.log(selectPlay, randomPlay)
     return {
@@ -158,7 +165,11 @@ export default {
       onCancelFullScreen,
       onSwitchPlayState,
       onNext,
-      onPrev
+      onPrev,
+      onCanplay,
+      onPlayError,
+      onPlayPause,
+      operateStateClass
     }
   }
 }
