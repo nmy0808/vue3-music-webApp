@@ -12,5 +12,7 @@ export default {
   // 当前索引
   currentIndex: 0,
   // 全屏
-  fullScreen: false
+  fullScreen: false,
+  // 收藏列表
+  favoriteList: []
 }
