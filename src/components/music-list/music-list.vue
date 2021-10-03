@@ -2,7 +2,7 @@
   <div class='header' ref='headerRef'>
     <div class='cover' :style='calcCoverStyleRef'>
       <div class='filter'></div>
-      <div class='random' @click='onRandom' v-show='!isLoading'>
+      <div class='random' @click='onRandomPlay(songs)' v-show='!isLoading'>
         <i class='icon-play'></i>
         <span>随机播放全部</span>
       </div>
@@ -16,7 +16,8 @@
           v-no-detail='!isLoading && songs.length === 0'
           v-loading='isLoading'>
     <ul>
-      <li class='song-item' v-for='item in songs' :key='item.id'>
+      <li class='song-item' v-for='(item,index) in songs' :key='item.id'
+          @click='onSelectPlay(songs,index)'>
         <h2>{{ item.name }}</h2>
         <div class='singer'>{{ item.singer }}</div>
       </li>
@@ -29,6 +30,7 @@
 import Scroll from '@/components/base/scroll/scroll'
 import useNavigator from './use-navigator'
 import useScroll from './use-scroll'
+import usePlay from './use-play'
 
 export default {
   name: 'MusicList',
@@ -54,9 +56,11 @@ export default {
       headerRef,
       onListScroll
     } = useScroll(props)
-    const onRandom = () => {
-      console.log(1)
-    }
+    const {
+      onSelectPlay,
+      onRandomPlay
+    } = usePlay()
+
     return {
       // useNavigator
       calcCoverStyleRef,
@@ -64,7 +68,9 @@ export default {
       scrollRef,
       headerRef,
       onListScroll,
-      onRandom
+      // usePlay
+      onSelectPlay,
+      onRandomPlay
     }
   }
 }
