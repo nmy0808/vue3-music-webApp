@@ -1,8 +1,9 @@
 import { useStore, mapActions } from 'vuex'
-import { PLAY_MODE } from '@/assets/js/constant'
+import { FAVORITE_KEY, PLAY_MODE } from '@/assets/js/constant'
 import { useState } from '@/assets/js/userStore'
 // eslint-disable-next-line no-unused-vars
 import { computed, ref, watchEffect, toRaw, watch } from 'vue'
+import { remove, save } from '@/assets/js/favorite-store'
 
 export default () => {
   const store = useStore()
@@ -20,8 +21,18 @@ export default () => {
   // const { currentSong } = useGetters(['currentSong'])
   const currentSongRef = computed(() => store.getters.currentSong)
   // computed
+  const currentCover = computed(() => {
+    return playlist.value[currentIndex.value].pic
+  })
   const currentName = computed(() => {
     return playlist.value[currentIndex.value].name
+  })
+  const isCurrentFavorite = computed(() => {
+    return favoriteList.value.find(item => item.id === currentSongRef.value.id)
+  })
+  const currentFavoriteClass = computed(() => {
+    return isCurrentFavorite.value
+      ? 'icon-favorite' : 'icon-not-favorite'
   })
   const currentSinger = computed(() => {
     return playlist.value[currentIndex.value].singer
@@ -136,6 +147,13 @@ export default () => {
     isCanplay.value = false
     audioRef.value.pause()
   }
+  const onSwitchFavorite = () => {
+    if (!isCurrentFavorite.value) {
+      save(FAVORITE_KEY, currentSongRef.value, store)
+    } else {
+      remove(FAVORITE_KEY, currentSongRef.value, store)
+    }
+  }
   return {
     audioRef,
     sequenceList,
@@ -150,10 +168,13 @@ export default () => {
     onSwitchPlayMode,
     onCancelFullScreen,
     onSwitchPlayState,
+    onSwitchFavorite,
     onNext,
     onPrev,
+    currentFavoriteClass,
     currentName,
     currentSinger,
+    currentCover,
     onCanplay,
     onPlayError,
     onPlayPause,

@@ -11,7 +11,7 @@
       >
         <div class='background'>
           <!--          封面-->
-          <img src=''>
+          <img :src='currentCover'>
         </div>
         <div class='top'>
           <div
@@ -101,7 +101,7 @@
               <i class='icon-next' @click='onNext'></i>
             </div>
             <div class='icon i-right'>
-              <i class='icon-not-favorite'></i>
+              <i :class='currentFavoriteClass' @click='onSwitchFavorite'></i>
             </div>
           </div>
         </div>
@@ -134,12 +134,14 @@ export default {
       randomPlay,
       currentName,
       currentSinger,
+      currentCover,
+      currentFavoriteClass,
       playIconClass,
       playModeIconClass,
-      // isShow,
       onSwitchPlayMode,
       onCancelFullScreen,
       onSwitchPlayState,
+      onSwitchFavorite,
       onNext,
       onPrev,
       onCanplay,
@@ -157,13 +159,16 @@ export default {
       currentIndex,
       fullScreen,
       favoriteList,
+      currentFavoriteClass,
       currentName,
       currentSinger,
+      currentCover,
       playIconClass,
       playModeIconClass,
       onSwitchPlayMode,
       onCancelFullScreen,
       onSwitchPlayState,
+      onSwitchFavorite,
       onNext,
       onPrev,
       onCanplay,

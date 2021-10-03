@@ -1,4 +1,5 @@
-import { PLAY_MODE } from '@/assets/js/constant'
+import { FAVORITE_KEY, PLAY_MODE } from '@/assets/js/constant'
+import { get } from '@/assets/js/favorite-store'
 
 export default {
   // 序列歌单
@@ -14,5 +15,5 @@ export default {
   // 全屏
   fullScreen: false,
   // 收藏列表
-  favoriteList: []
+  favoriteList: get(FAVORITE_KEY)
 }
