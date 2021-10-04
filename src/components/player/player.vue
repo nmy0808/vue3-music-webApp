@@ -25,50 +25,48 @@
         <div
           class='middle'
         >
-          <!--          <div-->
-          <!--            class='middle-l'-->
-          <!--            :style='middleLStyle'-->
-          <!--          >-->
-          <!--            <div-->
-          <!--              ref='cdWrapperRef'-->
-          <!--              class='cd-wrapper'-->
-          <!--            >-->
-          <!--              <div-->
-          <!--                ref='cdRef'-->
-          <!--                class='cd'-->
-          <!--              >-->
-          <!--                <img-->
-          <!--                  ref='cdImageRef'-->
-          <!--                  class='image'-->
-          <!--                  :class='cdCls'-->
-          <!--                  :src='currentSong.pic'>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--            <div class='playing-lyric-wrapper'>-->
-          <!--              <div class='playing-lyric'>{{ playingLyric }}</div>-->
-          <!--            </div>-->
-          <!--          </div>-->
-          <!--          <scroll-->
-          <!--            class='middle-r'-->
-          <!--            ref='lyricScrollRef'-->
-          <!--            :style='middleRStyle'-->
-          <!--          >-->
-          <!--            <div class='lyric-wrapper'>-->
-          <!--              <div v-if='currentLyric' ref='lyricListRef'>-->
-          <!--                <p-->
-          <!--                  class='text'-->
-          <!--                  :class="{'current': currentLineNum ===index}"-->
-          <!--                  v-for='(line,index) in currentLyric.lines'-->
-          <!--                  :key='line.num'-->
-          <!--                >-->
-          <!--                  {{ line.txt }}-->
-          <!--                </p>-->
-          <!--              </div>-->
-          <!--              <div class='pure-music' v-show='pureMusicLyric'>-->
-          <!--                <p>{{ pureMusicLyric }}</p>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </scroll>-->
+          <div
+            class='middle-l'
+          >
+            <div
+              ref='cdWrapperRef'
+              class='cd-wrapper'
+            >
+              <div
+                ref='cdRef'
+                class='cd'
+              >
+                <img
+                  ref='cdImageRef'
+                  class='image'
+                  :src='currentCover'>
+              </div>
+            </div>
+            <div class='playing-lyric-wrapper'>
+              <div class='playing-lyric'>{{ 'geci' }}</div>
+            </div>
+          </div>
+          <!--                    <scroll-->
+          <!--                      class='middle-r'-->
+          <!--                      ref='lyricScrollRef'-->
+          <!--                      :style='middleRStyle'-->
+          <!--                    >-->
+          <!--                      <div class='lyric-wrapper'>-->
+          <!--                        <div v-if='currentLyric' ref='lyricListRef'>-->
+          <!--                          <p-->
+          <!--                            class='text'-->
+          <!--                            :class="{'current': currentLineNum ===index}"-->
+          <!--                            v-for='(line,index) in currentLyric.lines'-->
+          <!--                            :key='line.num'-->
+          <!--                          >-->
+          <!--                            {{ line.txt }}-->
+          <!--                          </p>-->
+          <!--                        </div>-->
+          <!--                        <div class='pure-music' v-show='pureMusicLyric'>-->
+          <!--                          <p>{{ pureMusicLyric }}</p>-->
+          <!--                        </div>-->
+          <!--                      </div>-->
+          <!--                    </scroll>-->
         </div>
         <div class='bottom'>
           <div class='dot-wrapper'>
@@ -117,8 +115,9 @@
   </div>
 </template>
 <script>
-import usePlay from './use-paly'
 import progressBar from './progress-bar'
+import usePlay from './use-paly'
+import useCd from './use-cd'
 
 export default {
   name: 'MPlayer',
@@ -158,6 +157,10 @@ export default {
       onPlayEnded,
       operateStateClass
     } = usePlay()
+    const {
+      cdRef,
+      cdImageRef
+    } = useCd()
     return {
       audioRef,
       sequenceList,
@@ -190,7 +193,9 @@ export default {
       onProgressChanging,
       onProgressChanged,
       onPlayEnded,
-      operateStateClass
+      operateStateClass,
+      cdRef,
+      cdImageRef
     }
   }
 }

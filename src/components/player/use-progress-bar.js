@@ -24,7 +24,7 @@ export default function(props, emit) {
   const btnStyle = computed(() => {
     let val = offset.value
     if (val > proWrapWidth - progressBtnWidth) {
-      val = proWrapWidth - progressBtnWidth / 2
+      val = proWrapWidth - progressBtnWidth + 4 // 增加4误差
     }
     if (val < 0) {
       val = 0
@@ -34,7 +34,7 @@ export default function(props, emit) {
   const progressStyle = computed(() => {
     let val = offset.value
     if (val > proWrapWidth - progressBtnWidth) {
-      val = proWrapWidth - progressBtnWidth / 2
+      val = proWrapWidth - progressBtnWidth + 4 // 增加4误差
     }
     if (val < 0) {
       val = 0

@@ -96,7 +96,7 @@ export default () => {
     store.commit('setPlayingState', true)
     nextTick(() => {
       audioVal.play()
-    }, 0)
+    })
   }
   const onNext = () => {
     if (!isCanplay.value) return
@@ -115,7 +115,7 @@ export default () => {
       store.commit('setPlayingState', true)
       nextTick(() => {
         audioVal.play()
-      }, 0)
+      })
     }
     store.commit('setCurrentIndex', currentIndexVal)
   }
@@ -136,7 +136,7 @@ export default () => {
       store.commit('setPlayingState', true)
       nextTick(() => {
         audioVal.play()
-      }, 0)
+      })
     }
     store.commit('setCurrentIndex', currentIndexVal)
   }
