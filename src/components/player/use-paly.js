@@ -4,11 +4,14 @@ import { useState } from '@/assets/js/userStore'
 // eslint-disable-next-line no-unused-vars
 import { computed, ref, watchEffect, toRaw, watch } from 'vue'
 import { remove, save } from '@/assets/js/favorite-store'
+import { formatTime } from '@/assets/js/util'
 
 export default () => {
   const store = useStore()
   const audioRef = ref(null)
   const isCanplay = ref(false) // 是否缓存了一部分
+  const currentTime = ref(null)
+
   const {
     sequenceList,
     playlist,
@@ -37,6 +40,15 @@ export default () => {
   const currentSinger = computed(() => {
     return playlist.value[currentIndex.value].singer
   })
+  const currentPlayingTime = computed(() => {
+    return formatTime(currentTime.value)
+  })
+  const currentTotalTime = computed(() => {
+    return formatTime(currentSongRef.value.duration)
+  })
+  const currentProgress = computed(() => {
+    return currentTime.value / currentSongRef.value.duration
+  })
   const playIconClass = computed(() => {
     return !playing.value ? 'icon-play' : 'icon-pause'
   })
@@ -53,14 +65,6 @@ export default () => {
     return isCanplay.value ? '' : 'disable'
   })
   // watch
-  // 监听当前播放状态
-  // watchEffect(() => {
-  //   const audioVal = audioRef.value
-  //   if (playing.value) {
-  //     audioVal.src = currentSongRef.value.url
-  //     audioVal.play()
-  //   }
-  // })
   watch(currentSongRef, () => {
     const audioVal = audioRef.value
     if (playing.value) {
@@ -154,6 +158,9 @@ export default () => {
       remove(FAVORITE_KEY, currentSongRef.value, store)
     }
   }
+  const onUpdateTime = (e) => {
+    currentTime.value = e.target.currentTime
+  }
   return {
     audioRef,
     sequenceList,
@@ -175,10 +182,15 @@ export default () => {
     currentName,
     currentSinger,
     currentCover,
+    currentTime,
+    currentTotalTime,
+    currentProgress,
+    currentPlayingTime,
     onCanplay,
     onPlayError,
     onPlayPause,
     operateStateClass,
+    onUpdateTime,
     ...mapActions(['selectPlay', 'randomPlay'])
   }
 }

@@ -43,6 +43,8 @@
       <ul
       >
         <li
+          @touchstart.stop.prevent='onShortcutTouchStart'
+          @touchmove.stop.prevent='onShortcutTouchMove'
           v-for='(item, index) in shortcutsRef'
           :key='item'
           :data-index='index'

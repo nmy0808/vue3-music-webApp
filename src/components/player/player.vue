@@ -75,18 +75,16 @@
             <span class='dot'></span>
             <span class='dot'></span>
           </div>
-          <!--          <div class='progress-wrapper'>-->
-          <!--            <span class='time time-l'>{{ formatTime(currentTime) }}</span>-->
-          <!--            <div class='progress-bar-wrapper'>-->
-          <!--              <progress-bar-->
-          <!--                ref='barRef'-->
-          <!--                :progress='progress'-->
-          <!--                @progress-changing='onProgressChanging'-->
-          <!--                @progress-changed='onProgressChanged'-->
-          <!--              ></progress-bar>-->
-          <!--            </div>-->
-          <!--            <span class='time time-r'>{{ formatTime(currentSong.duration) }}</span>-->
-          <!--          </div>-->
+          <div class='progress-wrapper'>
+            <span class='time time-l'>{{ currentPlayingTime }}</span>
+            <div class='progress-bar-wrapper'>
+              <progress-bar
+                ref='barRef'
+                :progress='currentProgress'
+              ></progress-bar>
+            </div>
+            <span class='time time-r'>{{ currentTotalTime }}</span>
+          </div>
           <div class='operators'>
             <div class='icon i-left'>
               <i :class='playModeIconClass' @click='onSwitchPlayMode'></i>
@@ -108,6 +106,7 @@
       </div>
     </transition>
     <audio ref='audioRef'
+           @timeupdate='onUpdateTime'
            @canplay='onCanplay'
            @error='onPlayError'
            @pause='onPlayPause'
@@ -116,10 +115,11 @@
 </template>
 <script>
 import usePlay from './use-paly'
+import progressBar from './progress-bar'
 
 export default {
   name: 'MPlayer',
-  components: {},
+  components: { progressBar },
   setup() {
     const {
       audioRef,
@@ -130,12 +130,14 @@ export default {
       currentIndex,
       fullScreen,
       favoriteList,
-      selectPlay,
-      randomPlay,
       currentName,
       currentSinger,
       currentCover,
+      currentTime,
+      currentTotalTime,
       currentFavoriteClass,
+      currentPlayingTime,
+      currentProgress,
       playIconClass,
       playModeIconClass,
       onSwitchPlayMode,
@@ -147,9 +149,9 @@ export default {
       onCanplay,
       onPlayError,
       onPlayPause,
+      onUpdateTime,
       operateStateClass
     } = usePlay()
-    console.log(selectPlay, randomPlay)
     return {
       audioRef,
       sequenceList,
@@ -163,6 +165,10 @@ export default {
       currentName,
       currentSinger,
       currentCover,
+      currentTime,
+      currentTotalTime,
+      currentProgress,
+      currentPlayingTime,
       playIconClass,
       playModeIconClass,
       onSwitchPlayMode,
@@ -174,6 +180,7 @@ export default {
       onCanplay,
       onPlayError,
       onPlayPause,
+      onUpdateTime,
       operateStateClass
     }
   }
