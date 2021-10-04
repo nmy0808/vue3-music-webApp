@@ -2,7 +2,7 @@ import { useStore, mapActions } from 'vuex'
 import { FAVORITE_KEY, PLAY_MODE } from '@/assets/js/constant'
 import { useState } from '@/assets/js/userStore'
 // eslint-disable-next-line no-unused-vars
-import { computed, ref, watchEffect, toRaw, watch } from 'vue'
+import { computed, ref, watchEffect, toRaw, watch, nextTick } from 'vue'
 import { remove, save } from '@/assets/js/favorite-store'
 import { formatTime } from '@/assets/js/util'
 
@@ -11,7 +11,7 @@ export default () => {
   const audioRef = ref(null)
   const isCanplay = ref(false) // 是否缓存了一部分
   const currentTime = ref(null)
-
+  let isProgressChanging = false // 滑动动作判断
   const {
     sequenceList,
     playlist,
@@ -67,7 +67,7 @@ export default () => {
   // watch
   watch(currentSongRef, () => {
     const audioVal = audioRef.value
-    if (playing.value) {
+    if (playing.value && isCanplay) {
       audioVal.src = currentSongRef.value.url
       audioVal.play()
     }
@@ -90,15 +90,21 @@ export default () => {
       store.commit('setPlayingState', true)
     }
   }
+  const loop = () => {
+    const audioVal = audioRef.value
+    audioVal.currentTime = 0
+    store.commit('setPlayingState', true)
+    nextTick(() => {
+      audioVal.play()
+    }, 0)
+  }
   const onNext = () => {
     if (!isCanplay.value) return
     const audioVal = audioRef.value
     let currentIndexVal = currentIndex.value
     const maxNum = playlist.value.length - 1
     if (maxNum === 0) {
-      audioVal.currentTime = 0
-      store.commit('setPlayingState', true)
-      audioVal.play()
+      loop()
       return
     }
     currentIndexVal++
@@ -107,7 +113,9 @@ export default () => {
     }
     if (playlist.value.length !== 0) {
       store.commit('setPlayingState', true)
-      audioVal.play()
+      nextTick(() => {
+        audioVal.play()
+      }, 0)
     }
     store.commit('setCurrentIndex', currentIndexVal)
   }
@@ -117,9 +125,7 @@ export default () => {
     let currentIndexVal = currentIndex.value
     const maxNum = playlist.value.length - 1
     if (maxNum === 0) {
-      audioVal.currentTime = 0
-      store.commit('setPlayingState', true)
-      audioVal.play()
+      loop()
       return
     }
     currentIndexVal--
@@ -128,7 +134,9 @@ export default () => {
     }
     if (playlist.value.length !== 0) {
       store.commit('setPlayingState', true)
-      audioVal.play()
+      nextTick(() => {
+        audioVal.play()
+      }, 0)
     }
     store.commit('setCurrentIndex', currentIndexVal)
   }
@@ -159,7 +167,34 @@ export default () => {
     }
   }
   const onUpdateTime = (e) => {
-    currentTime.value = e.target.currentTime
+    if (!isProgressChanging) {
+      currentTime.value = e.target.currentTime
+    }
+  }
+  let percent = 0
+  const onProgressChanging = ({
+    offset,
+    proWrapWidth
+  }) => {
+    isProgressChanging = true
+    percent = offset / proWrapWidth
+    percent = Math.min(1, Math.max(0, percent))
+    currentTime.value = currentSongRef.value.duration * percent
+  }
+  const onProgressChanged = () => {
+    currentTime.value = audioRef.value.currentTime = currentSongRef.value.duration * percent
+    if (!playing.value) {
+      store.commit('setPlayingState', true)
+      audioRef.value.play()
+    }
+    isProgressChanging = false
+  }
+  const onPlayEnded = () => {
+    if (playMode.value === PLAY_MODE.loop) {
+      loop()
+      return
+    }
+    onNext()
   }
   return {
     audioRef,
@@ -178,6 +213,7 @@ export default () => {
     onSwitchFavorite,
     onNext,
     onPrev,
+    onPlayEnded,
     currentFavoriteClass,
     currentName,
     currentSinger,
@@ -191,6 +227,8 @@ export default () => {
     onPlayPause,
     operateStateClass,
     onUpdateTime,
+    onProgressChanging,
+    onProgressChanged,
     ...mapActions(['selectPlay', 'randomPlay'])
   }
 }

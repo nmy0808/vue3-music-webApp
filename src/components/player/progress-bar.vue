@@ -10,6 +10,9 @@
         :style='progressStyle'
       ></div>
       <div
+        @touchstart.prevent='onTouchStart'
+        @touchmove.prevent='onTouchMove'
+        @touchend.prevent='onTouchEnd'
         class='progress-btn-wrapper'
         :style='btnStyle'
       >
@@ -31,18 +34,24 @@ export default {
       default: 0
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
     const {
       offset,
       btnStyle,
       progressStyle,
-      proWrapRef
-    } = useProBar(props)
+      proWrapRef,
+      onTouchStart,
+      onTouchMove,
+      onTouchEnd
+    } = useProBar(props, emit)
     return {
       offset,
       btnStyle,
       progressStyle,
-      proWrapRef
+      proWrapRef,
+      onTouchStart,
+      onTouchMove,
+      onTouchEnd
     }
   }
 }

@@ -81,6 +81,8 @@
               <progress-bar
                 ref='barRef'
                 :progress='currentProgress'
+                @progress-changing='onProgressChanging'
+                @progress-changed='onProgressChanged'
               ></progress-bar>
             </div>
             <span class='time time-r'>{{ currentTotalTime }}</span>
@@ -110,6 +112,7 @@
            @canplay='onCanplay'
            @error='onPlayError'
            @pause='onPlayPause'
+           @ended='onPlayEnded'
     ></audio>
   </div>
 </template>
@@ -150,6 +153,9 @@ export default {
       onPlayError,
       onPlayPause,
       onUpdateTime,
+      onProgressChanging,
+      onProgressChanged,
+      onPlayEnded,
       operateStateClass
     } = usePlay()
     return {
@@ -181,6 +187,9 @@ export default {
       onPlayError,
       onPlayPause,
       onUpdateTime,
+      onProgressChanging,
+      onProgressChanged,
+      onPlayEnded,
       operateStateClass
     }
   }
