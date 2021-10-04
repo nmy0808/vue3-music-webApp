@@ -1,4 +1,5 @@
 import { computed, onMounted, ref, reactive, watch } from 'vue'
+import bus from '@/assets/js/bus'
 
 const progressBtnWidth = 16
 
@@ -53,12 +54,24 @@ export default function(props, emit) {
       offset: offset.value,
       proWrapWidth: proWrapWidth
     })
+    bus.emit('progress-changing')
   }
   const onTouchEnd = (e) => {
     emit('progress-changed', {
       offset: offset.value,
       proWrapWidth: proWrapWidth
     })
+    bus.emit('progress-changed')
+  }
+  const onClickBar = (e) => {
+    console.log('click')
+    const disx = e.pageX - proWrapRef.value.getBoundingClientRect().x
+    offset.value = Math.min(proWrapWidth, Math.max(disx, 0))
+    emit('progress-click', {
+      offset: offset.value,
+      proWrapWidth: proWrapWidth
+    })
+    bus.emit('progress-click')
   }
   return {
     proWrapRef,
@@ -67,6 +80,7 @@ export default function(props, emit) {
     progressStyle,
     onTouchStart,
     onTouchMove,
-    onTouchEnd
+    onTouchEnd,
+    onClickBar
   }
 }

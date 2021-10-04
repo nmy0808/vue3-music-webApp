@@ -23,3 +23,18 @@ export function formatTime(interval) {
   const second = (interval % 60 + '').padStart(2, '0')
   return `${minute}:${second}`
 }
+
+export function throttle(fn, interval = 5000) {
+  // let timer = null
+  let preTime = Date.now()
+  return function(...arg) {
+    const curTime = Date.now()
+    if (curTime - preTime < interval) return
+    preTime = curTime
+    fn.apply(null, arg)
+    // clearTimeout(timer)
+    // timer = setTimeout(() => {
+    //   fn.apply(null, arg)
+    // }, interval)
+  }
+}

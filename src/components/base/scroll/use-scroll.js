@@ -16,6 +16,9 @@ export default function(wrapRef, options, emit) {
         emit('scroll', position)
       })
     }
+    scrollRef.value.on('scrollEnd', () => {
+      emit('scroll-end')
+    })
   })
   return {
     scrollRef

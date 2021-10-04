@@ -49,6 +49,9 @@
             </div>
           </div>
           <scroll
+            @scroll='onLyricScroll'
+            @scroll-end='onLyricScrollEnd'
+            :probe-type='3'
             class='middle-r'
             ref='lyricScrollRef'
           >
@@ -79,11 +82,13 @@
           <div class='progress-wrapper'>
             <span class='time time-l'>{{ currentPlayingTime }}</span>
             <div class='progress-bar-wrapper'>
+<!--              @progress-click='onProgressClick' progress-click-->
               <progress-bar
                 ref='barRef'
                 :progress='currentProgress'
                 @progress-changing='onProgressChanging'
                 @progress-changed='onProgressChanged'
+                @progress-click='onProgressClick'
               ></progress-bar>
             </div>
             <span class='time time-r'>{{ currentTotalTime }}</span>
@@ -162,6 +167,7 @@ export default {
       onUpdateTime,
       onProgressChanging,
       onProgressChanged,
+      onProgressClick,
       onPlayEnded,
       operateStateClass
     } = usePlay()
@@ -171,7 +177,11 @@ export default {
     } = useCd()
     const {
       currentLyric,
-      currentLineNum
+      lyricScrollRef,
+      lyricListRef,
+      currentLineNum,
+      onLyricScroll,
+      onLyricScrollEnd
     } = useLyric({ currentTime })
     return {
       audioRef,
@@ -204,12 +214,17 @@ export default {
       onUpdateTime,
       onProgressChanging,
       onProgressChanged,
+      onProgressClick,
       onPlayEnded,
       operateStateClass,
       cdRef,
       cdImageRef,
       currentLyric,
-      currentLineNum
+      currentLineNum,
+      lyricScrollRef,
+      lyricListRef,
+      onLyricScroll,
+      onLyricScrollEnd
     }
   }
 }

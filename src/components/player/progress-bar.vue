@@ -2,6 +2,7 @@
   <div
     class='progress-bar'
     ref='proWrapRef'
+    @click='onClickBar'
   >
     <div class='bar-inner'>
       <div
@@ -27,7 +28,7 @@ import useProBar from './use-progress-bar'
 
 export default {
   name: 'progress-bar',
-  emits: ['progress-changing', 'progress-changed'],
+  emits: ['progress-changing', 'progress-changed', 'progress-click'],
   props: {
     progress: {
       type: Number,
@@ -42,7 +43,8 @@ export default {
       proWrapRef,
       onTouchStart,
       onTouchMove,
-      onTouchEnd
+      onTouchEnd,
+      onClickBar
     } = useProBar(props, emit)
     return {
       offset,
@@ -51,7 +53,8 @@ export default {
       proWrapRef,
       onTouchStart,
       onTouchMove,
-      onTouchEnd
+      onTouchEnd,
+      onClickBar
     }
   }
 }

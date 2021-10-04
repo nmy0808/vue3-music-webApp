@@ -5,12 +5,13 @@ import { useState } from '@/assets/js/userStore'
 import { computed, ref, watchEffect, toRaw, watch, nextTick } from 'vue'
 import { remove, save } from '@/assets/js/favorite-store'
 import { formatTime } from '@/assets/js/util'
+import bus from '@/assets/js/bus'
 
 export default () => {
   const store = useStore()
   const audioRef = ref(null)
   const isCanplay = ref(false) // 是否缓存了一部分
-  const currentTime = ref(null)
+  const currentTime = ref(0)
   let isProgressChanging = false // 滑动动作判断
   const {
     sequenceList,
@@ -74,6 +75,7 @@ export default () => {
   })
   watch(currentIndex, () => {
     // 处理缓存bug
+    currentTime.value = 0
     isCanplay.value = false
   })
   // methods
@@ -138,6 +140,7 @@ export default () => {
         audioVal.play()
       })
     }
+    currentTime.value = 0
     store.commit('setCurrentIndex', currentIndexVal)
   }
   const onSwitchPlayMode = () => {
@@ -149,6 +152,7 @@ export default () => {
     if (!isCanplay.value) {
       isCanplay.value = true
     }
+    bus.emit('play-canplay', true)
   }
   const onPlayPause = () => {
     store.commit('setPlayingState', false)
@@ -172,6 +176,18 @@ export default () => {
     }
   }
   let percent = 0
+  const onProgressClick = ({
+    offset,
+    proWrapWidth
+  }) => {
+    percent = offset / proWrapWidth
+    percent = Math.min(1, Math.max(0, percent))
+    audioRef.value.currentTime = currentTime.value = currentSongRef.value.duration * percent
+    if (!playing.value) {
+      store.commit('setPlayingState', true)
+      audioRef.value.play()
+    }
+  }
   const onProgressChanging = ({
     offset,
     proWrapWidth
@@ -229,6 +245,7 @@ export default () => {
     onUpdateTime,
     onProgressChanging,
     onProgressChanged,
+    onProgressClick,
     ...mapActions(['selectPlay', 'randomPlay'])
   }
 }
