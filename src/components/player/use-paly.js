@@ -67,17 +67,18 @@ export default () => {
   })
   // watch
   watch(currentSongRef, () => {
+    currentTime.value = 0
+    isCanplay.value = false
     const audioVal = audioRef.value
     if (playing.value && isCanplay) {
       audioVal.src = currentSongRef.value.url
       audioVal.play()
     }
   })
-  watch(currentIndex, () => {
-    // 处理缓存bug
-    currentTime.value = 0
-    isCanplay.value = false
-  })
+  // watch(currentIndex, () => {
+  //   // 处理缓存bug
+  //   currentTime.value = 0
+  // })
   // methods
   const onCancelFullScreen = () => {
     store.commit('setFullScreen', false)
@@ -101,6 +102,7 @@ export default () => {
     })
   }
   const onNext = () => {
+    console.log(isCanplay.value)
     if (!isCanplay.value) return
     const audioVal = audioRef.value
     let currentIndexVal = currentIndex.value
@@ -151,6 +153,10 @@ export default () => {
   const onCanplay = () => {
     if (!isCanplay.value) {
       isCanplay.value = true
+      // nextTick(()=>{
+      //   audioRef.value.play()
+      // })
+      console.log(1)
     }
     bus.emit('play-canplay', true)
   }
