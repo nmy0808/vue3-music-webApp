@@ -26,7 +26,9 @@
           class='middle'
         >
           <div
+            style='display: none'
             class='middle-l'
+            dddddd='暂时隐藏'
           >
             <div
               ref='cdWrapperRef'
@@ -46,27 +48,28 @@
               <div class='playing-lyric'>{{ 'geci' }}</div>
             </div>
           </div>
-          <!--                    <scroll-->
-          <!--                      class='middle-r'-->
-          <!--                      ref='lyricScrollRef'-->
-          <!--                      :style='middleRStyle'-->
-          <!--                    >-->
-          <!--                      <div class='lyric-wrapper'>-->
-          <!--                        <div v-if='currentLyric' ref='lyricListRef'>-->
-          <!--                          <p-->
-          <!--                            class='text'-->
-          <!--                            :class="{'current': currentLineNum ===index}"-->
-          <!--                            v-for='(line,index) in currentLyric.lines'-->
-          <!--                            :key='line.num'-->
-          <!--                          >-->
-          <!--                            {{ line.txt }}-->
-          <!--                          </p>-->
-          <!--                        </div>-->
-          <!--                        <div class='pure-music' v-show='pureMusicLyric'>-->
-          <!--                          <p>{{ pureMusicLyric }}</p>-->
-          <!--                        </div>-->
-          <!--                      </div>-->
-          <!--                    </scroll>-->
+          <scroll
+            class='middle-r'
+            ref='lyricScrollRef'
+          >
+            <div dddddd='scroll包裹元素'>
+              <div class='lyric-wrapper'>
+                <div v-if='currentLyric' ref='lyricListRef'>
+                  <p
+                    class='text'
+                    :class='{current : index === currentLineNum}'
+                    v-for='(line,index) in currentLyric.lines'
+                    :key='line.num'
+                  >
+                    {{ line.txt }}
+                  </p>
+                </div>
+                <!--              <div class='pure-music' v-show='pureMusicLyric'>-->
+                <!--                <p>{{ pureMusicLyric }}</p>-->
+                <!--              </div>-->
+              </div>
+            </div>
+          </scroll>
         </div>
         <div class='bottom'>
           <div class='dot-wrapper'>
@@ -118,10 +121,15 @@
 import progressBar from './progress-bar'
 import usePlay from './use-paly'
 import useCd from './use-cd'
+import useLyric from './use-lyric'
+import Scroll from '@/components/base/scroll/scroll'
 
 export default {
   name: 'MPlayer',
-  components: { progressBar },
+  components: {
+    Scroll,
+    progressBar
+  },
   setup() {
     const {
       audioRef,
@@ -161,6 +169,10 @@ export default {
       cdRef,
       cdImageRef
     } = useCd()
+    const {
+      currentLyric,
+      currentLineNum
+    } = useLyric({ currentTime })
     return {
       audioRef,
       sequenceList,
@@ -195,7 +207,9 @@ export default {
       onPlayEnded,
       operateStateClass,
       cdRef,
-      cdImageRef
+      cdImageRef,
+      currentLyric,
+      currentLineNum
     }
   }
 }
