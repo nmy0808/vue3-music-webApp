@@ -1,6 +1,6 @@
 import { getLyric } from '@/service/song'
 import { useStore } from 'vuex'
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import LyricParser from 'lyric-parser'
 import bus from '@/assets/js/bus'
 
@@ -60,6 +60,11 @@ export default function({ currentTime }) {
     } else {
       stopLyric()
     }
+  })
+  const fullScreen = computed(() => store.state.fullScreen)
+  watch(fullScreen, async (state) => {
+    await nextTick()
+    state && scrollAutoHandle()
   })
   // watch(currentTime, (newVal) => {
   //

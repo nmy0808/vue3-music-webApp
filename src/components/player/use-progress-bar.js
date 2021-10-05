@@ -1,5 +1,6 @@
 import { computed, onMounted, ref, reactive, watch } from 'vue'
 import bus from '@/assets/js/bus'
+import { useStore } from 'vuex'
 
 const progressBtnWidth = 16
 
@@ -7,16 +8,22 @@ export default function(props, emit) {
   // watch(() => props.progress, (c) => {
   //   console.log(c)
   // })
+  const store = useStore()
   const proWrapRef = ref(null)
   let proWrapWidth = 0
   const offset = ref(0)
   const touch = reactive({})
+  const fullScreen = computed(() => store.state.fullScreen)
   //
   onMounted(() => {
     proWrapWidth = proWrapRef.value.clientWidth
   })
   //
   watch(() => props.progress, () => {
+    offset.value = (proWrapWidth - progressBtnWidth) * props.progress
+  })
+
+  onMounted(() => {
     offset.value = (proWrapWidth - progressBtnWidth) * props.progress
   })
   // const offset = computed(() => {

@@ -75,10 +75,6 @@ export default () => {
       audioVal.play()
     }
   })
-  // watch(currentIndex, () => {
-  //   // 处理缓存bug
-  //   currentTime.value = 0
-  // })
   // methods
   const onCancelFullScreen = () => {
     store.commit('setFullScreen', false)
@@ -149,12 +145,12 @@ export default () => {
     const currMode = (oldMode + 1) % 3
     store.dispatch('changeMode', currMode)
   }
-  const onCanplay = () => {
+  const onCanplay = async () => {
     if (!isCanplay.value) {
       isCanplay.value = true
-      // nextTick(()=>{
-      //   audioRef.value.play()
-      // })
+      await nextTick(() => {
+        audioRef.value.play()
+      })
     }
     bus.emit('play-canplay', true)
   }

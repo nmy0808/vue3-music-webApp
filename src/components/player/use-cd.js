@@ -22,7 +22,7 @@ export default function() {
     await nextTick()
     if (!cdRef.value) return
     if (state) {
-      cdImageRef.value.classList.add('playing')
+      playing.value && cdImageRef.value.classList.add('playing')
     } else {
       const cdImage = cdImageRef.value
       const cdWrap = cdRef.value

@@ -3,6 +3,7 @@
     <div
       v-if='isShow'
       class='mini-player'
+      @click='onFullScreen'
     >
       <div class='cd-wrapper'>
         <div
@@ -40,7 +41,7 @@
           <i
             class='icon-mini icon-play-mini'
             :class='{"icon-pause-mini" : playing}'
-            @click='togglePlay'
+            @click.stop='togglePlay'
           ></i>
         </progress-circle>
       </div>
@@ -87,12 +88,16 @@ export default {
         await handle(isShow)
       }
     })
+    const onFullScreen = () => {
+      store.commit('setFullScreen', true)
+    }
     return {
       currentSong,
       isShow,
       playing,
       cdRef,
-      cdImageRef
+      cdImageRef,
+      onFullScreen
     }
   }
 }
