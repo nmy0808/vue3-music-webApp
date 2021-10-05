@@ -8,7 +8,13 @@ export default function() {
   const playing = computed(() => {
     return store.state.playing
   })
-  watch(playing, (state) => {
+  const fullScreen = computed(() => {
+    return store.state.fullScreen
+  })
+  watch(playing, handle)
+  watch(fullScreen, handle)
+
+  function handle(state) {
     if (state) {
       nextTick(() => {
         cdImageRef.value.classList.add('playing')
@@ -19,7 +25,7 @@ export default function() {
       syncTransform(cdWrap, cdImage)
       cdImage.classList.remove('playing')
     }
-  })
+  }
 
   function syncTransform(wrap, img) {
     const imgCss = getComputedStyle(img).transform

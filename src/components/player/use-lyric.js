@@ -8,6 +8,7 @@ export default function({ currentTime }) {
   const lyricScrollRef = ref(null)
   const lyricListRef = ref(null)
   const currentLyric = ref('')
+  const currentlyricLine = ref('')
   const currentLineNum = ref(0)
   const store = useStore()
   let isLyricScroll = true // 歌词可以自动校准
@@ -34,6 +35,7 @@ export default function({ currentTime }) {
   })
   watch(currentSong, async (newSong) => {
     stopLyric()
+    currentlyricLine.value = ''
     currentLyric.value = null
     if (!newSong.url || !newSong.id) {
       return
@@ -47,7 +49,7 @@ export default function({ currentTime }) {
       })
     }
     if (newSong.lyric !== lyric) return
-    lyricScrollRef.value.scrollRef.scrollTo(0, 0)
+    lyricScrollRef.value && lyricScrollRef.value.scrollRef.scrollTo(0, 0)
     currentLyric.value = new LyricParser(lyric, handleLyric)
     // todo 这里没有加canReady 判断
     playLyric()
@@ -83,7 +85,11 @@ export default function({ currentTime }) {
     playLyric()
   })
 
-  function handleLyric({ lineNum }) {
+  function handleLyric({
+    lineNum,
+    txt
+  }) {
+    currentlyricLine.value = txt
     // const lyricScrollCom = lyricScrollRef.value
     // const lyricListEl = lyricListRef.value
     currentLineNum.value = lineNum
@@ -92,6 +98,9 @@ export default function({ currentTime }) {
     // if (lineNum > 4 && isLyricScroll) {
     //   lyricItems.length > 0 && lyricScrollCom.scrollRef.scrollToElement(lyricItems[lineNum - 4], 200, 0, 0)
     // }
+    nextTick(() => {
+      scrollAutoHandle()
+    })
   }
 
   // 自动校准scroll滚动距离
@@ -117,6 +126,7 @@ export default function({ currentTime }) {
       currentLyricVal.stop()
     }
   }
+
   // 手指滑动歌词的时候上锁, 不自动校准
   let lyricScrollTimer = null
   const onLyricScroll = () => {
@@ -133,6 +143,7 @@ export default function({ currentTime }) {
     lyricScrollRef,
     lyricListRef,
     currentLyric,
+    currentlyricLine,
     currentLineNum,
     onLyricScroll,
     onLyricScrollEnd

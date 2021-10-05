@@ -26,8 +26,8 @@
           class='middle'
         >
           <div
-            style='display: none'
             class='middle-l'
+            style='display: none'
             dddddd='暂时隐藏'
           >
             <div
@@ -45,7 +45,7 @@
               </div>
             </div>
             <div class='playing-lyric-wrapper'>
-              <div class='playing-lyric'>{{ 'geci' }}</div>
+              <div class='playing-lyric'>{{ currentlyricLine }}</div>
             </div>
           </div>
           <scroll
@@ -177,6 +177,7 @@ export default {
     } = useCd()
     const {
       currentLyric,
+      currentlyricLine,
       lyricScrollRef,
       lyricListRef,
       currentLineNum,
@@ -220,11 +221,12 @@ export default {
       cdRef,
       cdImageRef,
       currentLyric,
+      currentlyricLine,
       currentLineNum,
       lyricScrollRef,
       lyricListRef,
       onLyricScroll,
-      onLyricScrollEnd
+      onLyricScrollEnd,
     }
   }
 }
