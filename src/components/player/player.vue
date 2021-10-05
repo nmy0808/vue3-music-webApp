@@ -24,10 +24,13 @@
         </div>
         <div
           class='middle'
+          @touchstart='onMiddleTouchStart'
+          @touchmove='onMiddleTouchMove'
+          @touchend='onMiddleTouchEnd'
         >
           <div
             class='middle-l'
-            style='display: none'
+            :style='middleLeftStyle'
             dddddd='暂时隐藏'
           >
             <div
@@ -53,6 +56,7 @@
             @scroll-end='onLyricScrollEnd'
             :probe-type='3'
             class='middle-r'
+            :style='middleRightStyle'
             ref='lyricScrollRef'
           >
             <div dddddd='scroll包裹元素'>
@@ -76,13 +80,13 @@
         </div>
         <div class='bottom'>
           <div class='dot-wrapper'>
-            <span class='dot'></span>
-            <span class='dot'></span>
+            <span class='dot' :class='{active: currentMiddleShow==="cover"}'></span>
+            <span class='dot' :class='{active: currentMiddleShow==="lyric"}'></span>
           </div>
           <div class='progress-wrapper'>
             <span class='time time-l'>{{ currentPlayingTime }}</span>
             <div class='progress-bar-wrapper'>
-<!--              @progress-click='onProgressClick' progress-click-->
+              <!--              @progress-click='onProgressClick' progress-click-->
               <progress-bar
                 ref='barRef'
                 :progress='currentProgress'
@@ -127,6 +131,7 @@ import progressBar from './progress-bar'
 import usePlay from './use-paly'
 import useCd from './use-cd'
 import useLyric from './use-lyric'
+import useMiddleSwitchAni from './use-middle-switch-animation'
 import Scroll from '@/components/base/scroll/scroll'
 
 export default {
@@ -184,6 +189,14 @@ export default {
       onLyricScroll,
       onLyricScrollEnd
     } = useLyric({ currentTime })
+    const {
+      currentMiddleShow,
+      onMiddleTouchStart,
+      onMiddleTouchMove,
+      onMiddleTouchEnd,
+      middleLeftStyle,
+      middleRightStyle
+    } = useMiddleSwitchAni()
     return {
       audioRef,
       sequenceList,
@@ -227,6 +240,12 @@ export default {
       lyricListRef,
       onLyricScroll,
       onLyricScrollEnd,
+      currentMiddleShow,
+      onMiddleTouchStart,
+      onMiddleTouchMove,
+      onMiddleTouchEnd,
+      middleLeftStyle,
+      middleRightStyle
     }
   }
 }
