@@ -86,11 +86,11 @@ export default () => {
   const onSwitchPlayState = () => {
     const audioVal = audioRef.value
     if (playing.value) {
-      audioVal.pause()
       store.commit('setPlayingState', false)
+      audioVal.pause()
     } else {
-      audioVal.play()
       store.commit('setPlayingState', true)
+      audioVal.play()
     }
   }
   const loop = () => {
@@ -102,7 +102,6 @@ export default () => {
     })
   }
   const onNext = () => {
-    console.log(isCanplay.value)
     if (!isCanplay.value) return
     const audioVal = audioRef.value
     let currentIndexVal = currentIndex.value
@@ -156,7 +155,6 @@ export default () => {
       // nextTick(()=>{
       //   audioRef.value.play()
       // })
-      console.log(1)
     }
     bus.emit('play-canplay', true)
   }

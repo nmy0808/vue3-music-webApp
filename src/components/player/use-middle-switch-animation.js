@@ -3,7 +3,6 @@ import { reactive, ref } from 'vue'
 export default function() {
   const currentMiddleShow = ref('cover')
   const middleLeftStyle = reactive({})
-  const middleRightStyle = reactive({})
   const touch = {}
   let current = 0 // 0:cover, 1:lyric
   const onMiddleTouchStart = (e) => {
@@ -53,6 +52,5 @@ export default function() {
     onMiddleTouchMove,
     onMiddleTouchEnd,
     middleLeftStyle,
-    middleRightStyle
   }
 }

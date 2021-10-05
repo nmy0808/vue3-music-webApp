@@ -116,6 +116,7 @@
         </div>
       </div>
     </transition>
+    <mini-player :progress='currentProgress' :toggle-play='onSwitchPlayState' />
     <audio ref='audioRef'
            @timeupdate='onUpdateTime'
            @canplay='onCanplay'
@@ -132,12 +133,14 @@ import useCd from './use-cd'
 import useLyric from './use-lyric'
 import useMiddleSwitchAni from './use-middle-switch-animation'
 import Scroll from '@/components/base/scroll/scroll'
+import MiniPlayer from './mini-player'
 
 export default {
   name: 'MPlayer',
   components: {
     Scroll,
-    progressBar
+    progressBar,
+    MiniPlayer
   },
   setup() {
     const {
@@ -193,8 +196,7 @@ export default {
       onMiddleTouchStart,
       onMiddleTouchMove,
       onMiddleTouchEnd,
-      middleLeftStyle,
-      middleRightStyle
+      middleLeftStyle
     } = useMiddleSwitchAni()
     return {
       audioRef,
@@ -243,8 +245,7 @@ export default {
       onMiddleTouchStart,
       onMiddleTouchMove,
       onMiddleTouchEnd,
-      middleLeftStyle,
-      middleRightStyle
+      middleLeftStyle
     }
   }
 }

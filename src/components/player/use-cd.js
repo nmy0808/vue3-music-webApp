@@ -11,14 +11,18 @@ export default function() {
   const fullScreen = computed(() => {
     return store.state.fullScreen
   })
-  watch(playing, handle)
-  watch(fullScreen, handle)
+  watch(playing, async (state) => {
+    await handle(state)
+  })
+  watch(fullScreen, async (state) => {
+    await handle(state)
+  })
 
-  function handle(state) {
+  async function handle(state) {
+    await nextTick()
+    if (!cdRef.value) return
     if (state) {
-      nextTick(() => {
-        cdImageRef.value.classList.add('playing')
-      })
+      cdImageRef.value.classList.add('playing')
     } else {
       const cdImage = cdImageRef.value
       const cdWrap = cdRef.value
@@ -39,6 +43,7 @@ export default function() {
 
   return {
     cdRef,
-    cdImageRef
+    cdImageRef,
+    handle
   }
 }
