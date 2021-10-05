@@ -27,10 +27,10 @@
           @touchstart='onMiddleTouchStart'
           @touchmove='onMiddleTouchMove'
           @touchend='onMiddleTouchEnd'
+          :style='middleLeftStyle'
         >
           <div
             class='middle-l'
-            :style='middleLeftStyle'
             dddddd='暂时隐藏'
           >
             <div
@@ -56,7 +56,6 @@
             @scroll-end='onLyricScrollEnd'
             :probe-type='3'
             class='middle-r'
-            :style='middleRightStyle'
             ref='lyricScrollRef'
           >
             <div dddddd='scroll包裹元素'>
