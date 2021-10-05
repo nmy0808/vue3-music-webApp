@@ -11,11 +11,15 @@ export default function() {
   const fullScreen = computed(() => {
     return store.state.fullScreen
   })
+  const currentIndex = computed(() => store.state.currentIndex)
   watch(playing, async (state) => {
     await handle(state)
   })
   watch(fullScreen, async (state) => {
     await handle(state)
+  })
+  watch(currentIndex, async () => {
+    await handle(true)
   })
 
   async function handle(state) {

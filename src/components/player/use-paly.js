@@ -66,7 +66,8 @@ export default () => {
     return isCanplay.value ? '' : 'disable'
   })
   // watch
-  watch(currentSongRef, () => {
+  watch(currentSongRef, async () => {
+    await nextTick()
     currentTime.value = 0
     isCanplay.value = false
     const audioVal = audioRef.value

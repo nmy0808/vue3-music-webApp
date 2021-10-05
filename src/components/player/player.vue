@@ -1,12 +1,13 @@
 <template>
   <div
     class='player'
+    v-if='playlist.length'
   >
     <transition
       name='normal'
     >
       <div
-        v-if='fullScreen'
+        v-show='fullScreen'
         class='normal-player'
       >
         <div class='background'>
@@ -38,6 +39,7 @@
               class='cd-wrapper'
             >
               <div
+                :key='currentIndex'
                 ref='cdRef'
                 class='cd'
               >
