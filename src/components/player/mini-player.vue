@@ -70,9 +70,11 @@ export default {
       type: Number,
       default: 0
     },
-    togglePlay: Function
+    togglePlay: Function,
+    prevPlay: Function,
+    nextPlay: Function
   },
-  setup() {
+  setup(props) {
     const {
       cdRef,
       cdImageRef,
@@ -94,7 +96,8 @@ export default {
       store.commit('setFullScreen', true)
     }
     const { sliderWrapperRef } = useMiniPlayerScroll({
-      isShow
+      isShow,
+      props
     })
     return {
       currentSong,

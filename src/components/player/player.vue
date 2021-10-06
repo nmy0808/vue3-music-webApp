@@ -118,7 +118,8 @@
         </div>
       </div>
     </transition>
-    <mini-player :progress='currentProgress' :toggle-play='onSwitchPlayState' />
+    <mini-player :progress='currentProgress' :toggle-play='onSwitchPlayState'
+                 :prev-play='onPrev' :next-play='onNext' />
     <audio ref='audioRef'
            @timeupdate='onUpdateTime'
            @canplay='onCanplay'

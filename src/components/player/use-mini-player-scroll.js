@@ -5,6 +5,7 @@ import { useStore } from 'vuex'
 
 BScroll.use(Slide)
 export default function({
+  props,
   isShow
 }) {
   const store = useStore()
@@ -37,7 +38,11 @@ export default function({
   watch(bScrollRef, (newBScrollRef) => {
     if (newBScrollRef) {
       newBScrollRef.on('slidePageChanged', ({ pageX }) => {
-        store.commit('setCurrentIndex', pageX)
+        if (currentIndex.value > pageX) {
+          props.prevPlay()
+        } else {
+          props.nextPlay()
+        }
       })
     }
   })
