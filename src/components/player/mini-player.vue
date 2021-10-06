@@ -1,7 +1,7 @@
 <template>
   <transition name='mini'>
     <div
-      v-if='isShow'
+      v-show='isShow'
       class='mini-player'
       @click='onFullScreen'
     >
@@ -25,11 +25,11 @@
         <div class='slider-group' dddd='滑动'>
           <div
             class='slider-page'
-            v-for='song in 2'
-            :key='song'
+            v-for='song in playlist'
+            :key='song.id'
           >
-            <h2 class='name'>{{ currentSong.name }}</h2>
-            <p class='desc'>{{ currentSong.singer }}</p>
+            <h2 class='name'>{{ song.name }}</h2>
+            <p class='desc'>{{ song.singer }}</p>
           </div>
         </div>
       </div>
@@ -57,6 +57,7 @@
 import { computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import useCd from './use-cd'
+import useMiniPlayerScroll from './use-mini-player-scroll'
 import ProgressCircle from './progress-circle'
 
 export default {
@@ -79,6 +80,7 @@ export default {
     } = useCd()
     const store = useStore()
     const currentSong = computed(() => store.getters.currentSong)
+    const playlist = computed(() => store.state.playlist)
     const playing = computed(() => store.state.playing)
     const fullScreen = computed(() => store.state.fullScreen)
     const playList = computed(() => store.state.playlist)
@@ -91,13 +93,18 @@ export default {
     const onFullScreen = () => {
       store.commit('setFullScreen', true)
     }
+    const { sliderWrapperRef } = useMiniPlayerScroll({
+      isShow
+    })
     return {
       currentSong,
+      playlist,
       isShow,
       playing,
       cdRef,
       cdImageRef,
-      onFullScreen
+      onFullScreen,
+      sliderWrapperRef
     }
   }
 }
