@@ -1,10 +1,13 @@
 import { getLyric } from '@/service/song'
 import { useStore } from 'vuex'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import LyricParser from 'lyric-parser'
 import bus from '@/assets/js/bus'
 
-export default function({ currentTime }) {
+export default function({
+  currentTime,
+  isCanplay
+}) {
   const lyricScrollRef = ref(null)
   const lyricListRef = ref(null)
   const currentLyric = ref('')
@@ -52,6 +55,8 @@ export default function({ currentTime }) {
     lyricScrollRef.value && lyricScrollRef.value.scrollRef.scrollTo(0, 0)
     currentLyric.value = new LyricParser(lyric, handleLyric)
     // todo 这里没有加canReady 判断
+    if (!isCanplay) return
+    stopLyric()
     playLyric()
   })
   watch(palying, (newState) => {
@@ -78,7 +83,6 @@ export default function({ currentTime }) {
       stopLyric()
       playLyric()
     } else {
-      // stopLyric()
     }
   })
 
@@ -119,6 +123,7 @@ export default function({ currentTime }) {
   }
 
   function playLyric() {
+    if (!isCanplay) return
     const currentLyricVal = currentLyric.value
     if (currentLyricVal) {
       currentLyric.value.seek(currentTime.value * 1000)

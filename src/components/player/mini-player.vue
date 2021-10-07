@@ -5,7 +5,7 @@
       class='mini-player'
       @click='onFullScreen'
     >
-      <div class='cd-wrapper'>
+      <div class='cd-wrapper' mini-cover>
         <div
           ref='cdRef'
           class='cd'

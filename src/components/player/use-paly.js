@@ -65,15 +65,20 @@ export default () => {
   const operateStateClass = computed(() => {
     return isCanplay.value ? '' : 'disable'
   })
-  // watch
+
   watch(currentSongRef, async () => {
     await nextTick()
     currentTime.value = 0
     isCanplay.value = false
     const audioVal = audioRef.value
     if (playing.value && isCanplay) {
-      audioVal.src = currentSongRef.value.url
+      if (audioVal.src !== currentSongRef.value.url) {
+        // 同一个src不会循环赋值
+        audioVal.src = currentSongRef.value.url
+      }
+      audioVal.currentTime = 0
       audioVal.play()
+      isCanplay.value = false
     }
   })
   // methods
@@ -224,6 +229,7 @@ export default () => {
     favoriteList,
     playIconClass,
     playModeIconClass,
+    isCanplay,
     onSwitchPlayMode,
     onCancelFullScreen,
     onSwitchPlayState,

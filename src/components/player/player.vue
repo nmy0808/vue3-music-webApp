@@ -4,6 +4,10 @@
     v-if='playlist.length'
   >
     <transition
+      @enter='onEnter'
+      @after-enter='onAfterEnter'
+      @leave='onLeave'
+      @after-leave='onAfterLeave'
       name='normal'
     >
       <div
@@ -37,6 +41,8 @@
             <div
               ref='cdWrapperRef'
               class='cd-wrapper'
+              :style='cdWrapStyle'
+              cd-wrapper
             >
               <div
                 :key='currentIndex'
@@ -135,6 +141,7 @@ import usePlay from './use-paly'
 import useCd from './use-cd'
 import useLyric from './use-lyric'
 import useMiddleSwitchAni from './use-middle-switch-animation'
+import useCoverAni from './use-cover-animation'
 import Scroll from '@/components/base/scroll/scroll'
 import MiniPlayer from './mini-player'
 
@@ -179,7 +186,8 @@ export default {
       onProgressChanged,
       onProgressClick,
       onPlayEnded,
-      operateStateClass
+      operateStateClass,
+      isCanplay
     } = usePlay()
     const {
       cdRef,
@@ -193,7 +201,7 @@ export default {
       currentLineNum,
       onLyricScroll,
       onLyricScrollEnd
-    } = useLyric({ currentTime })
+    } = useLyric({ currentTime , isCanplay})
     const {
       currentMiddleShow,
       onMiddleTouchStart,
@@ -201,6 +209,14 @@ export default {
       onMiddleTouchEnd,
       middleLeftStyle
     } = useMiddleSwitchAni()
+    const {
+      cdWrapStyle,
+      cdWrapperRef,
+      onEnter,
+      onAfterEnter,
+      onLeave,
+      onAfterLeave
+    } = useCoverAni()
     return {
       audioRef,
       sequenceList,
@@ -248,7 +264,13 @@ export default {
       onMiddleTouchStart,
       onMiddleTouchMove,
       onMiddleTouchEnd,
-      middleLeftStyle
+      middleLeftStyle,
+      onEnter,
+      onAfterEnter,
+      onLeave,
+      onAfterLeave,
+      cdWrapperRef,
+      cdWrapStyle
     }
   }
 }

@@ -9,7 +9,6 @@ import loading from '@/directive/loading'
 import noDetail from '@/directive/no-detail'
 
 const app = createApp(App)
-
 app.component('scroll', scroll)
 app.use(lazyPlugin, {
   loading: require('@/assets/images/default.png')
