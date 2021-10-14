@@ -1,20 +1,28 @@
 <template>
-  <div>
-    111
-  </div>
+  <div class='wrap'>12312</div>
 </template>
 
 <script>
+import { getBanner } from '@/api'
+import { watchEffect } from 'vue'
 
 export default {
-  components: {
-
-  },
+  components: {},
   setup() {
+    watchEffect(async () => {
+      const res = await getBanner()
+      console.log(res)
+    })
     return {}
   }
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss'>
+.wrap {
+  width: 375px;
+  height: 375px;
+  border: 1px solid;
+  @extend .center-all;
+}
 </style>

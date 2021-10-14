@@ -1,8 +1,18 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-  state: {},
+  state: {
+    isShow: false,
+    age: 19
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    addAge(state) {
+      state.age++
+    },
+    switchShow(state) {
+      state.isShow = !state.isShow
+    }
+  },
   actions: {}
 })
