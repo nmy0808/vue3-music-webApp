@@ -14,7 +14,7 @@ const routes = [
     component: Recommend,
     children: [
       {
-        path: 'detail',
+        path: 'detail/:id',
         name: 'RecommendDetail',
         component: () => import('@/views/recommend/Recommend-detail')
       }
@@ -34,9 +34,10 @@ const routes = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes
-})
+const
+  router = createRouter({
+    history: createWebHistory(),
+    routes
+  })
 
 export default router

@@ -10,7 +10,7 @@
 <script>
 import Header from '@/components/header/header'
 import TabBar from '@/components/tabBar/tabBar'
-import useScroll from './use-scroll'
+import useNavScroll from './use-nav-scroll'
 
 export default {
   components: {
@@ -24,7 +24,7 @@ export default {
       top,
       nav,
       isBgClass
-    } = useScroll()
+    } = useNavScroll()
     return {
       onscroll,
       isShadow,

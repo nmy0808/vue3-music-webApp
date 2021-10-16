@@ -2,7 +2,7 @@
   <div class='wrap container'>
     <recommend-title>推荐歌单</recommend-title>
     <ul class='list'>
-      <li v-for='item in personalized' :key='item.id'>
+      <li v-for='item in personalized' :key='item.id' @click='onToPage(item.id)'>
         <div class='pic'>
           <img v-lazy='item.picUrl' alt=''>
         </div>
@@ -21,7 +21,14 @@ import RecommendTitle from '@/components/title/recommend-title'
 export default {
   name: 'personalized',
   props: ['personalized'],
-  components: { RecommendTitle }
+  emits: ['to-page'],
+  components: { RecommendTitle },
+  setup(props, { emit }) {
+    const onToPage = (id) => {
+      emit('to-page', id)
+    }
+    return { onToPage }
+  }
 }
 </script>
 

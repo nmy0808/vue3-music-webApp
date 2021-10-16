@@ -1,11 +1,15 @@
 <template>
-    <scroll class='scroll-wrap' @scroll='onscroll' probe-type='3'>
-      <Banner class='banner-wrap' :banners='banners' v-if='banners.length>0' />
-      <personalized :personalized='personalized'></personalized>
-      <album :albums='albums' v-if='albums.length>0' />
-      <new-song class='newsong-wrap' :new-song='newSong' v-if='newSong.length>0' />
-    </scroll>
-  <router-view></router-view>
+  <scroll class='scroll-wrap' @scroll='onscroll' probe-type='3'>
+    <Banner class='banner-wrap' :banners='banners' v-if='banners.length>0' />
+    <personalized :personalized='personalized' @to-page='onToPagePersonalizedDetail'></personalized>
+    <album :albums='albums' v-if='albums.length>0' />
+    <new-song class='newsong-wrap' :new-song='newSong' v-if='newSong.length>0' />
+  </scroll>
+  <router-view v-slot="{ Component }">
+    <transition name='slide'>
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <script>
@@ -19,6 +23,7 @@ import useAlbum from './use-album'
 import useNewSong from './use-newSong'
 import NewSong from '@/components-block/recommend/newSong'
 import Scroll from '@/components/scroll/scroll'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'about.vue',
@@ -35,6 +40,13 @@ export default {
     const onscroll = (e) => {
       emit('scroll', e)
     }
+    const router = useRouter()
+    const onToPagePersonalizedDetail = (id) => {
+      router.push({
+        name: 'RecommendDetail',
+        params: { id }
+      })
+    }
     const { banners } = useBanner()
     const { personalized } = usePersonalized()
     const { albums } = useAlbum()
@@ -44,13 +56,14 @@ export default {
       banners,
       personalized,
       albums,
-      newSong
+      newSong,
+      onToPagePersonalizedDetail
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
 .scroll-wrap {
   position: fixed;
   top: 176px;
@@ -61,7 +74,8 @@ export default {
 .banner-wrap {
   padding-top: 32px;
 }
-.newsong-wrap{
+
+.newsong-wrap {
   padding-bottom: 40px;
 }
 </style>

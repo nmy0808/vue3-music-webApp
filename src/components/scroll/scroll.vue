@@ -23,6 +23,10 @@ export default {
     orient: {
       type: String,
       default: 'y'
+    },
+    bounce: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { emit }) {
@@ -35,7 +39,7 @@ export default {
         scrollY: props.orient === 'y',
         probeType: +props.probeType,
         click: true,
-        bounce: false
+        bounce: props.bounce
       })
       if (props.probeType > 0) {
         bsRef.value.on('scroll', (e) => {
