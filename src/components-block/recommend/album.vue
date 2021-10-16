@@ -3,7 +3,7 @@
     <recommend-title class='title'>最新专辑</recommend-title>
     <div class='scroll-wrap' ref='wrap'>
       <ul class='list'>
-        <li class='item' v-for='item in albums' :key='item.id'>
+        <li class='item' @click='onToPage(item.id)' v-for='item in albums' :key='item.id'>
           <div class='pic'>
             <img v-lazy='item.picUrl'>
           </div>
@@ -34,11 +34,15 @@ BScroll.use(ObserveDOM)
 export default {
   name: 'album',
   props: ['albums'],
+  emits: ['toPage'],
   components: {
     RecommendTitle
   },
-  setup() {
+  setup(props, { emit }) {
     const wrap = ref(null)
+    const onToPage = (id) => {
+      emit('toPage', id)
+    }
     onMounted(() => {
       const list = wrap.value.querySelector('.list')
       const items = wrap.value.querySelectorAll('.item')
@@ -52,7 +56,10 @@ export default {
         bounce: false
       })
     })
-    return { wrap }
+    return {
+      wrap,
+      onToPage
+    }
   }
 }
 </script>

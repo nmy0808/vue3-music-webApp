@@ -9,7 +9,7 @@
       </div>
       <div class='content'>
         <div class='item' v-for='item in list' :key='item.id'>
-          <div class='pic'>
+          <div class='pic' v-if='isPic'>
             <img ref='pic' :src='item.al.picUrl'>
           </div>
           <div class='desc'>
@@ -28,7 +28,7 @@ import { ref } from 'vue'
 
 export default {
   name: 'detail-list',
-  props: ['list'],
+  props: ['list','isPic'],
   emits: ['scroll'],
   components: { Scroll },
   setup(props, { emit }) {
@@ -98,7 +98,7 @@ export default {
         border-radius: 30px;
         overflow: hidden;
         background: #000;
-
+        margin-right: 16px;
         img {
           width: 100%;
         }
@@ -108,8 +108,8 @@ export default {
         display: flex;
         flex-wrap: wrap;
         align-content: space-between;
-        padding: 28px 0 28px 32px;
-        box-sizing: border-box;
+        height: 120px;
+        align-content: center;
 
         .name {
           width: 100%;
@@ -119,6 +119,7 @@ export default {
         }
 
         .sub-name {
+          margin-top: 16px;
           width: 100%;
           color: $color-dark;
           font-size: $font-size-medium;

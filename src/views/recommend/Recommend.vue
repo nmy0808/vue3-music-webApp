@@ -1,13 +1,14 @@
 <template>
   <scroll class='scroll-wrap' @scroll='onscroll' probe-type='3'>
     <Banner class='banner-wrap' :banners='banners' v-if='banners.length>0' />
-    <personalized :personalized='personalized' @to-page='onToPagePersonalizedDetail'></personalized>
-    <album :albums='albums' v-if='albums.length>0' />
+    <personalized :personalized='personalized'
+                  @to-page='onToPageDetail($event,"personalized")'></personalized>
+    <album :albums='albums' v-if='albums.length>0' @to-page='onToPageDetail($event,"album")' />
     <new-song class='newsong-wrap' :new-song='newSong' v-if='newSong.length>0' />
   </scroll>
-  <router-view v-slot="{ Component }">
+  <router-view v-slot='{ Component }'>
     <transition name='slide'>
-      <component :is="Component" />
+      <component :is='Component' />
     </transition>
   </router-view>
 </template>
@@ -41,10 +42,10 @@ export default {
       emit('scroll', e)
     }
     const router = useRouter()
-    const onToPagePersonalizedDetail = (id) => {
+    const onToPageDetail = (id,type) => {
       router.push({
         name: 'RecommendDetail',
-        params: { id }
+        params: { id,type }
       })
     }
     const { banners } = useBanner()
@@ -57,7 +58,7 @@ export default {
       personalized,
       albums,
       newSong,
-      onToPagePersonalizedDetail
+      onToPageDetail
     }
   }
 }

@@ -5,7 +5,9 @@
         {{ playlist && playlist.name }}
       </sub-header>
     </detail-cover>
-    <detail-list @scroll='onListScroll' v-if='playlist' :list='playlist.tracks' ref='scrollRef'></detail-list>
+    <!--    如果是专辑推荐列表 不显示图片-->
+    <detail-list @scroll='onListScroll' v-if='playlist' :isPic='isPic' :list='playlist.tracks'
+                 ref='scrollRef'></detail-list>
   </div>
 </template>
 
@@ -15,7 +17,7 @@ import SubHeader from '@/components/header/sub-header'
 import DetailCover from '@/components/cover/detail-cover'
 import DetailList from '@/components-block/recommend/detail-list'
 import { ref, watchEffect } from 'vue'
-import { getPlayDetail } from '@/api'
+import { getAlbumDetail, getPlayDetail } from '@/api'
 import { useRoute } from 'vue-router'
 
 export default {
@@ -31,9 +33,11 @@ export default {
     const coverRef = ref(null)
     const scrollRef = ref(null)
     const isFixed = ref(false)
+    const isPic = ref(true)
     // 上面bar的高度
     const TOPBAR_HEIGHT = 44
     const onListScroll = ({ y }) => {
+      if (!coverRef.value) return
       const pic = coverRef.value.picRef
       const height = scrollRef.value.$el.getBoundingClientRect().top
       const disTop = height + y
@@ -56,15 +60,26 @@ export default {
     }
     watchEffect(async () => {
       const id = route.params.id
-      const data = await getPlayDetail({ id })
-      playlist.value = data.playlist
+      const type = route.params.type
+      if (type === 'personalized') {
+        const data = await getPlayDetail({ id })
+        playlist.value = data.playlist
+      }
+      if (type === 'album') {
+        isPic.value = false
+        const data = await getAlbumDetail({ id })
+        playlist.value = data.album
+        playlist.value.coverImgUrl = data.album.blurPicUrl
+        playlist.value.tracks = data.songs
+      }
     })
     return {
       playlist,
       coverRef,
       onListScroll,
       scrollRef,
-      isFixed
+      isFixed,
+      isPic
     }
   }
 }

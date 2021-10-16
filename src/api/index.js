@@ -9,3 +9,5 @@ export const getAlbum = () => netWork.get('/album/newest')
 export const getNewSong = () => netWork.get('/personalized/newsong')
 // 获取歌单详情
 export const getPlayDetail = (data) => netWork.get('/playlist/detail', data)
+// 获取专辑内容
+export const getAlbumDetail = (data) => netWork.get('/album', data)
