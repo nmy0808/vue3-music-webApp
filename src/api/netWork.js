@@ -10,7 +10,7 @@ export default {
         params: data
       })
         .then(res => {
-          resolve(res)
+          resolve(res.data)
         })
         .catch(err => {
           reject(err)
@@ -21,7 +21,7 @@ export default {
     return new Promise((resolve, reject) => {
       axios.get(path, data)
         .then(res => {
-          resolve(res)
+          resolve(res.data)
         })
         .catch(err => {
           reject(err)

@@ -1,28 +1,53 @@
 <template>
-  <div class='wrap'>12312</div>
+  <div class='navigator' ref='nav' :style='{top: top+"px"}' :class='{active: isBgClass, "has-shadow" : isShadow}'>
+    <Header :top='top'></Header>
+    <TabBar></TabBar>
+  </div>
+<!--  @scroll: navigation滑动动效-->
+  <router-view @scroll='onscroll'></router-view>
 </template>
 
 <script>
-import { getBanner } from '@/api'
-import { watchEffect } from 'vue'
+import Header from '@/components/header/header'
+import TabBar from '@/components/tabBar/tabBar'
+import useScroll from './use-scroll'
 
 export default {
-  components: {},
+  components: {
+    Header,
+    TabBar
+  },
   setup() {
-    watchEffect(async () => {
-      const res = await getBanner()
-      console.log(res)
-    })
-    return {}
+    const {
+      onscroll,
+      isShadow,
+      top,
+      nav,
+      isBgClass
+    } = useScroll()
+    return {
+      onscroll,
+      isShadow,
+      top,
+      nav,
+      isBgClass
+    }
   }
 }
 </script>
 
-<style lang='scss'>
-.wrap {
-  width: 375px;
-  height: 375px;
-  border: 1px solid;
-  @extend .center-all;
+<style lang='scss' scoped>
+.navigator {
+  position: relative;
+  top: 0;
+  z-index: 1;
+
+  &.active {
+    background: #334049;
+  }
+
+  &.has-shadow {
+    box-shadow: 0px 2px 4px 0px rgba(22, 33, 42, 0.3);
+  }
 }
 </style>

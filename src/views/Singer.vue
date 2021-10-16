@@ -1,12 +1,10 @@
 <template>
-  <div>
-    home
-  </div>
+  <div>singer</div>
 </template>
 
 <script>
 export default {
-  name: 'home.vue'
+  name: 'Singer'
 }
 </script>
 

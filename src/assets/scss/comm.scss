@@ -1,13 +1,17 @@
 @import 'mixin.scss';
-.center-h{
+
+.center-h {
   @include center-translate(h);
 }
-.center-v{
+
+.center-v {
   @include center-translate(v);
 }
-.center-all{
+
+.center-all {
   @include center-translate;
 }
+
 @keyframes rotate {
   0% {
     transform: rotate(0);
@@ -16,4 +20,9 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.container {
+  padding: 0 32px;
+  box-sizing: border-box;
 }
