@@ -1,6 +1,8 @@
 <template>
   <div class='sub-header container'>
-    <i class='back' @click='()=>$router.back()'></i>
+    <slot name='left'>
+      <i class='back' @click='()=>$router.back()'></i>
+    </slot>
     <div>
       <slot></slot>
     </div>

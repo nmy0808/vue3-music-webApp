@@ -1,13 +1,15 @@
 <template>
   <normal-player></normal-player>
+  <mini-player></mini-player>
 </template>
 
 <script>
 
 import NormalPlayer from '@/components-block/player/normal-player'
+import MiniPlayer from '@/components-block/player/mini-player'
 export default {
   name: 'player',
-  components: { NormalPlayer }
+  components: { MiniPlayer, NormalPlayer }
 }
 </script>
 

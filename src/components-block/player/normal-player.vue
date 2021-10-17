@@ -1,6 +1,9 @@
 <template>
   <div class='player-wrap'>
     <sub-header class='player-header'>
+      <template #left>
+        <i class='icon-back'></i>
+      </template>
       <div class='player-box'>
         <div class='name'>一路向北</div>
         <div class='singer'>周杰伦</div>
@@ -217,6 +220,14 @@ export default {
 .player-header {
   z-index: 10;
 
+  .icon-back {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: url("~@/assets/imgs/icon-bottom.png");
+    background-size: cover;
+  }
+
   .player-box {
     text-align: center;
 
@@ -267,7 +278,7 @@ export default {
   overflow: hidden;
 
   .right-lyrics {
-    height: 750px;
+    height: 660px;
     width: 100%;
     color: $color-light;
     opacity: 0.5;
