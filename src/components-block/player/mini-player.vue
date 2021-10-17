@@ -1,32 +1,50 @@
 <template>
-  <div class='mini-wrap container'>
-    <div class='pic'>
-      <img
-        src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-        alt=''>
+  <div class='mini-box'>
+    <div class='mini-wrap container'>
+      <div class='pic'>
+        <img
+          src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+          alt=''>
+      </div>
+      <div class='desc'>
+        <h4 class='name'>夜曲</h4>
+        <h4 class='sub'>周结论</h4>
+      </div>
+      <div class='control'>
+        <i class='icon-play'></i>
+        <i class='icon-list' @click='onToggleShow'>列表</i>
+      </div>
     </div>
-    <div class='desc'>
-      <h4 class='name'>夜曲</h4>
-      <h4 class='sub'>周结论</h4>
-    </div>
-    <div class='control'>
-      <i class='icon-play'></i>
-      <i class='icon-list'>列表</i>
-    </div>
+    <mini-play-list :is-show='isShow'></mini-play-list>
   </div>
-  <mini-paly-list></mini-paly-list>
 </template>
 
 <script>
-import MiniPalyList from '@/components-block/player/mini-paly-list'
+import MiniPlayList from '@/components-block/player/mini-play-list'
+import { ref } from 'vue'
 
 export default {
   name: 'mini-player',
-  components: { MiniPalyList }
+  components: { MiniPlayList },
+  setup() {
+    const isShow = ref(false)
+    const onToggleShow = () => {
+      isShow.value = !isShow.value
+    }
+    return {
+      isShow,
+      onToggleShow
+    }
+  }
 }
 </script>
 
 <style scoped lang='scss'>
+.mini-box {
+  position: relative;
+  z-index: 100;
+}
+
 .mini-wrap {
   height: 132px;
   width: 100%;

@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class='content'>
-        <div class='item' v-for='item in list' :key='item.id'>
+        <div class='item' v-for='item in list' :key='item.id' @click='onSelectItem'>
           <div class='pic' v-if='isPic'>
             <img ref='pic' :src='item.al.picUrl'>
           </div>
@@ -25,20 +25,26 @@
 <script>
 import Scroll from '@/components/scroll/scroll'
 import { ref } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'detail-list',
-  props: ['list','isPic'],
+  props: ['list', 'isPic'],
   emits: ['scroll'],
   components: { Scroll },
   setup(props, { emit }) {
+    const store = useStore()
     const pic = ref(null)
     const onScroll = (e) => {
       emit('scroll', e)
     }
+    const onSelectItem = () => {
+      store.commit('setFullScreen', true)
+    }
     return {
       onScroll,
-      pic
+      pic,
+      onSelectItem
     }
   }
 }
@@ -52,7 +58,6 @@ export default {
   bottom: 0;
   width: 100%;
   background: #fff;
-
   .wrap-bg {
     background: #fff;
     padding: 32px;
@@ -66,7 +71,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .operate{
+
+    .operate {
       border: 1px solid $color-dark;
       height: 54px;
       padding: 0 18px;
@@ -77,7 +83,8 @@ export default {
       border-radius: 22px;
       font-size: $font-size-medium;
       font-weight: normal;
-      .word{
+
+      .word {
         font-weight: bold;
         margin-right: 10px;
       }
@@ -99,6 +106,7 @@ export default {
         overflow: hidden;
         background: #000;
         margin-right: 16px;
+
         img {
           width: 100%;
         }

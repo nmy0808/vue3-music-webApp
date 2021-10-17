@@ -1,9 +1,9 @@
 <template>
-  <div class='mini-list-wrap container'>
+  <div class='mini-list-wrap container' v-show='isShow'>
     <div class='header'>
       <span>随机播放</span>
       <i class='icon-type'></i>
-      <i class='icon-close'></i>
+      <i class='icon-close' @click='onClose'></i>
     </div>
     <scroll class='mini-scroll container' :bounce='true'>
       <div class='item'>
@@ -23,8 +23,14 @@ import Scroll from '@/components/scroll/scroll'
 
 export default {
   name: 'mini-paly-list',
+  props: ['isShow'],
   components: {
     Scroll
+  },
+  methods: {
+    onClose() {
+      this.$parent.isShow = false
+    }
   }
 }
 </script>

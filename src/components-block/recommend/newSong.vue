@@ -2,7 +2,7 @@
   <div>
     <recommend-title class='title-wrap'>最新音乐</recommend-title>
     <ul class='list container'>
-      <li class='item' v-for='item in newSong' :key='item.id'>
+      <li class='item' v-for='item in newSong' :key='item.id' @click='onSelectItem'>
         <div class='pic'>
           <img v-lazy='item.picUrl' alt=''>
         </div>
@@ -17,13 +17,18 @@
 
 <script>
 import RecommendTitle from '@/components/title/recommend-title'
+import { useStore } from 'vuex'
 
 export default {
   name: 'newSong',
   components: { RecommendTitle },
   props: ['newSong'],
   setup(props) {
-    return {}
+    const store = useStore()
+    const onSelectItem = () => {
+      store.commit('setFullScreen', true)
+    }
+    return { onSelectItem }
   }
 }
 </script>

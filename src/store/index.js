@@ -1,18 +1,12 @@
 import { createStore } from 'vuex'
+import state from './state'
+import getters from './getters'
+import mutations from './mutations'
+import actions from './actions'
 
 export default createStore({
-  state: {
-    isShow: false,
-    age: 19
-  },
-  getters: {},
-  mutations: {
-    addAge(state) {
-      state.age++
-    },
-    switchShow(state) {
-      state.isShow = !state.isShow
-    }
-  },
-  actions: {}
+  state,
+  getters,
+  mutations,
+  actions
 })

@@ -2,7 +2,7 @@
   <div class='player-wrap'>
     <sub-header class='player-header'>
       <template #left>
-        <i class='icon-back'></i>
+        <i class='icon-back' @click='onCloseFullScreen'></i>
       </template>
       <div class='player-box'>
         <div class='name'>一路向北</div>
@@ -57,6 +57,7 @@ import { ref, onMounted } from 'vue'
 import SubHeader from '@/components/header/sub-header'
 import BigCircleCover from '@/components/cover/big-circle-cover'
 import Scroll from '@/components/scroll/scroll'
+import { useStore } from 'vuex'
 
 BScroll.use(Slide)
 
@@ -68,9 +69,13 @@ export default {
     SubHeader
   },
   setup() {
+    const store = useStore()
     const scrollWrapRef = ref(null)
     const bsRef = ref(null)
     const currentIndex = ref(0)
+    const onCloseFullScreen = () => {
+      store.commit('setFullScreen', false)
+    }
     onMounted(() => {
       bsRef.value = new BScroll(scrollWrapRef.value, {
         scrollX: true,
@@ -87,7 +92,8 @@ export default {
     })
     return {
       scrollWrapRef,
-      currentIndex
+      currentIndex,
+      onCloseFullScreen
     }
   }
 }
@@ -101,7 +107,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 100;
 
   .dot-wrap {
     position: fixed;
