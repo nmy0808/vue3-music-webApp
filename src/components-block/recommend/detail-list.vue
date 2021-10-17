@@ -1,5 +1,5 @@
 <template>
-  <scroll class='list-wrap' probe-type='3' :bounce='true' @scroll='onScroll'>
+  <scroll class='list-wrap' probe-type='3' ref='scrollRef' :bounce='true' @scroll='onScroll'>
     <div class='wrap-bg'>
       <div class='header'>音乐列表
         <div class='operate'>
@@ -19,6 +19,7 @@
         </div>
       </div>
     </div>
+    <mini-player-box></mini-player-box>
   </scroll>
 </template>
 
@@ -26,12 +27,13 @@
 import Scroll from '@/components/scroll/scroll'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import MiniPlayerBox from '@/components/mini-player-box/mini-player-box'
 
 export default {
   name: 'detail-list',
   props: ['list', 'isPic'],
   emits: ['scroll'],
-  components: { Scroll },
+  components: { MiniPlayerBox, Scroll },
   setup(props, { emit }) {
     const store = useStore()
     const pic = ref(null)
@@ -44,7 +46,7 @@ export default {
     return {
       onScroll,
       pic,
-      onSelectItem
+      onSelectItem,
     }
   }
 }
@@ -57,29 +59,29 @@ export default {
   left: 0;
   bottom: 0;
   width: 100%;
-  background: #fff;
+  background: #26303c;
+
   .wrap-bg {
-    background: #fff;
+    background: #26303c;
     padding: 32px;
     box-sizing: border-box;
   }
 
   .header {
-    font-size: 40px;
-    font-weight: 600;
-    color: $color-dark;
+    font-size: 30px;
+    color: $color-sub;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     .operate {
-      border: 1px solid $color-dark;
+      border: 1px solid $color-light;
       height: 54px;
       padding: 0 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $color-dark;
+      color: $color-light;
       border-radius: 22px;
       font-size: $font-size-medium;
       font-weight: normal;
@@ -121,7 +123,7 @@ export default {
 
         .name {
           width: 100%;
-          color: $color-main;
+          color: $color-light;
           font-size: $font-size-medium;
           @include clamp(1);
         }
@@ -129,7 +131,7 @@ export default {
         .sub-name {
           margin-top: 16px;
           width: 100%;
-          color: $color-dark;
+          color: $color-sub;
           font-size: $font-size-medium;
           @include clamp(1);
         }

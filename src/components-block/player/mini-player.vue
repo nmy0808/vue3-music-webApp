@@ -1,12 +1,12 @@
 <template>
   <div class='mini-box'>
     <div class='mini-wrap container'>
-      <div class='pic'>
+      <div class='pic' @click='onFullScreen'>
         <img
           src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
           alt=''>
       </div>
-      <div class='desc'>
+      <div class='desc' @click='onFullScreen'>
         <h4 class='name'>夜曲</h4>
         <h4 class='sub'>周结论</h4>
       </div>
@@ -21,19 +21,29 @@
 
 <script>
 import MiniPlayList from '@/components-block/player/mini-play-list'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   name: 'mini-player',
   components: { MiniPlayList },
   setup() {
+    const store = useStore()
     const isShow = ref(false)
     const onToggleShow = () => {
       isShow.value = !isShow.value
     }
+    const onFullScreen = () => {
+      isShow.value = false
+      nextTick(() => {
+        store.commit('setFullScreen', true)
+      })
+    }
+
     return {
       isShow,
-      onToggleShow
+      onToggleShow,
+      onFullScreen
     }
   }
 }
@@ -49,10 +59,10 @@ export default {
   height: 132px;
   width: 100%;
   position: fixed;
+  z-index: 100;
   left: 0;
   bottom: 0;
-  z-index: 4;
-  background: #24303D;
+  background: $color-main;
   display: flex;
   align-items: center;
   color: $color-light;
@@ -97,6 +107,22 @@ export default {
       background-size: cover;
     }
   }
+}
 
+.in {
+  animation: slide 0.3s;
+}
+
+.out {
+  animation: slide 0.3s reverse;
+}
+
+@keyframes slide {
+  0% {
+    transform: translate3d(0, 100%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
 </style>

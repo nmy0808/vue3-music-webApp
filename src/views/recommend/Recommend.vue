@@ -5,6 +5,7 @@
                   @to-page='onToPageDetail($event,"personalized")'></personalized>
     <album :albums='albums' v-if='albums.length>0' @to-page='onToPageDetail($event,"album")' />
     <new-song class='newsong-wrap' :new-song='newSong' v-if='newSong.length>0' />
+    <mini-player-box></mini-player-box>
   </scroll>
   <router-view v-slot='{ Component }'>
     <transition name='slide'>
@@ -25,11 +26,13 @@ import useNewSong from './use-newSong'
 import NewSong from '@/components-block/recommend/newSong'
 import Scroll from '@/components/scroll/scroll'
 import { useRouter } from 'vue-router'
+import MiniPlayerBox from '@/components/mini-player-box/mini-player-box'
 
 export default {
   name: 'about.vue',
   emits: ['scroll'],
   components: {
+    MiniPlayerBox,
     Scroll,
     NewSong,
     Personalized,
@@ -42,10 +45,13 @@ export default {
       emit('scroll', e)
     }
     const router = useRouter()
-    const onToPageDetail = (id,type) => {
+    const onToPageDetail = (id, type) => {
       router.push({
         name: 'RecommendDetail',
-        params: { id,type }
+        params: {
+          id,
+          type
+        }
       })
     }
     const { banners } = useBanner()

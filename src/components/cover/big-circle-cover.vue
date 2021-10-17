@@ -14,9 +14,9 @@ export default {
 
 <style scoped lang='scss'>
 .circle-cover-wrap {
-  width: 600px;
-  height: 600px;
-  border: 20px solid #fff;
+  width: 500px;
+  height: 500px;
+  border: 10px solid #fff;
   overflow: hidden;
   border-radius: 50%;
   img {

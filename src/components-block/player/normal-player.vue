@@ -1,52 +1,52 @@
 <template>
-  <div class='player-wrap'>
-    <sub-header class='player-header'>
-      <template #left>
-        <i class='icon-back' @click='onCloseFullScreen'></i>
-      </template>
-      <div class='player-box'>
-        <div class='name'>一路向北</div>
-        <div class='singer'>周杰伦</div>
-      </div>
-    </sub-header>
-    <div class='scroll-wrap' ref='scrollWrapRef'>
-      <div class='scroll-inner'>
-        <div class='item'>
-          <big-circle-cover class='big-cover-wrap'
-                            pic-url='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'></big-circle-cover>
-          <div class='left-lyrics'>我是一段歌词</div>
+    <div class='player-wrap'>
+      <sub-header class='player-header'>
+        <template #left>
+          <i class='icon-back' @click='onCloseFullScreen'></i>
+        </template>
+        <div class='player-box'>
+          <div class='name'>一路向北</div>
+          <div class='singer'>周杰伦</div>
         </div>
-        <div class='item'>
-          <!--右侧歌词-->
-          <scroll class='right-lyrics'>
-            我是歌词...
-          </scroll>
+      </sub-header>
+      <div class='scroll-wrap' ref='scrollWrapRef'>
+        <div class='scroll-inner'>
+          <div class='item'>
+            <big-circle-cover class='big-cover-wrap'
+                              pic-url='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'></big-circle-cover>
+            <div class='left-lyrics'>我是一段歌词</div>
+          </div>
+          <div class='item'>
+            <!--右侧歌词-->
+            <scroll class='right-lyrics'>
+              我是歌词...
+            </scroll>
+          </div>
         </div>
       </div>
-    </div>
-    <div class='dot-wrap'>
-      <span class='dot-item' :class='{active: index===currentIndex}' v-for='(item,index) in 2' :key='index'></span>
-    </div>
-    <div class='player-bottom-wrap container'>
-      <div class='player-top'>
-        <div class='begin-time'>00:00</div>
-        <div class='progress-wrap'>
-          <div class='progress-line'></div>
+      <div class='dot-wrap'>
+        <span class='dot-item' :class='{active: index===currentIndex}' v-for='(item,index) in 2' :key='index'></span>
+      </div>
+      <div class='player-bottom-wrap container'>
+        <div class='player-top'>
+          <div class='begin-time'>00:00</div>
+          <div class='progress-wrap'>
+            <div class='progress-line'></div>
+          </div>
+          <div class='over-time'>04:00</div>
         </div>
-        <div class='over-time'>04:00</div>
+        <div class='player-control'>
+          <i class='icon-type'>随机</i>
+          <i class='icon-pre'></i>
+          <i class='icon-playing'></i>
+          <i class='icon-next'></i>
+          <i class='icon-fav'>收藏</i>
+        </div>
       </div>
-      <div class='player-control'>
-        <i class='icon-type'>随机</i>
-        <i class='icon-pre'></i>
-        <i class='icon-playing'></i>
-        <i class='icon-next'></i>
-        <i class='icon-fav'>收藏</i>
-      </div>
+      <img class='player-bg'
+           src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+           alt=''>
     </div>
-    <img class='player-bg'
-         src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-         alt=''>
-  </div>
 </template>
 
 <script>
@@ -76,6 +76,7 @@ export default {
     const onCloseFullScreen = () => {
       store.commit('setFullScreen', false)
     }
+
     onMounted(() => {
       bsRef.value = new BScroll(scrollWrapRef.value, {
         scrollX: true,
@@ -93,7 +94,7 @@ export default {
     return {
       scrollWrapRef,
       currentIndex,
-      onCloseFullScreen
+      onCloseFullScreen,
     }
   }
 }
@@ -101,17 +102,17 @@ export default {
 
 <style scoped lang='scss'>
 .player-wrap {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   background: #000;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-
   .dot-wrap {
     position: fixed;
-    top: 1000px;
+    left: 0;
+    bottom: 26%;
     text-align: center;
     width: 100%;
 
@@ -133,7 +134,7 @@ export default {
 
   .player-bottom-wrap {
     position: absolute;
-    top: 80%;
+    bottom: 7%;
     left: 0;
 
     .player-top {
@@ -147,7 +148,7 @@ export default {
       .progress-wrap {
         width: 70%;
         height: 3px;
-        background: rgba($color-main, 30%);
+        background: rgba(#fff,0.3);
         margin: 0 auto;
         position: relative;
 
@@ -179,7 +180,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 30px;
+      margin-top: 50px;
 
       .icon-type {
         width: 29px;
@@ -273,7 +274,7 @@ export default {
     opacity: 0.5;
     text-align: center;
     margin-top: 90px;
-    font-size: 32px;
+    font-size: $font-size-medium;
   }
 }
 
@@ -290,7 +291,7 @@ export default {
     opacity: 0.5;
     text-align: center;
     margin-top: 90px;
-    font-size: 32px;
+    font-size: $font-size-medium;
     // 当前歌词
     .active {
       color: $color-main;
