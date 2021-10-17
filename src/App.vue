@@ -5,15 +5,18 @@
   </div>
 <!--  @scroll: navigation滑动动效-->
   <router-view @scroll='onscroll'></router-view>
+  <player></player>
 </template>
 
 <script>
 import Header from '@/components/header/header'
 import TabBar from '@/components/tabBar/tabBar'
 import useNavScroll from './use-nav-scroll'
+import Player from '@/views/player/Player'
 
 export default {
   components: {
+    Player,
     Header,
     TabBar
   },
