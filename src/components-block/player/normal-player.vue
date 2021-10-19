@@ -1,52 +1,52 @@
 <template>
-    <div class='player-wrap'>
-      <sub-header class='player-header'>
-        <template #left>
-          <i class='icon-back' @click='onCloseFullScreen'></i>
-        </template>
-        <div class='player-box'>
-          <div class='name'>一路向北</div>
-          <div class='singer'>周杰伦</div>
+  <div class='player-wrap'>
+    <sub-header class='player-header'>
+      <template #left>
+        <i class='icon-back' @click='onCloseFullScreen'></i>
+      </template>
+      <div class='player-box'>
+        <div class='name'>一路向北</div>
+        <div class='singer'>周杰伦</div>
+      </div>
+    </sub-header>
+    <div class='scroll-wrap' ref='scrollWrapRef'>
+      <div class='scroll-inner'>
+        <div class='item'>
+          <big-circle-cover class='big-cover-wrap'
+                            pic-url='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'></big-circle-cover>
+          <div class='left-lyrics'>我是一段歌词</div>
         </div>
-      </sub-header>
-      <div class='scroll-wrap' ref='scrollWrapRef'>
-        <div class='scroll-inner'>
-          <div class='item'>
-            <big-circle-cover class='big-cover-wrap'
-                              pic-url='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'></big-circle-cover>
-            <div class='left-lyrics'>我是一段歌词</div>
-          </div>
-          <div class='item'>
-            <!--右侧歌词-->
-            <scroll class='right-lyrics'>
-              我是歌词...
-            </scroll>
-          </div>
+        <div class='item'>
+          <!--右侧歌词-->
+          <scroll class='right-lyrics'>
+            我是歌词...
+          </scroll>
         </div>
       </div>
-      <div class='dot-wrap'>
-        <span class='dot-item' :class='{active: index===currentIndex}' v-for='(item,index) in 2' :key='index'></span>
-      </div>
-      <div class='player-bottom-wrap container'>
-        <div class='player-top'>
-          <div class='begin-time'>00:00</div>
-          <div class='progress-wrap'>
-            <div class='progress-line'></div>
-          </div>
-          <div class='over-time'>04:00</div>
-        </div>
-        <div class='player-control'>
-          <i class='icon-type'>随机</i>
-          <i class='icon-pre'></i>
-          <i class='icon-playing'></i>
-          <i class='icon-next'></i>
-          <i class='icon-fav'>收藏</i>
-        </div>
-      </div>
-      <img class='player-bg'
-           src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-           alt=''>
     </div>
+    <div class='dot-wrap'>
+      <span class='dot-item' :class='{active: index===currentIndex}' v-for='(item,index) in 2' :key='index'></span>
+    </div>
+    <div class='player-bottom-wrap container'>
+      <div class='player-top'>
+        <div class='begin-time'>00:00</div>
+        <div class='progress-wrap'>
+          <div class='progress-line'></div>
+        </div>
+        <div class='over-time'>04:00</div>
+      </div>
+      <div class='player-control'>
+        <i class='icon-type xunxu'></i>
+        <i class='icon-pre'></i>
+        <i class='icon-playing'></i>
+        <i class='icon-next'></i>
+        <i class='icon-fav'></i>
+      </div>
+    </div>
+    <img class='player-bg'
+         src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+         alt=''>
+  </div>
 </template>
 
 <script>
@@ -94,7 +94,7 @@ export default {
     return {
       scrollWrapRef,
       currentIndex,
-      onCloseFullScreen,
+      onCloseFullScreen
     }
   }
 }
@@ -109,6 +109,7 @@ export default {
   top: 0;
   left: 0;
   z-index: 100;
+
   .dot-wrap {
     position: fixed;
     left: 0;
@@ -148,7 +149,7 @@ export default {
       .progress-wrap {
         width: 70%;
         height: 3px;
-        background: rgba(#fff,0.3);
+        background: rgba(#fff, 0.3);
         margin: 0 auto;
         position: relative;
 
@@ -188,8 +189,23 @@ export default {
       }
 
       .icon-type {
-        width: 29px;
-        height: 29px;
+        width: 50px;
+        height: 50px;
+
+        &.xunxu {
+          @include bg-image('~@/assets/imgs/mode-type-1');
+          background-size: cover;
+        }
+
+          &.single {
+            @include bg-image('~@/assets/imgs/mode-type-2');
+            background-size: cover;
+          }
+
+          &.random {
+            @include bg-image('~@/assets/imgs/mode-type-3');
+            background-size: cover;
+          }
       }
 
       .icon-pre {
@@ -204,8 +220,16 @@ export default {
         width: 120px;
         height: 120px;
         border-radius: 50%;
-        background: $color-main;
+        @include bg-image('~@/assets/imgs/play_btn');
+        background-color: $color-main;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 40px 40px;
         box-shadow: 0px 2px 28px 4px rgba(242, 95, 9, 0.7);
+
+        &.pause {
+          @include bg-image('~@/assets/imgs/pause_btn');
+        }
       }
 
       .icon-next {
@@ -217,8 +241,16 @@ export default {
       }
 
       .icon-fav {
-        width: 29px;
-        height: 29px;
+        width: 50px;
+        height: 50px;
+        @include bg-image('~@/assets/imgs/fav-small-main');
+        background-size: 40px 40px;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &.active {
+          @include bg-image('~@/assets/imgs/fav-small-active');
+        }
       }
     }
   }

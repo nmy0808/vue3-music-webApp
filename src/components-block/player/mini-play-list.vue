@@ -4,7 +4,7 @@
       <div class='mini-list-wrap container' v-show='isShow'>
         <div class='header'>
           <span>随机播放</span>
-          <i class='icon-type'></i>
+          <i class='icon-type xunxu'></i>
           <i class='icon-close' @click='onClose'></i>
         </div>
         <scroll class='mini-scroll container' :bounce='true'>
@@ -19,7 +19,7 @@
         </scroll>
       </div>
     </transition>
-    <div class='mask'  v-show='isShow' @click='onClose'></div>
+    <div class='mask' v-show='isShow' @click='onClose'></div>
   </div>
 </template>
 
@@ -85,20 +85,34 @@ export default {
     height: 100px;
     box-sizing: border-box;
     margin-top: 10px;
+
     .icon-type {
-      margin-left: 10px;
       display: block;
-      width: 40px;
-      height: 40px;
-      background: #000;
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      margin-left: 2px;
+      &.xunxu {
+        @include bg-image('~@/assets/imgs/mode-sub-type-1');
+      }
+
+      &.single {
+        @include bg-image('~@/assets/imgs/mode-sub-type-2');
+      }
+
+      &.random {
+        @include bg-image('~@/assets/imgs/mode-sub-type-3');
+      }
     }
 
     .icon-close {
       display: block;
-      width: 40px;
-      height: 40px;
-      background: #000;
+      width: 32px;
+      height: 32px;
       margin-left: auto;
+      @include bg-image('~@/assets/imgs/close_btn');
+      background-position: 1px center;
+      background-size: cover;
     }
   }
 
@@ -112,9 +126,10 @@ export default {
     color: #232F3C;
 
     .item {
-      &:first-of-type{
+      &:first-of-type {
         margin-top: 15px;
       }
+
       padding-bottom: 32px;
       display: flex;
       align-items: center;
@@ -134,13 +149,21 @@ export default {
       .icon-del {
         margin-left: auto;
         margin-right: 32px;
+        @include bg-image('~@/assets/imgs/del-small');
+      }
+
+      .icon-fav {
+        @include bg-image('~@/assets/imgs/fav-small');
+
+        &.active {
+          @include bg-image('~@/assets/imgs/fav-sub-small-active');
+        }
       }
 
       .icon-del, .icon-fav {
         display: inline-block;
         width: 28px;
         height: 28px;
-        background: #000;
         background-size: cover;
       }
     }
@@ -155,6 +178,6 @@ export default {
   left: 0;
   z-index: -12;
   background: #000000;
-  opacity: 0.5;
+  opacity: 0.7;
 }
 </style>

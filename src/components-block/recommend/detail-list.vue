@@ -4,7 +4,7 @@
       <div class='header'>音乐列表
         <div class='operate'>
           <span class='word'>随机播放</span>
-          <i class='icon'>x</i>
+          <i class='icon xunxu'></i>
         </div>
       </div>
       <div class='content'>
@@ -75,7 +75,7 @@ export default {
     justify-content: space-between;
 
     .operate {
-      border: 1px solid $color-light;
+      border: 1px solid #9fa2ac;
       height: 54px;
       padding: 0 18px;
       display: flex;
@@ -89,6 +89,23 @@ export default {
       .word {
         font-weight: bold;
         margin-right: 10px;
+      }
+      .icon{
+        width: 28px;
+        height: 28px;
+        display: inline-block;
+        background-size: cover;
+        &.xunxu {
+          @include bg-image('~@/assets/imgs/mode-type-1');
+        }
+
+        &.single {
+          @include bg-image('~@/assets/imgs/mode-type-2');
+        }
+
+        &.random {
+          @include bg-image('~@/assets/imgs/mode-type-3');
+        }
       }
     }
   }

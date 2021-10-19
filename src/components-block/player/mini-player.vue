@@ -12,7 +12,7 @@
       </div>
       <div class='control'>
         <i class='icon-play'></i>
-        <i class='icon-list' @click='onToggleShow'>列表</i>
+        <i class='icon-list' @click='onToggleShow'></i>
       </div>
     </div>
     <mini-play-list :is-show='isShow'></mini-play-list>
@@ -93,11 +93,16 @@ export default {
     margin-left: auto;
 
     .icon-play {
-      @include bg-image('~@/assets/imgs/play-bar-btn')
+      @include bg-image('~@/assets/imgs/play-bar-btn');
+
+      &.pause {
+        @include bg-image('~@/assets/imgs/pause-bar-btn');
+      }
     }
 
     .icon-list {
-      margin-left: 60px;
+      margin-left: 34px;
+      @include bg-image('~@/assets/imgs/list')
     }
 
     .icon-play, .icon-list {
