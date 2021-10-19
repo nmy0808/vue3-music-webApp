@@ -33,6 +33,9 @@ export default {
     const bsRef = ref(null)
     const bsWrap = ref(null)
     const inner = ref(null)
+    const refresh = () => {
+      bsRef.value.refresh()
+    }
     onMounted(() => {
       if (props.orient === 'x') {
         const items = inner.value.children
@@ -59,7 +62,8 @@ export default {
     return {
       bsRef,
       bsWrap,
-      inner
+      inner,
+      refresh
     }
   }
 }

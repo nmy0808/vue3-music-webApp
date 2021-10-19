@@ -2,13 +2,13 @@
   <scroll class='list-wrap' probe-type='3' ref='scrollRef' :bounce='true' @scroll='onScroll'>
     <div class='wrap-bg'>
       <div class='header'>音乐列表
-        <div class='operate'>
-          <span class='word'>随机播放</span>
-          <i class='icon xunxu'></i>
+        <div class='operate' @click='onPlayModeType'>
+          <span class='word'>{{ calcCurrPlayModeType }}</span>
+          <i class='icon shunxu' ref='playModeTypeRef'></i>
         </div>
       </div>
       <div class='content'>
-        <div class='item' v-for='item in list' :key='item.id' @click='onSelectItem'>
+        <div class='item' v-for='item in list' :key='item.id' @click='onSelectItem(item)'>
           <div class='pic' v-if='isPic'>
             <img ref='pic' :src='item.al.picUrl'>
           </div>
@@ -28,25 +28,45 @@ import Scroll from '@/components/scroll/scroll'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import MiniPlayerBox from '@/components/mini-player-box/mini-player-box'
+import usePlayModeType from '@/components-block/player/use-play-mode-type'
+import usePlaySong from '@/components-block/player/use-play-song'
 
 export default {
   name: 'detail-list',
   props: ['list', 'isPic'],
   emits: ['scroll'],
-  components: { MiniPlayerBox, Scroll },
+  components: {
+    MiniPlayerBox,
+    Scroll
+  },
   setup(props, { emit }) {
     const store = useStore()
     const pic = ref(null)
     const onScroll = (e) => {
       emit('scroll', e)
     }
-    const onSelectItem = () => {
+    const onSelectItem = async (item) => {
+      await store.dispatch('getSongDetail', item.id)
+      store.commit('setFullScreen', true)
+    }
+    // 当前播放类型
+    const playModeTypeRef = ref(null)
+    const {
+      calcCurrPlayModeType
+    } = usePlayModeType({ playModeTypeRef })
+    const { playSongs } = usePlaySong()
+    const onPlayModeType = async () => {
+      const ids = props.list.map(item => item.id)
+      await playSongs(ids)
       store.commit('setFullScreen', true)
     }
     return {
       onScroll,
       pic,
       onSelectItem,
+      playModeTypeRef,
+      calcCurrPlayModeType,
+      onPlayModeType
     }
   }
 }
@@ -90,12 +110,14 @@ export default {
         font-weight: bold;
         margin-right: 10px;
       }
-      .icon{
+
+      .icon {
         width: 28px;
         height: 28px;
         display: inline-block;
         background-size: cover;
-        &.xunxu {
+
+        &.shunxu {
           @include bg-image('~@/assets/imgs/mode-type-1');
         }
 

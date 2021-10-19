@@ -6,5 +6,8 @@ export default {
   miniPlayer: false,
   playStata: playingState.PAUSE,
   playModeType: playModeType.SHUNXU,
-  matrix: 'none'
+  matrix: 'none',
+  songs: [],
+  currentIndex: 0,
+  currentLyric: []
 }

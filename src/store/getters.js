@@ -10,5 +10,8 @@ export default {
   },
   getPlayModeType(state) {
     return state.playModeType
+  },
+  getCurrentSong(state) {
+    return state.songs[state.currentIndex] || {}
   }
 }

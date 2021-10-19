@@ -5,15 +5,15 @@
         <i class='icon-back' @click='onCloseFullScreen'></i>
       </template>
       <div class='player-box'>
-        <div class='name'>一路向北</div>
-        <div class='singer'>周杰伦</div>
+        <div class='name'>{{ currentSong.name }}</div>
+        <div class='singer'>{{ currentSong.singer }}</div>
       </div>
     </sub-header>
     <div class='scroll-wrap' ref='scrollWrapRef'>
       <div class='scroll-inner'>
         <div class='item'>
           <big-circle-cover class='big-cover-wrap'
-                            pic-url='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'></big-circle-cover>
+                            :pic-url='currentSong.picUrl'></big-circle-cover>
           <div class='left-lyrics'>我是一段歌词</div>
         </div>
         <div class='item'>
@@ -44,8 +44,10 @@
       </div>
     </div>
     <img class='player-bg'
-         src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+         :src='currentSong.picUrl'
          alt=''>
+    <audio :src='currentSong.musicUrl'></audio>
+    <div class='mask'></div>
   </div>
 </template>
 
@@ -60,6 +62,7 @@ import Scroll from '@/components/scroll/scroll'
 import { useStore } from 'vuex'
 import usePlayState from './use-play-state'
 import usePlayModeType from './use-play-mode-type'
+import useSongDetail from '@/components-block/player/use-song-detail'
 
 BScroll.use(Slide)
 
@@ -86,6 +89,8 @@ export default {
     // 播放类型
     const playModeTypeRef = ref(null)
     const { togglePlayModeType } = usePlayModeType({ playModeTypeRef })
+    // 当前歌曲信息
+    const { currentSong } = useSongDetail()
     //
     onMounted(() => {
       bsRef.value = new BScroll(scrollWrapRef.value, {
@@ -109,7 +114,8 @@ export default {
       playRef,
       togglePlayState,
       playModeTypeRef,
-      togglePlayModeType
+      togglePlayModeType,
+      currentSong
     }
   }
 }
@@ -348,19 +354,23 @@ export default {
 }
 
 .player-bg {
-  width: 100vw;
   height: 100vh;
-  filter: blur(20px);
+  filter: blur(40px);
+  background: #000;
   position: fixed;
   top: 0;
-  left: 0;
-  z-index: -1;
-
+  left: -50%;
+  z-index: -2;
 }
 
-.xxx {
-  width: 100%;
-  border: 1px solid;
-  height: 100px;
+.mask {
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  position: fixed;
+  top: 0;
+  left:0;
+  opacity: 0.6;
+  z-index: -1;
 }
 </style>

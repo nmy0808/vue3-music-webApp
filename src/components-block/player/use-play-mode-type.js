@@ -5,6 +5,21 @@ import playModeType from '@/store/play-mode-type'
 
 export default function({ playModeTypeRef }) {
   const store = useStore()
+  // 当前播放类型
+  const calcCurrPlayModeType = computed(() => {
+    const currType = store.getters.getPlayModeType
+    let result = ''
+    if (currType === playModeType.SHUNXU) {
+      result = '顺序播放'
+    }
+    if (currType === playModeType.SINGLE) {
+      result = '单曲循环'
+    }
+    if (currType === playModeType.RANDOM) {
+      result = '随机播放'
+    }
+    return result
+  })
   // 播放类型
   const PlayModeType = computed(() => store.getters.getPlayModeType)
   // 切换类型
@@ -39,6 +54,7 @@ export default function({ playModeTypeRef }) {
 
   return {
     PlayModeType,
+    calcCurrPlayModeType,
     togglePlayModeType
   }
 }

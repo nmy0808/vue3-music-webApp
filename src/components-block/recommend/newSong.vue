@@ -2,13 +2,13 @@
   <div>
     <recommend-title class='title-wrap'>最新音乐</recommend-title>
     <ul class='list container'>
-      <li class='item' v-for='item in newSong' :key='item.id' @click='onSelectItem'>
+      <li class='item' v-for='item in newSong' :key='item.id' @click='onSelectItem(item)'>
         <div class='pic'>
           <img v-lazy='item.picUrl' alt=''>
         </div>
         <div class='desc'>
           <h4 class='name'>{{ item.name }}</h4>
-          <h4 class='singer'>{{ item.song.artists[0].name }}</h4>
+          <h4 class='singer'>{{ item.songs.artists[0].name }}</h4>
         </div>
       </li>
     </ul>
@@ -25,7 +25,8 @@ export default {
   props: ['newSong'],
   setup(props) {
     const store = useStore()
-    const onSelectItem = () => {
+    const onSelectItem = async (item) => {
+      await store.dispatch('getSongDetail', item.id)
       store.commit('setFullScreen', true)
     }
     return { onSelectItem }

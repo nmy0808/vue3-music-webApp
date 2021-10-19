@@ -2,16 +2,16 @@
   <div class='list-box'>
     <transition @enter='onEnter' @leave='onLeave'>
       <div class='mini-list-wrap container' v-show='isShow'>
-        <div class='header'>
-          <span @click='togglePlayModeType'>随机播放</span>
-          <i class='icon-type shunxu' ref='playModeTypeRef' @click='togglePlayModeType'></i>
+        <div class='header' @click='togglePlayModeType'>
+          <span>{{ calcCurrPlayModeType }}</span>
+          <i class='icon-type shunxu' ref='playModeTypeRef'></i>
           <i class='icon-close' @click='onClose'></i>
         </div>
-        <scroll class='mini-scroll container' :bounce='true'>
-          <div class='item'>
+        <scroll class='mini-scroll container' ref='scrollRef' :bounce='true'>
+          <div class='item' v-for='item in songs' :key='item.id' @click='onSelectItem(item)'>
             <div class='desc'>
-              <h4 class='name'>夜曲</h4>
-              <h4 class='sub'>周杰伦</h4>
+              <h4 class='name'>{{ item.name }}</h4>
+              <h4 class='sub'>{{ item.singer }}</h4>
             </div>
             <i class='icon-del'></i>
             <i class='icon-fav'></i>
@@ -26,12 +26,15 @@
 <script>
 import Scroll from '@/components/scroll/scroll'
 import { gsap } from 'gsap'
-import { ref } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import usePlayModeType from '@/components-block/player/use-play-mode-type'
+import useSongDetail from '@/components-block/player/use-song-detail'
+import { useStore } from 'vuex'
 
 export default {
   name: 'mini-paly-list',
   props: ['isShow'],
+  emits: ['show'],
   components: {
     Scroll
   },
@@ -40,7 +43,8 @@ export default {
       this.$parent.isShow = false
     }
   },
-  setup() {
+  setup(props, { emit }) {
+    const store = useStore()
     const onEnter = (el, next) => {
       gsap.fromTo(el, {
         y: '100%'
@@ -63,12 +67,34 @@ export default {
     }
     // 播放类型
     const playModeTypeRef = ref(null)
-    const { togglePlayModeType } = usePlayModeType({ playModeTypeRef })
+    const {
+      calcCurrPlayModeType,
+      togglePlayModeType
+    } = usePlayModeType({ playModeTypeRef })
+    // 歌曲信息
+    const { songs } = useSongDetail()
+    // 根据songs刷新scroll
+    const scrollRef = ref(null)
+    watch(() => props.isShow, () => {
+      nextTick(() => {
+        scrollRef.value.refresh()
+      })
+    })
+    // 点击item播放全屏
+    const onSelectItem = async (item) => {
+      emit('show', false)
+      await store.dispatch('getSongDetail', item.id)
+      store.commit('setFullScreen', true)
+    }
     return {
       onEnter,
       onLeave,
       playModeTypeRef,
-      togglePlayModeType
+      togglePlayModeType,
+      calcCurrPlayModeType,
+      songs,
+      scrollRef,
+      onSelectItem
     }
   }
 }

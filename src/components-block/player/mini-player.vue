@@ -4,19 +4,19 @@
       <div class='pic' @click='onFullScreen' ref='wrapRef'>
         <img
           ref='picRef'
-          src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+          :src='currentSong.picUrl'
           alt=''>
       </div>
       <div class='desc' @click='onFullScreen'>
-        <h4 class='name'>夜曲</h4>
-        <h4 class='sub'>周结论</h4>
+        <h4 class='name'>{{ currentSong.name }}</h4>
+        <h4 class='sub'>{{ currentSong.singer }}</h4>
       </div>
       <div class='control'>
         <i class='icon-play' @click='togglePlayState' ref='playRef'></i>
         <i class='icon-list' @click='onToggleShow'></i>
       </div>
     </div>
-    <mini-play-list :is-show='isShow'></mini-play-list>
+    <mini-play-list @show='onShow' :is-show='isShow'></mini-play-list>
   </div>
 </template>
 
@@ -26,6 +26,7 @@ import { nextTick, ref } from 'vue'
 import { useStore } from 'vuex'
 import usePlayState from '@/components-block/player/use-play-state'
 import useCoverAnimation from './use-cover-animation'
+import useSongDetail from '@/components-block/player/use-song-detail'
 
 export default {
   name: 'mini-player',
@@ -51,7 +52,12 @@ export default {
     const wrapRef = ref(null)
     const picRef = ref(null)
     useCoverAnimation(wrapRef, picRef, 'mini')
+    // 歌曲信息
+    const { currentSong } = useSongDetail()
     //
+    const onShow = (flag)=>{
+      isShow.value = flag
+    }
     return {
       isShow,
       onToggleShow,
@@ -59,7 +65,9 @@ export default {
       playRef,
       togglePlayState,
       wrapRef,
-      picRef
+      picRef,
+      currentSong,
+      onShow
     }
   }
 }
@@ -100,7 +108,10 @@ export default {
 
   .desc {
     margin-left: 22px;
-
+    .name{
+      width: 70%;
+      @include clamp(1);
+    }
     .sub {
       margin-top: 12px;
       font-size: $font-size-medium;
