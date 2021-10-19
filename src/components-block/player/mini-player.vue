@@ -90,6 +90,7 @@ export default {
     overflow: hidden;
     border-radius: 50%;
     overflow: hidden;
+    border-radius: 50%;
 
     img {
       width: 100%;

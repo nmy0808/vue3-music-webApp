@@ -2,6 +2,12 @@ import { useStore } from 'vuex'
 import { computed, onMounted, watch } from 'vue'
 import playingState from '@/store/playing-state'
 // type: mini , full
+/** 专门为大封面和mini封面做转动动画的hook
+ * @param wrap img外部容器
+ * @param pic  img元素
+ * @param String 'mini' / 'full'
+ * @returns {{}}
+ */
 export default function(wrap, pic, type) {
   const store = useStore()
   const playState = computed(() => store.getters.isPlayState)
@@ -42,6 +48,16 @@ export default function(wrap, pic, type) {
     setTimeout(() => {
       if (flag) {
         wrapEl.style.transform = matrix.value
+      } else {
+        const picStyle = getComputedStyle(picEl).transform
+        const prev = matrix.value || ''
+        let curr = ''
+        if (prev !== 'none') {
+          curr = prev.concat(' ' + picStyle)
+        } else {
+          curr = picStyle
+        }
+        setStoreMatrix(curr)
       }
     })
   }, { immediate: true })
@@ -50,6 +66,16 @@ export default function(wrap, pic, type) {
     setTimeout(() => {
       if (flag) {
         wrapEl.style.transform = matrix.value
+      } else {
+        const picStyle = getComputedStyle(picEl).transform
+        const prev = matrix.value || ''
+        let curr = ''
+        if (prev !== 'none') {
+          curr = prev.concat(' ' + picStyle)
+        } else {
+          curr = picStyle
+        }
+        setStoreMatrix(curr)
       }
     })
   }, { immediate: true })
