@@ -23,13 +23,10 @@ export default function({
   onMounted(() => {
     watch(playState, (val) => {
       const playEl = playRef.value
-      const coverEl = coverRef.value
       if (val === playingState.PLAY) {
         playEl && playEl.classList.add('pause')
-        coverEl && coverEl.classList.remove('pause')
       } else {
         playEl && playEl.classList.remove('pause')
-        coverEl && coverEl.classList.add('pause')
       }
     }, { immediate: true })
   })

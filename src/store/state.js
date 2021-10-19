@@ -6,5 +6,5 @@ export default {
   miniPlayer: false,
   playStata: playingState.PAUSE,
   playModeType: playModeType.SHUNXU,
-  matrix: null
+  matrix: 'none'
 }

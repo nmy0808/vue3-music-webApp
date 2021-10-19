@@ -1,29 +1,32 @@
 import { useStore } from 'vuex'
 import { computed, onMounted, watch } from 'vue'
 import playingState from '@/store/playing-state'
-
-export default function(wrap, pic) {
+// type: mini , full
+export default function(wrap, pic, type) {
   const store = useStore()
   const playState = computed(() => store.getters.isPlayState)
+  const matrix = computed(() => store.state.matrix)
+  const isFullScreen = computed(() => store.getters.isFullScreen)
+  const isMiniPlayer = computed(() => store.getters.isMiniPlayer)
+  let wrapEl = null
+  let picEl = null
   onMounted(() => {
-    let wrapEl = null
-    let picEl = null
-    const matrix = computed(() => store.state.matrix)
     watch(playState, (val) => {
       wrapEl = wrap.value
       picEl = pic.value
       if (val === playingState.PAUSE) {
         const picStyle = getComputedStyle(picEl).transform
-        const prev = store.state.matrix
+        const prev = matrix.value || ''
         let curr = ''
-        if (prev) {
-          curr = prev.concat(picStyle)
+        if (prev !== 'none') {
+          curr = prev.concat(' ' + picStyle)
         } else {
           curr = picStyle
         }
+        picEl.classList.remove('circle-animation')
         setStoreMatrix(curr)
-      }else{
-
+      } else {
+        picEl.classList.add('circle-animation')
       }
     }, { immediate: true })
     watch(matrix, (val) => {
@@ -34,6 +37,22 @@ export default function(wrap, pic) {
       }
     })
   })
+  // 当切换为mini时, 给cover赋值
+  type === 'mini' && watch(isMiniPlayer, (flag) => {
+    setTimeout(() => {
+      if (flag) {
+        wrapEl.style.transform = matrix.value
+      }
+    })
+  }, { immediate: true })
+  // 当切换为全屏时, 给cover赋值
+  type === 'full' && watch(isFullScreen, (flag) => {
+    setTimeout(() => {
+      if (flag) {
+        wrapEl.style.transform = matrix.value
+      }
+    })
+  }, { immediate: true })
 
   function setStoreMatrix(val) {
     store.commit('setMatrix', val)

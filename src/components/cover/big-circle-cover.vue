@@ -1,23 +1,25 @@
 <template>
-  <div class='circle-cover-wrap  circle-animation' ref='coverRef'>
-    <img :src='picUrl'>
+  <div class='circle-cover-wrap ' ref='wrapRef'>
+    <img :src='picUrl' ref='picRef'>
   </div>
 </template>
 
 <script>
 // normal-player的封面
 import { ref } from 'vue'
-import usePlayState from '@/components-block/player/use-play-state'
+import useCoverAnimation from '@/components-block/player/use-cover-animation'
 
 export default {
   name: 'big-circle-cover',
   props: ['picUrl'],
   setup() {
-    const coverRef = ref(null)
-    usePlayState({
-      coverRef
-    })
-    return { coverRef }
+    const wrapRef = ref(null)
+    const picRef = ref(null)
+    useCoverAnimation(wrapRef, picRef, 'full')
+    return {
+      wrapRef,
+      picRef
+    }
   }
 }
 </script>

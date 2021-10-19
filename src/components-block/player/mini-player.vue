@@ -1,8 +1,9 @@
 <template>
   <div class='mini-box'>
     <div class='mini-wrap container'>
-      <div class='pic circle-animation' @click='onFullScreen' ref='coverRef'>
+      <div class='pic' @click='onFullScreen' ref='wrapRef'>
         <img
+          ref='picRef'
           src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
           alt=''>
       </div>
@@ -24,6 +25,7 @@ import MiniPlayList from '@/components-block/player/mini-play-list'
 import { nextTick, ref } from 'vue'
 import { useStore } from 'vuex'
 import usePlayState from '@/components-block/player/use-play-state'
+import useCoverAnimation from './use-cover-animation'
 
 export default {
   name: 'mini-player',
@@ -42,19 +44,22 @@ export default {
     }
     // 按钮状态
     const playRef = ref(null)
-    const coverRef = ref(null)
     const { togglePlayState } = usePlayState({
-      playRef,
-      coverRef
+      playRef
     })
+    // 封面旋转
+    const wrapRef = ref(null)
+    const picRef = ref(null)
+    useCoverAnimation(wrapRef, picRef, 'mini')
     //
     return {
       isShow,
       onToggleShow,
       onFullScreen,
       playRef,
-      coverRef,
-      togglePlayState
+      togglePlayState,
+      wrapRef,
+      picRef
     }
   }
 }
@@ -88,6 +93,7 @@ export default {
 
     img {
       width: 100%;
+      height: 100%;
     }
   }
 

@@ -24,6 +24,10 @@ export default {
     return type
   },
   setMatrix(state, val) {
-    state.matrix = val
+    state.matrix = clearNoneStr(val)
   }
+}
+
+function clearNoneStr(str) {
+  return str.replace(/none/g, '')
 }
