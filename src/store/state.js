@@ -5,5 +5,6 @@ export default {
   fullScreen: false,
   miniPlayer: false,
   playStata: playingState.PAUSE,
-  playModeType: playModeType.SHUNXU
+  playModeType: playModeType.SHUNXU,
+  matrix: null
 }

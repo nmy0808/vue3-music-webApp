@@ -80,7 +80,9 @@ export default {
     }
     // 按钮状态
     const playRef = ref(null)
-    const { togglePlayState } = usePlayState({ playRef })
+    const { togglePlayState } = usePlayState({
+      playRef
+    })
     // 播放类型
     const playModeTypeRef = ref(null)
     const { togglePlayModeType } = usePlayModeType({ playModeTypeRef })

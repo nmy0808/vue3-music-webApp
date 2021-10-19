@@ -22,5 +22,8 @@ export default {
     type = type === 0 ? 1 : type
     state.playModeType = type
     return type
+  },
+  setMatrix(state, val) {
+    state.matrix = val
   }
 }

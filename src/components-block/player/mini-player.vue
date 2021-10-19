@@ -1,7 +1,7 @@
 <template>
   <div class='mini-box'>
     <div class='mini-wrap container'>
-      <div class='pic' @click='onFullScreen'>
+      <div class='pic circle-animation' @click='onFullScreen' ref='coverRef'>
         <img
           src='https://images.unsplash.com/photo-1634370058500-ebaeece3e395?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
           alt=''>
@@ -42,13 +42,18 @@ export default {
     }
     // 按钮状态
     const playRef = ref(null)
-    const { togglePlayState } = usePlayState({ playRef })
+    const coverRef = ref(null)
+    const { togglePlayState } = usePlayState({
+      playRef,
+      coverRef
+    })
     //
     return {
       isShow,
       onToggleShow,
       onFullScreen,
       playRef,
+      coverRef,
       togglePlayState
     }
   }
