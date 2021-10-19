@@ -4,5 +4,11 @@ export default {
   },
   isMiniPlayer(state) {
     return state.miniPlayer
+  },
+  isPlayState(state) {
+    return state.playStata
+  },
+  getPlayModeType(state) {
+    return state.playModeType
   }
 }
