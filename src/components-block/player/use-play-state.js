@@ -30,12 +30,6 @@ export default function({
       }
     }, { immediate: true })
   })
-  window.ff = () => {
-    const coverEl = coverRef.value
-    const css = getComputedStyle(coverEl)
-    const rotate = css.transform
-    console.log(rotate)
-  }
   return {
     playState,
     togglePlayState

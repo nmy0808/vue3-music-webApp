@@ -55,7 +55,7 @@ export default {
     // 歌曲信息
     const { currentSong } = useSongDetail()
     //
-    const onShow = (flag)=>{
+    const onShow = (flag) => {
       isShow.value = flag
     }
     return {
@@ -108,10 +108,13 @@ export default {
 
   .desc {
     margin-left: 22px;
-    .name{
+
+    .name {
       width: 70%;
+      height: 28px;
       @include clamp(1);
     }
+
     .sub {
       margin-top: 12px;
       font-size: $font-size-medium;

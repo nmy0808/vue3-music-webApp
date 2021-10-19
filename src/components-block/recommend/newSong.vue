@@ -8,7 +8,7 @@
         </div>
         <div class='desc'>
           <h4 class='name'>{{ item.name }}</h4>
-          <h4 class='singer'>{{ item.songs.artists[0].name }}</h4>
+          <h4 class='singer'>{{ item.song.artists[0].name }}</h4>
         </div>
       </li>
     </ul>

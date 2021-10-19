@@ -30,17 +30,18 @@ export default {
     state.songs = []
   },
   setSongs(state, songs) {
-    const currSong = state.songs.filter(item => item.id !== songs.id)
-    // 如果传入的数组,整体添加到前面
-    if (songs.length > 1) {
-      songs.forEach(song => {
-        currSong.push(song)
-      })
-      // 否则添加到最前面
-    } else {
-      currSong.unshift(songs[0])
+    state.songs = songs
+  },
+  setSong(state, song) {
+    const currSongIndex = state.songs.findIndex(item => item.id === song.id)
+    // 如果播放列表有这首歌,index指向当前歌曲
+    if (currSongIndex !== -1) {
+      state.currentIndex = currSongIndex
+      return
     }
-    state.songs = currSong
+    //  反之插入到列表最前面, index为0
+    state.currentIndex = 0
+    state.songs.unshift(song)
   },
   setCurrentIndex(state, index) {
     state.currentIndex = index

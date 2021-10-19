@@ -4,7 +4,7 @@
     <personalized :personalized='personalized'
                   @to-page='onToPageDetail($event,"personalized")'></personalized>
     <album :albums='albums' v-if='albums.length>0' @to-page='onToPageDetail($event,"album")' />
-    <new-song class='newsong-wrap' :new-songs='newSong' v-if='newSong.length>0' />
+    <new-song class='newsong-wrap' :new-song='newSong' v-if='newSong.length>0' />
     <mini-player-box></mini-player-box>
   </scroll>
   <router-view v-slot='{ Component }'>

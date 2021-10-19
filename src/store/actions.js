@@ -30,7 +30,11 @@ export default {
       // obj.musicUrl = musicUrl.data[0].url
       result.push(obj)
     }
-    commit('setSongs', result)
+    if (ids.length > 1) {
+      commit('setSongs', result)
+    } else {
+      commit('setSong', ...result)
+    }
   },
   async getLyric({
     state,
