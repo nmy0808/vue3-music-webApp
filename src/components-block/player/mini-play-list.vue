@@ -3,8 +3,8 @@
     <transition @enter='onEnter' @leave='onLeave'>
       <div class='mini-list-wrap container' v-show='isShow'>
         <div class='header'>
-          <span>随机播放</span>
-          <i class='icon-type xunxu'></i>
+          <span @click='togglePlayModeType'>随机播放</span>
+          <i class='icon-type shunxu' ref='playModeTypeRef' @click='togglePlayModeType'></i>
           <i class='icon-close' @click='onClose'></i>
         </div>
         <scroll class='mini-scroll container' :bounce='true'>
@@ -26,6 +26,8 @@
 <script>
 import Scroll from '@/components/scroll/scroll'
 import { gsap } from 'gsap'
+import { ref } from 'vue'
+import usePlayModeType from '@/components-block/player/use-play-mode-type'
 
 export default {
   name: 'mini-paly-list',
@@ -59,9 +61,14 @@ export default {
         onComplete: next
       })
     }
+    // 播放类型
+    const playModeTypeRef = ref(null)
+    const { togglePlayModeType } = usePlayModeType({ playModeTypeRef })
     return {
       onEnter,
-      onLeave
+      onLeave,
+      playModeTypeRef,
+      togglePlayModeType
     }
   }
 }
@@ -92,7 +99,8 @@ export default {
       height: 50px;
       background-size: cover;
       margin-left: 2px;
-      &.xunxu {
+
+      &.shunxu {
         @include bg-image('~@/assets/imgs/mode-sub-type-1');
       }
 

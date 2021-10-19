@@ -1,3 +1,5 @@
+import playingState from './playing-state'
+
 export default {
   setFullScreen(state, flag) {
     state.fullScreen = flag
@@ -8,9 +10,14 @@ export default {
     }
   },
   setPlayState(state, flag) {
-    state.playStata = flag
+    if (flag === playingState.PLAY) {
+      state.playStata = playingState.PLAY
+    }
+    if (flag === playingState.PAUSE) {
+      state.playStata = playingState.PAUSE
+    }
   },
-  setPlayModeType(state) {
+  togglePlayModeType(state) {
     let type = (state.playModeType + 1) % 4
     type = type === 0 ? 1 : type
     state.playModeType = type

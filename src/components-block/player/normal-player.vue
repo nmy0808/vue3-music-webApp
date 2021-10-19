@@ -36,9 +36,9 @@
         <div class='over-time'>04:00</div>
       </div>
       <div class='player-control'>
-        <i class='icon-type xunxu'></i>
+        <i class='icon-type shunxu' ref='playModeTypeRef' @click='togglePlayModeType'></i>
         <i class='icon-pre'></i>
-        <i class='icon-playing'></i>
+        <i class='icon-playing' @click='togglePlayState' ref='playRef'></i>
         <i class='icon-next'></i>
         <i class='icon-fav'></i>
       </div>
@@ -58,6 +58,8 @@ import SubHeader from '@/components/header/sub-header'
 import BigCircleCover from '@/components/cover/big-circle-cover'
 import Scroll from '@/components/scroll/scroll'
 import { useStore } from 'vuex'
+import usePlayState from './use-play-state'
+import usePlayModeType from './use-play-mode-type'
 
 BScroll.use(Slide)
 
@@ -76,7 +78,13 @@ export default {
     const onCloseFullScreen = () => {
       store.commit('setFullScreen', false)
     }
-
+    // 按钮状态
+    const playRef = ref(null)
+    const { togglePlayState } = usePlayState({ playRef })
+    // 播放类型
+    const playModeTypeRef = ref(null)
+    const { togglePlayModeType } = usePlayModeType({ playModeTypeRef })
+    //
     onMounted(() => {
       bsRef.value = new BScroll(scrollWrapRef.value, {
         scrollX: true,
@@ -91,10 +99,15 @@ export default {
         currentIndex.value = pageX
       })
     })
+
     return {
       scrollWrapRef,
       currentIndex,
-      onCloseFullScreen
+      onCloseFullScreen,
+      playRef,
+      togglePlayState,
+      playModeTypeRef,
+      togglePlayModeType
     }
   }
 }
@@ -192,20 +205,20 @@ export default {
         width: 50px;
         height: 50px;
 
-        &.xunxu {
+        &.shunxu {
           @include bg-image('~@/assets/imgs/mode-type-1');
           background-size: cover;
         }
 
-          &.single {
-            @include bg-image('~@/assets/imgs/mode-type-2');
-            background-size: cover;
-          }
+        &.single {
+          @include bg-image('~@/assets/imgs/mode-type-2');
+          background-size: cover;
+        }
 
-          &.random {
-            @include bg-image('~@/assets/imgs/mode-type-3');
-            background-size: cover;
-          }
+        &.random {
+          @include bg-image('~@/assets/imgs/mode-type-3');
+          background-size: cover;
+        }
       }
 
       .icon-pre {

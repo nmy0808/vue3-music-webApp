@@ -11,7 +11,7 @@
         <h4 class='sub'>周结论</h4>
       </div>
       <div class='control'>
-        <i class='icon-play'></i>
+        <i class='icon-play' @click='togglePlayState' ref='playRef'></i>
         <i class='icon-list' @click='onToggleShow'></i>
       </div>
     </div>
@@ -23,6 +23,7 @@
 import MiniPlayList from '@/components-block/player/mini-play-list'
 import { nextTick, ref } from 'vue'
 import { useStore } from 'vuex'
+import usePlayState from '@/components-block/player/use-play-state'
 
 export default {
   name: 'mini-player',
@@ -39,11 +40,16 @@ export default {
         store.commit('setFullScreen', true)
       })
     }
-
+    // 按钮状态
+    const playRef = ref(null)
+    const { togglePlayState } = usePlayState({ playRef })
+    //
     return {
       isShow,
       onToggleShow,
-      onFullScreen
+      onFullScreen,
+      playRef,
+      togglePlayState
     }
   }
 }
