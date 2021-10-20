@@ -5,7 +5,7 @@
   <transition @enter='onMiniEnter' @leave='onMiniLeave'>
     <mini-player v-if='isMiniPlayer' :prevPlay='prevPlay' :nextPlay='nextPlay'></mini-player>
   </transition>
-  <audio @canplay='onCanPlay' @timeupdate='onTimeUpdate' ref='audioRef' :src='currentSong.musicUrl'></audio>
+  <audio @canplay='onCanPlay' autoplay @timeupdate='onTimeUpdate' ref='audioRef' :src='currentSong.musicUrl'></audio>
 </template>
 
 <script>

@@ -304,5 +304,7 @@ export default {
   justify-content: center;
   color: $color-light;
   font-size: $font-size-large;
+  z-index: 2;
+  transform: translate3d(0, 0, 1px);
 }
 </style>

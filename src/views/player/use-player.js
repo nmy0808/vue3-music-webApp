@@ -53,8 +53,12 @@ export default function({ audioRef }) {
       store.commit('setPlayState', playingState.PAUSE)
     }
   }, { immediate: true })
+  // 监听加载musicUrl, 播放器播放
+  // watch(() => currentSong.value.musicUrl, (url) => {
+  //   audioRef.value.play()
+  //   store.commit('setPlayState', playingState.PLAY)
+  // })
   // 监听当前时间 播放器跟着改动事件
-
   busEvent.on(CLICK_PROGRESS_PERCENT, (percent) => {
     if (percent === undefined) return
     audioRef.value.currentTime = totalTime.value * percent
@@ -92,6 +96,8 @@ export default function({ audioRef }) {
   }
   // 当音乐加载完成后 获取总时长, 存入vuex
   const onCanPlay = (e) => {
+    audioRef.value.play()
+    store.commit('setPlayState', playingState.PLAY)
     store.commit('setCurrentTotalTime', getTotalTime())
   }
   // 当前音乐时间变化和计算当前比例, 存入vuex

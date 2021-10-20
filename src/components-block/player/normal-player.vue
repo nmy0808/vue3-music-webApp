@@ -9,21 +9,21 @@
         <div class='singer'>{{ currentSong.singer }}</div>
       </div>
     </sub-header>
-    <div class='scroll-wrap' ref='scrollWrapRef'>
-      <div class='scroll-inner'>
-        <div class='item'>
-          <big-circle-cover class='big-cover-wrap'
-                            :pic-url='currentSong.picUrl'></big-circle-cover>
-          <div class='left-lyrics'>我是一段歌词</div>
+        <div class='scroll-wrap' ref='scrollWrapRef'>
+          <div class='scroll-inner'>
+            <div class='item'>
+              <big-circle-cover class='big-cover-wrap'
+                                :pic-url='currentSong.picUrl'></big-circle-cover>
+              <div class='left-lyrics'>我是一段歌词</div>
+            </div>
+            <div class='item'>
+              <!--右侧歌词-->
+              <scroll class='right-lyrics'>
+                我是歌词...
+              </scroll>
+            </div>
+          </div>
         </div>
-        <div class='item'>
-          <!--右侧歌词-->
-          <scroll class='right-lyrics'>
-            我是歌词...
-          </scroll>
-        </div>
-      </div>
-    </div>
     <div class='dot-wrap'>
       <span class='dot-item' :class='{active: index===currentIndex}' v-for='(item,index) in 2' :key='index'></span>
     </div>
@@ -114,18 +114,18 @@ export default {
     } = useFavorite()
     //
     onMounted(() => {
-      bsRef.value = new BScroll(scrollWrapRef.value, {
-        scrollX: true,
-        scrollY: false,
-        probeType: 3,
-        slide: {
-          loop: false,
-          autoplay: false
-        }
-      })
-      bsRef.value.on('slideWillChange', ({ pageX }) => {
-        currentIndex.value = pageX
-      })
+      // bsRef.value = new BScroll(scrollWrapRef.value, {
+      //   scrollX: true,
+      //   scrollY: false,
+      //   probeType: 3,
+      //   slide: {
+      //     loop: false,
+      //     autoplay: false
+      //   }
+      // })
+      // bsRef.value.on('slideWillChange', ({ pageX }) => {
+      //   currentIndex.value = pageX
+      // })
     })
 
     return {
