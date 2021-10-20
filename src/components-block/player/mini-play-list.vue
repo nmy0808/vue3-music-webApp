@@ -10,6 +10,8 @@
         </div>
         <scroll class='mini-scroll container' ref='scrollRef' :bounce='true'>
           <div class='item' v-for='item in songs' :key='item.id' @click='onSelectItem(item)'>
+            <i class='icon-left-play' :class='{pause: currentSong.id === item.id && isPlayState}'
+               @click.stop='onSelectPlay(item)'></i>
             <div class='desc'>
               <h4 class='name' :class='{active: currentSong.id === item.id}'>{{ item.name }}</h4>
               <h4 class='sub'>{{ item.singer }}</h4>
@@ -82,7 +84,8 @@ export default {
     // 歌曲信息
     const {
       songs,
-      currentSong
+      currentSong,
+      isPlayState
     } = useSongDetail()
     // 根据songs刷新scroll
     const scrollRef = ref(null)
@@ -92,12 +95,21 @@ export default {
       })
     })
     // 播放状态
-    const { setPlayState } = usePlayState({})
-    // 点击item播放全屏
+    const {
+      setPlayState,
+      togglePlayState
+    } = usePlayState({})
+    // 点击左侧播放状态按钮
+    const onSelectPlay = async (item) => {
+      if (item.id === currentSong.value.id) {
+        togglePlayState()
+      } else {
+        await store.dispatch('getSongDetail', item.id)
+      }
+    }
+    // 点击item
     const onSelectItem = async (item) => {
-      emit('show', false)
       await store.dispatch('getSongDetail', item.id)
-      store.commit('setFullScreen', true)
       setPlayState(true)
     }
     // 删除歌曲
@@ -121,7 +133,9 @@ export default {
       onEnter,
       onLeave,
       playModeTypeRef,
+      isPlayState,
       togglePlayModeType,
+      togglePlayState,
       calcCurrPlayModeType,
       songs,
       scrollRef,
@@ -130,7 +144,8 @@ export default {
       onRemoveAllSong,
       currentSong,
       toggleFavState,
-      judgeCurrentFavState
+      judgeCurrentFavState,
+      onSelectPlay
     }
   }
 }
@@ -213,6 +228,19 @@ export default {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
+      // 左侧播放暂停按钮
+      .icon-left-play {
+        display: block;
+        height: 28px;
+        width: 28px;
+        margin-right: 32px;
+        @include bg-image('~@/assets/imgs/mini-left-play-btn');
+        background-size: cover;
+
+        &.pause {
+          @include bg-image('~@/assets/imgs/mini-left-pause-btn');
+        }
+      }
 
       .name {
         color: $color-light;
