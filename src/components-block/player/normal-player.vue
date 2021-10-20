@@ -63,8 +63,7 @@ import usePlayState from './use-play-state'
 import usePlayModeType from './use-play-mode-type'
 import useSongDetail from '@/components-block/player/use-song-detail'
 import useAudioTime from '@/components-block/player/use-audio-time'
-import busEvent from '@/bus-event'
-import { CLICK_PROGRESS_PERCENT } from '@/bus-event/bus-event-type'
+import useTouchEvent from './use-touch-event'
 
 BScroll.use(Slide)
 
@@ -104,14 +103,7 @@ export default {
     } = useAudioTime()
     // 滚动条事件
     const progressWrapRef = ref(null)
-    const onClickProgress = (e) => {
-      const el = progressWrapRef.value
-      const total = el.clientWidth
-      const distance = e.pageX - el.offsetLeft
-      const percent = distance / total
-      setCurrentPercent(percent)
-      busEvent.emit(CLICK_PROGRESS_PERCENT, percent)
-    }
+    const { onClickProgress } = useTouchEvent({ progressWrapRef })
     //
     onMounted(() => {
       bsRef.value = new BScroll(scrollWrapRef.value, {
