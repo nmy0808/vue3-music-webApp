@@ -56,6 +56,7 @@ export default {
     state,
     commit
   }, id) {
+    if (id) return
     const targetSong = state.songs.find(song => song.id === id)
     if (targetSong.musicUrl) {
       return

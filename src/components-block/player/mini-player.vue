@@ -83,7 +83,7 @@ export default {
   height: 132px;
   width: 100%;
   position: fixed;
-  z-index: 100;
+  z-index: -11; //需要比list小
   left: 0;
   bottom: 0;
   background: $color-main;

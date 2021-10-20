@@ -18,6 +18,7 @@
 <script>
 import RecommendTitle from '@/components/title/recommend-title'
 import { useStore } from 'vuex'
+import usePlayState from '@/components-block/player/use-play-state'
 
 export default {
   name: 'newSong',
@@ -25,9 +26,12 @@ export default {
   props: ['newSong'],
   setup(props) {
     const store = useStore()
+    // 播放状态
+    const { setPlayState } = usePlayState({})
     const onSelectItem = async (item) => {
       await store.dispatch('getSongDetail', item.id)
       store.commit('setFullScreen', true)
+      setPlayState(true)
     }
     return { onSelectItem }
   }

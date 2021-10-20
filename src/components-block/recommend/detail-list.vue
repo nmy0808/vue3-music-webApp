@@ -13,7 +13,7 @@
             <img ref='pic' :src='item.al.picUrl'>
           </div>
           <div class='desc'>
-            <h4 class='name'>{{ item.name }}</h4>
+            <h4 class='name' :class='{active: currentSong.id === item.id}'>{{ item.name }}</h4>
             <h4 class='sub-name'>{{ item.ar[0].name }} - {{ item.al.name }}</h4>
           </div>
         </div>
@@ -30,6 +30,8 @@ import { useStore } from 'vuex'
 import MiniPlayerBox from '@/components/mini-player-box/mini-player-box'
 import usePlayModeType from '@/components-block/player/use-play-mode-type'
 import usePlaySong from '@/components-block/player/use-play-song'
+import usePlayState from '@/components-block/player/use-play-state'
+import useSongDetail from '@/components-block/player/use-song-detail'
 
 export default {
   name: 'detail-list',
@@ -45,9 +47,12 @@ export default {
     const onScroll = (e) => {
       emit('scroll', e)
     }
+    // 播放状态
+    const { setPlayState } = usePlayState({})
     const onSelectItem = async (item) => {
       await store.dispatch('getSongDetail', item.id)
       store.commit('setFullScreen', true)
+      setPlayState(true)
     }
     // 当前播放类型
     const playModeTypeRef = ref(null)
@@ -60,13 +65,16 @@ export default {
       await playSongs(ids)
       store.commit('setFullScreen', true)
     }
+    // 当前播放信息
+    const { currentSong } = useSongDetail()
     return {
       onScroll,
       pic,
       onSelectItem,
       playModeTypeRef,
       calcCurrPlayModeType,
-      onPlayModeType
+      onPlayModeType,
+      currentSong
     }
   }
 }
@@ -165,6 +173,10 @@ export default {
           color: $color-light;
           font-size: $font-size-medium;
           @include clamp(1);
+
+          &.active {
+            color: $color-main;
+          }
         }
 
         .sub-name {

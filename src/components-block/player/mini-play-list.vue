@@ -5,18 +5,21 @@
         <div class='header' @click='togglePlayModeType'>
           <span>{{ calcCurrPlayModeType }}</span>
           <i class='icon-type shunxu' ref='playModeTypeRef'></i>
-          <i class='icon-close' @click='onClose'></i>
+          <!--          <i class='icon-close' @click='onClose'></i>-->
+          <i class='icon-del' @click='onRemoveAllSong'></i>
         </div>
         <scroll class='mini-scroll container' ref='scrollRef' :bounce='true'>
           <div class='item' v-for='item in songs' :key='item.id' @click='onSelectItem(item)'>
             <div class='desc'>
-              <h4 class='name'>{{ item.name }}</h4>
+              <h4 class='name' :class='{active: currentSong.id === item.id}'>{{ item.name }}</h4>
               <h4 class='sub'>{{ item.singer }}</h4>
             </div>
-            <i class='icon-del'></i>
+            <i class='icon-del' @click.stop='onRemoveSingleSong(item)'></i>
             <i class='icon-fav'></i>
           </div>
+          <mini-player-box></mini-player-box>
         </scroll>
+        <div class='btn-close' @click='onClose'>关闭</div>
       </div>
     </transition>
     <div class='mask' v-show='isShow' @click='onClose'></div>
@@ -29,13 +32,17 @@ import { gsap } from 'gsap'
 import { nextTick, ref, watch } from 'vue'
 import usePlayModeType from '@/components-block/player/use-play-mode-type'
 import useSongDetail from '@/components-block/player/use-song-detail'
+import usePlayState from '@/components-block/player/use-play-state'
+import userPlaySong from './use-play-song'
 import { useStore } from 'vuex'
+import MiniPlayerBox from '@/components/mini-player-box/mini-player-box'
 
 export default {
   name: 'mini-paly-list',
   props: ['isShow'],
   emits: ['show'],
   components: {
+    MiniPlayerBox,
     Scroll
   },
   methods: {
@@ -72,7 +79,10 @@ export default {
       togglePlayModeType
     } = usePlayModeType({ playModeTypeRef })
     // 歌曲信息
-    const { songs } = useSongDetail()
+    const {
+      songs,
+      currentSong
+    } = useSongDetail()
     // 根据songs刷新scroll
     const scrollRef = ref(null)
     watch(() => props.isShow, () => {
@@ -80,11 +90,26 @@ export default {
         scrollRef.value.refresh()
       })
     })
+    // 播放状态
+    const { setPlayState } = usePlayState({})
     // 点击item播放全屏
     const onSelectItem = async (item) => {
       emit('show', false)
       await store.dispatch('getSongDetail', item.id)
       store.commit('setFullScreen', true)
+      setPlayState(true)
+    }
+    // 删除歌曲
+    const {
+      removeSong,
+      clearSong
+    } = userPlaySong()
+    const onRemoveSingleSong = (item) => {
+      removeSong(item.id)
+    }
+    const onRemoveAllSong = () => {
+      emit('show', false)
+      setTimeout(() => clearSong(), 100)
     }
     return {
       onEnter,
@@ -94,7 +119,10 @@ export default {
       calcCurrPlayModeType,
       songs,
       scrollRef,
-      onSelectItem
+      onSelectItem,
+      onRemoveSingleSong,
+      onRemoveAllSong,
+      currentSong
     }
   }
 }
@@ -102,10 +130,10 @@ export default {
 
 <style scoped lang='scss'>
 .mini-list-wrap {
-  height: 55vh;
+  height: 70vh;
   width: 100%;
   position: fixed;
-  bottom: 132px;
+  bottom: 0px;
   left: 0;
   z-index: -10;
   background: #26303c;
@@ -118,6 +146,15 @@ export default {
     height: 100px;
     box-sizing: border-box;
     margin-top: 10px;
+
+    .icon-del {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background-size: cover;
+      margin-left: auto;
+      @include bg-image('~@/assets/imgs/del-small');
+    }
 
     .icon-type {
       display: block;
@@ -161,7 +198,7 @@ export default {
 
     .item {
       &:first-of-type {
-        margin-top: 15px;
+        margin-top: 25px;
       }
 
       padding-bottom: 32px;
@@ -172,6 +209,10 @@ export default {
       .name {
         color: $color-light;
         font-size: $font-size-medium;
+
+        &.active {
+          color: $color-main;
+        }
       }
 
       .sub {
@@ -213,5 +254,19 @@ export default {
   z-index: -12;
   background: #000000;
   opacity: 0.7;
+}
+
+.btn-close {
+  height: 100px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: $color-main;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-light;
+  font-size: $font-size-large;
 }
 </style>

@@ -26,9 +26,7 @@ export default {
   setMatrix(state, val) {
     state.matrix = clearNoneStr(val)
   },
-  clearSongs(state) {
-    state.songs = []
-  },
+
   setSongs(state, songs) {
     state.songs = songs
   },
@@ -47,18 +45,72 @@ export default {
     state.currentIndex = index
   },
   setCurrentLyric(state, lyric) {
-    state.currentLyric = lyric
+    state.currentLyric = parseLyric(lyric)
   },
   setLyric(state, lyricObj) {
     const songs = state.songs
     songs.forEach(song => {
       if (song.id === lyricObj.id) {
-        song.lyric = lyricObj.lyric
+        song.lyric = parseLyric(lyricObj.lyric)
       }
     })
+  },
+  removeSong(state, id) {
+    // 根据id获取索引
+    const delIndex = state.songs.findIndex(song => song.id === id)
+    // 根据索引删除歌曲
+    state.songs.splice(delIndex, 1)
+    // 如果删除的索引在当前播放歌曲索引的前面, 当前播放歌曲的索引需要-1
+    if (delIndex < state.currentIndex) {
+      state.currentIndex !== 0 && state.currentIndex--
+    }
+    // 如果歌曲列表内没有音乐了, 当前播放状态为暂停
+    if (state.songs.length === 0) {
+      state.playStata = playingState.PAUSE
+      state.miniPlayer = false
+    }
+  },
+  clearSongs(state) {
+    state.songs = []
+    state.currentIndex = 0
+    state.playStata = playingState.PAUSE
+    state.miniPlayer = false
   }
 }
 
 function clearNoneStr(str) {
   return str.replace(/none/g, '')
+}
+
+// 格式化歌词方法
+function parseLyric(lrc) {
+  const lyrics = lrc.split('\n')
+  // [00:00.000] 作曲 : 林俊杰
+  // 1.定义正则表达式提取[00:00.000]
+  const reg1 = /\[\d*:\d*\.\d*\]/g
+  // 2.定义正则表达式提取 [00
+  const reg2 = /\[\d*/i
+  // 3.定义正则表达式提取 :00
+  const reg3 = /\:\d*/i
+  // 4.定义对象保存处理好的歌词
+  const lyricObj = {}
+  lyrics.forEach(function(lyric) {
+    // 1.提取时间
+    let timeStr = lyric.match(reg1)
+    if (!timeStr) {
+      return
+    }
+    timeStr = timeStr[0]
+    // 2.提取分钟
+    const minStr = timeStr.match(reg2)[0].substr(1)
+    // 3.提取秒钟
+    const secondStr = timeStr.match(reg3)[0].substr(1)
+    // 4.合并时间, 将分钟和秒钟都合并为秒钟
+    const time = parseInt(minStr) * 60 + parseInt(secondStr)
+    // 5.处理歌词
+    const text = lyric.replace(reg1, '').trim()
+    // 6.保存数据
+    lyricObj[time] = text
+  })
+  return lyricObj
 }

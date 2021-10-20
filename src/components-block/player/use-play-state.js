@@ -19,6 +19,10 @@ export default function({
   const togglePlayState = () => {
     store.commit('setPlayState', !playState.value)
   }
+  // 设置播放状态
+  const setPlayState = (flag) => {
+    store.commit('setPlayState', flag)
+  }
   // 监听播放状态, 切换按钮状态, 封面旋转状态
   onMounted(() => {
     watch(playState, (val) => {
@@ -32,6 +36,7 @@ export default function({
   })
   return {
     playState,
-    togglePlayState
+    togglePlayState,
+    setPlayState
   }
 }
