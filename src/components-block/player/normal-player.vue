@@ -30,8 +30,9 @@
     <div class='player-bottom-wrap container'>
       <div class='player-top'>
         <div class='begin-time'>{{ formatCurrentTime }}</div>
-        <div class='progress-wrap' @click='onClickProgress' ref='progressWrapRef'>
+        <div class='progress-wrap'  >
           <div class='progress-line' :style='{width: formatPercent}'></div>
+          <div class='progress-line-touch-wrap' @click='onClickProgress'  ref='progressWrapRef'></div>
         </div>
         <div class='over-time'>{{ formatTotalTime }}</div>
       </div>
@@ -186,9 +187,13 @@ export default {
       align-items: center;
       color: #ffffff50;
       font-size: $font-size-small;
-
+      .begin-time, .over-time{
+        width: 90px;
+        display: flex;
+        justify-content: center;
+      }
       .progress-wrap {
-        width: 70%;
+        width: 480px;
         height: 3px;
         background: rgba(#fff, 0.3);
         margin: 0 auto;
@@ -214,6 +219,16 @@ export default {
             border-radius: 50%;
             box-shadow: 0px 0px 8px 0px #E35807;
           }
+        }
+
+        .progress-line-touch-wrap {
+          position: absolute;
+          left: 0;
+          top: 0;
+          transform: translate3d(0,-50%,0);
+          width: 480px;
+          height: 80px;
+          z-index: 2;
         }
       }
     }

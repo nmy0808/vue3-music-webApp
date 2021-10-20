@@ -56,6 +56,7 @@ export default function({ audioRef }) {
   // 监听当前时间 播放器跟着改动事件
 
   busEvent.on(CLICK_PROGRESS_PERCENT, (percent) => {
+    if (percent === undefined) return
     audioRef.value.currentTime = totalTime.value * percent
   })
   // 上一首

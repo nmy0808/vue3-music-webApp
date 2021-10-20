@@ -1,7 +1,7 @@
 import { CLICK_PROGRESS_PERCENT } from '@/bus-event/bus-event-type'
 import busEvent from '@/bus-event'
 import useAudioTime from '@/components-block/player/use-audio-time'
-import { onMounted } from '@vue/runtime-core'
+import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import playingState from '@/store/playing-state'
 
@@ -11,7 +11,7 @@ export default function({ progressWrapRef }) {
   const onClickProgress = (e) => {
     const el = progressWrapRef.value
     const total = el.clientWidth
-    const distance = e.pageX - el.offsetLeft
+    const distance = e.pageX - el.getBoundingClientRect().x
     const percent = distance / total
     setCurrentPercent(percent)
     busEvent.emit(CLICK_PROGRESS_PERCENT, percent)
@@ -26,7 +26,7 @@ export default function({ progressWrapRef }) {
     let currPercent
     el.addEventListener('touchstart', (e) => {
       startX = e.touches[0].pageX
-      const distance = startX - el.offsetLeft
+      const distance = startX - el.getBoundingClientRect().x
       prePercent = distance / total
       setCurrentPercent(prePercent)
       store.commit('setPlayState', playingState.PAUSE)
@@ -34,6 +34,7 @@ export default function({ progressWrapRef }) {
     el.addEventListener('touchmove', (e) => {
       const distance = e.touches[0].pageX - startX
       currPercent = distance / elTotal + prePercent
+
       if (currPercent < 0) {
         currPercent = 0
       }
