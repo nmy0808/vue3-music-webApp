@@ -75,6 +75,15 @@ export default {
     state.currentIndex = 0
     state.playStata = playingState.PAUSE
     state.miniPlayer = false
+  },
+  setCurrentTotalTime(state, time) {
+    state.currentTotalTime = time
+  },
+  setCurrentTime(state, time) {
+    state.currentTime = time
+  },
+  setCurrentPercent(state, val) {
+    state.currentPercent = val
   }
 }
 

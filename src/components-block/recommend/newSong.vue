@@ -30,6 +30,8 @@ export default {
     const { setPlayState } = usePlayState({})
     const onSelectItem = async (item) => {
       await store.dispatch('getSongDetail', item.id)
+      await store.dispatch('getLyric', item.id)
+      await store.dispatch('getMusicUrl', item.id)
       store.commit('setFullScreen', true)
       setPlayState(true)
     }

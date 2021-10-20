@@ -6,9 +6,11 @@ export default function() {
   const currentSong = computed(() => store.getters.getCurrentSong)
   const currentIndex = computed(() => store.state.currentIndex)
   const songs = computed(() => store.state.songs)
+  const isPlayState = computed(() => store.getters.isPlayState)
   return {
     currentSong,
     currentIndex,
-    songs
+    songs,
+    isPlayState
   }
 }

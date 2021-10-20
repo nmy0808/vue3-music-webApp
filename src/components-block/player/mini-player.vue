@@ -31,6 +31,7 @@ import useSongDetail from '@/components-block/player/use-song-detail'
 export default {
   name: 'mini-player',
   components: { MiniPlayList },
+  props: ['prevPlay', 'nextPlay'],
   setup() {
     const store = useStore()
     const isShow = ref(false)

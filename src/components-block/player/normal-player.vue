@@ -29,24 +29,23 @@
     </div>
     <div class='player-bottom-wrap container'>
       <div class='player-top'>
-        <div class='begin-time'>00:00</div>
-        <div class='progress-wrap'>
-          <div class='progress-line'></div>
+        <div class='begin-time'>{{ formatCurrentTime }}</div>
+        <div class='progress-wrap' @click='onClickProgress' ref='progressWrapRef'>
+          <div class='progress-line' :style='{width: formatPercent}'></div>
         </div>
-        <div class='over-time'>04:00</div>
+        <div class='over-time'>{{ formatTotalTime }}</div>
       </div>
       <div class='player-control'>
         <i class='icon-type shunxu' ref='playModeTypeRef' @click='togglePlayModeType'></i>
-        <i class='icon-pre'></i>
+        <i class='icon-pre' @click='prevPlay'></i>
         <i class='icon-playing' @click='togglePlayState' ref='playRef'></i>
-        <i class='icon-next'></i>
+        <i class='icon-next' @click='nextPlay'></i>
         <i class='icon-fav'></i>
       </div>
     </div>
     <img class='player-bg'
          :src='currentSong.picUrl'
          alt=''>
-    <audio :src='currentSong.musicUrl'></audio>
     <div class='mask'></div>
   </div>
 </template>
@@ -63,6 +62,9 @@ import { useStore } from 'vuex'
 import usePlayState from './use-play-state'
 import usePlayModeType from './use-play-mode-type'
 import useSongDetail from '@/components-block/player/use-song-detail'
+import useAudioTime from '@/components-block/player/use-audio-time'
+import busEvent from '@/bus-event'
+import { CLICK_PROGRESS_PERCENT } from '@/bus-event/bus-event-type'
 
 BScroll.use(Slide)
 
@@ -73,6 +75,7 @@ export default {
     BigCircleCover,
     SubHeader
   },
+  props: ['prev-play', 'next-play'],
   setup() {
     const store = useStore()
     const scrollWrapRef = ref(null)
@@ -91,6 +94,24 @@ export default {
     const { togglePlayModeType } = usePlayModeType({ playModeTypeRef })
     // 当前歌曲信息
     const { currentSong } = useSongDetail()
+    // 当前歌曲时间信息, 比例
+    const {
+      formatTotalTime,
+      formatCurrentTime,
+      percent,
+      formatPercent,
+      setCurrentPercent
+    } = useAudioTime()
+    // 滚动条事件
+    const progressWrapRef = ref(null)
+    const onClickProgress = (e) => {
+      const el = progressWrapRef.value
+      const total = el.clientWidth
+      const distance = e.pageX - el.offsetLeft
+      const percent = distance / total
+      setCurrentPercent(percent)
+      busEvent.emit(CLICK_PROGRESS_PERCENT, percent)
+    }
     //
     onMounted(() => {
       bsRef.value = new BScroll(scrollWrapRef.value, {
@@ -115,7 +136,14 @@ export default {
       togglePlayState,
       playModeTypeRef,
       togglePlayModeType,
-      currentSong
+      currentSong,
+      formatTotalTime,
+      formatCurrentTime,
+      percent,
+      formatPercent,
+      setCurrentPercent,
+      onClickProgress,
+      progressWrapRef
     }
   }
 }
@@ -178,7 +206,7 @@ export default {
           position: absolute;
           left: 0;
           top: 0;
-          width: 10%;
+          width: 0%;
           height: 100%;
           background: $color-main;
 
@@ -369,7 +397,7 @@ export default {
   background: #000;
   position: fixed;
   top: 0;
-  left:0;
+  left: 0;
   opacity: 0.6;
   z-index: -1;
 }

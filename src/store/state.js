@@ -9,5 +9,8 @@ export default {
   matrix: 'none',
   songs: [],
   currentIndex: 0,
-  currentLyric: []
+  currentLyric: [],
+  currentTotalTime: '',
+  currentTime: '',
+  currentPercent: 0
 }

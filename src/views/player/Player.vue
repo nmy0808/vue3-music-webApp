@@ -1,19 +1,22 @@
 <template>
   <transition :css='false' @enter='onEnter' @leave='onLeave'>
-    <normal-player v-if='isFullScreen'></normal-player>
+    <normal-player v-if='isFullScreen' :prevPlay='prevPlay' :nextPlay='nextPlay'></normal-player>
   </transition>
   <transition @enter='onMiniEnter' @leave='onMiniLeave'>
-    <mini-player v-if='isMiniPlayer'></mini-player>
+    <mini-player v-if='isMiniPlayer' :prevPlay='prevPlay' :nextPlay='nextPlay'></mini-player>
   </transition>
+  <audio @canplay='onCanPlay' @timeupdate='onTimeUpdate' ref='audioRef' :src='currentSong.musicUrl'></audio>
 </template>
 
 <script>
 
 import NormalPlayer from '@/components-block/player/normal-player'
 import MiniPlayer from '@/components-block/player/mini-player'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { gsap } from 'gsap'
+import useSongDetail from '@/components-block/player/use-song-detail'
+import usePlayer from './use-player'
 
 export default {
   name: 'player',
@@ -68,13 +71,32 @@ export default {
         onComplete: done
       })
     }
+    //
+    const { currentSong } = useSongDetail()
+    // audio 控制
+    const audioRef = ref(null)
+    const {
+      prevPlay,
+      nextPlay,
+      onCanPlay,
+      onTimeUpdate
+    } = usePlayer({ audioRef })
+    //
+
+    //
     return {
       isFullScreen,
       isMiniPlayer,
       onEnter,
       onLeave,
       onMiniEnter,
-      onMiniLeave
+      onMiniLeave,
+      currentSong,
+      audioRef,
+      prevPlay,
+      nextPlay,
+      onCanPlay,
+      onTimeUpdate
     }
   }
 }
