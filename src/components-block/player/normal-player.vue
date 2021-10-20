@@ -30,9 +30,9 @@
     <div class='player-bottom-wrap container'>
       <div class='player-top'>
         <div class='begin-time'>{{ formatCurrentTime }}</div>
-        <div class='progress-wrap'  >
+        <div class='progress-wrap'>
           <div class='progress-line' :style='{width: formatPercent}'></div>
-          <div class='progress-line-touch-wrap' @click='onClickProgress'  ref='progressWrapRef'></div>
+          <div class='progress-line-touch-wrap' @click='onClickProgress' ref='progressWrapRef'></div>
         </div>
         <div class='over-time'>{{ formatTotalTime }}</div>
       </div>
@@ -41,7 +41,8 @@
         <i class='icon-pre' @click='prevPlay'></i>
         <i class='icon-playing' @click='togglePlayState' ref='playRef'></i>
         <i class='icon-next' @click='nextPlay'></i>
-        <i class='icon-fav'></i>
+        <i class='icon-fav' :class='{active: judgeCurrentFavState(currentSong)}'
+           @click='toggleFavState(currentSong)'></i>
       </div>
     </div>
     <img class='player-bg'
@@ -65,6 +66,7 @@ import usePlayModeType from './use-play-mode-type'
 import useSongDetail from '@/components-block/player/use-song-detail'
 import useAudioTime from '@/components-block/player/use-audio-time'
 import useTouchEvent from './use-touch-event'
+import useFavorite from './use-favorite'
 
 BScroll.use(Slide)
 
@@ -105,6 +107,11 @@ export default {
     // 滚动条事件
     const progressWrapRef = ref(null)
     const { onClickProgress } = useTouchEvent({ progressWrapRef })
+    // 收藏
+    const {
+      toggleFavState,
+      judgeCurrentFavState
+    } = useFavorite()
     //
     onMounted(() => {
       bsRef.value = new BScroll(scrollWrapRef.value, {
@@ -136,7 +143,9 @@ export default {
       formatPercent,
       setCurrentPercent,
       onClickProgress,
-      progressWrapRef
+      progressWrapRef,
+      toggleFavState,
+      judgeCurrentFavState
     }
   }
 }
@@ -187,11 +196,13 @@ export default {
       align-items: center;
       color: #ffffff50;
       font-size: $font-size-small;
-      .begin-time, .over-time{
+
+      .begin-time, .over-time {
         width: 90px;
         display: flex;
         justify-content: center;
       }
+
       .progress-wrap {
         width: 480px;
         height: 3px;
@@ -225,7 +236,7 @@ export default {
           position: absolute;
           left: 0;
           top: 0;
-          transform: translate3d(0,-50%,0);
+          transform: translate3d(0, -50%, 0);
           width: 480px;
           height: 80px;
           z-index: 2;

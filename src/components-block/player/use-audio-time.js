@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { formartTime } from '@/tool/indxe'
+import { formatTime } from '@/tool/indxe'
 
 export default function() {
   const store = useStore()
@@ -11,14 +11,14 @@ export default function() {
     const {
       minute,
       second
-    } = formartTime(totalTime.value)
+    } = formatTime(totalTime.value)
     return minute + ':' + second
   })
   const formatCurrentTime = computed(() => {
     const {
       minute,
       second
-    } = formartTime(currentTime.value)
+    } = formatTime(currentTime.value)
     return minute + ':' + second
   })
   const formatPercent = computed(() => {
@@ -29,6 +29,7 @@ export default function() {
     store.commit('setCurrentPercent', val)
     store.commit('setCurrentTime', totalTime.value * val)
   }
+
   return {
     totalTime,
     currentTime,
@@ -36,6 +37,6 @@ export default function() {
     formatTotalTime,
     formatCurrentTime,
     formatPercent,
-    setCurrentPercent
+    setCurrentPercent,
   }
 }

@@ -3,7 +3,7 @@ export const getRandomIntInclusive = (min, max) => {
   max = Math.floor(max)
   return Math.floor(Math.random() * (max - min + 1)) + min // 含最大值，含最小值
 }
-export const formartTime = (time) => {
+export const formatTime = (time) => {
   if (isNaN(time)) return ''
   // 2.得到两个时间之间的差值(秒)
   const differSecond = time

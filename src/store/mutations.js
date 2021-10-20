@@ -84,6 +84,22 @@ export default {
   },
   setCurrentPercent(state, val) {
     state.currentPercent = val
+  },
+  //
+  setFavoriteList(state, list) {
+    state.favoriteList = list
+  },
+  addFavorite(state, item) {
+    state.favoriteList.push(item)
+  },
+  clearFavoriteList(state, item) {
+    state.favoriteList = []
+  },
+  removeFavorite(state, id) {
+    const currentIndex = state.favoriteList.findIndex(item => item.id === id)
+    if (currentIndex !== -1) {
+      state.favoriteList.splice(currentIndex, 1)
+    }
   }
 }
 

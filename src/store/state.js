@@ -12,5 +12,6 @@ export default {
   currentLyric: [],
   currentTotalTime: '',
   currentTime: '',
-  currentPercent: 0
+  currentPercent: 0,
+  favoriteList: []
 }

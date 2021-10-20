@@ -8,6 +8,7 @@ import '@/assets/scss/reset.scss'
 import '@/assets/scss/base.scss'
 import lazyPlugin from 'vue3-lazy'
 
+
 fastclick.attach(document.body)
 
 const app = createApp(App)

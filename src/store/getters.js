@@ -13,5 +13,9 @@ export default {
   },
   getCurrentSong(state) {
     return state.songs[state.currentIndex] || {}
+  },
+  getCurrentFavorite(state) {
+    const currentSong = state.songs[state.currentIndex] || {}
+    return state.favoriteList.find(item => item.id === currentSong.id) || {}
   }
 }

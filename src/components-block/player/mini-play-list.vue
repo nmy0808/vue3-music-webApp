@@ -15,7 +15,7 @@
               <h4 class='sub'>{{ item.singer }}</h4>
             </div>
             <i class='icon-del' @click.stop='onRemoveSingleSong(item)'></i>
-            <i class='icon-fav'></i>
+            <i class='icon-fav' :class='{active: judgeCurrentFavState(item)}' @click.stop='toggleFavState(item)'></i>
           </div>
           <mini-player-box></mini-player-box>
         </scroll>
@@ -36,6 +36,7 @@ import usePlayState from '@/components-block/player/use-play-state'
 import userPlaySong from './use-play-song'
 import { useStore } from 'vuex'
 import MiniPlayerBox from '@/components/mini-player-box/mini-player-box'
+import useFavorite from './use-favorite'
 
 export default {
   name: 'mini-paly-list',
@@ -111,6 +112,11 @@ export default {
       emit('show', false)
       setTimeout(() => clearSong(), 100)
     }
+    // 收藏
+    const {
+      toggleFavState,
+      judgeCurrentFavState
+    } = useFavorite()
     return {
       onEnter,
       onLeave,
@@ -122,7 +128,9 @@ export default {
       onSelectItem,
       onRemoveSingleSong,
       onRemoveAllSong,
-      currentSong
+      currentSong,
+      toggleFavState,
+      judgeCurrentFavState
     }
   }
 }
