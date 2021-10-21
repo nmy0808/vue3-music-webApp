@@ -16,7 +16,6 @@ export default {
   data() {
     return {
       isShow: false,
-      imgPic: require('@/assets/imgs/loading1.gif'),
       dotNum: 0,
       timer: null
     }

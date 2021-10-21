@@ -1,7 +1,7 @@
 <template>
   <div class='header container'>
     <div class='logo'></div>
-    <i class='iconfont'></i>
+    <i class='icon-user' @click='()=>$router.push("/user")'></i>
   </div>
 </template>
 
@@ -24,6 +24,7 @@ export default {
   height: 88px;
   width: 100%;
   //z-index: 2;
+
 }
 
 .logo {
@@ -34,13 +35,14 @@ export default {
   @extend .center-all;
 }
 
-i {
-  width: 32px;
-  height: 32px;
+.icon-user {
+  width: 30px;
+  height: 30px;
   display: inline-block;
-  background: #000;
   position: absolute;
   right: 32px;
+  @include bg-image('~@/assets/imgs/icon-user');
   @extend .center-v;
+  background-size: cover;
 }
 </style>

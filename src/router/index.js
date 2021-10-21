@@ -31,6 +31,10 @@ const routes = [
   {
     path: '/singer',
     component: () => import('@/views/Singer.vue')
+  },
+  {
+    path: '/user',
+    component: () => import('@/views/user/User.vue')
   }
 ]
 
