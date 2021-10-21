@@ -13,5 +13,6 @@ export default {
   currentTotalTime: '',
   currentTime: '',
   currentPercent: 0,
-  favoriteList: []
+  favoriteList: [],
+  historyList: []
 }

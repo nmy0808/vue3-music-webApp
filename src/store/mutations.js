@@ -100,6 +100,25 @@ export default {
     if (currentIndex !== -1) {
       state.favoriteList.splice(currentIndex, 1)
     }
+  },
+  setHistoryList(state, list) {
+    state.historyList = list
+  },
+  addHistory(state, song) {
+    const currentIndex = state.historyList.findIndex(item => item.id === song.id)
+    if (currentIndex !== -1) {
+      state.historyList.splice(currentIndex, 1)
+    }
+    state.historyList.unshift(song)
+  },
+  clearHistoryList(state, item) {
+    state.historyList = []
+  },
+  removeHistory(state, id) {
+    const currentIndex = state.historyList.findIndex(item => item.id === id)
+    if (currentIndex !== -1) {
+      state.historyList.splice(currentIndex, 1)
+    }
   }
 }
 

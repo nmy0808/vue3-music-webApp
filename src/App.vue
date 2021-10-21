@@ -13,7 +13,8 @@ import Header from '@/components/header/header'
 import TabBar from '@/components/tabBar/tabBar'
 import useNavScroll from './use-nav-scroll'
 import Player from '@/views/player/Player'
-import initFavorite from '@/store/init-favorite'
+import initFavorite from '@/init/init-favorite'
+import initHistory from '@/init/init-history'
 
 export default {
   components: {
@@ -24,7 +25,7 @@ export default {
   setup() {
     // 初始化仓库
     initFavorite()
-
+    initHistory()
     const {
       onscroll,
       isShadow,

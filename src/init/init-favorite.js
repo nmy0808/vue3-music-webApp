@@ -12,12 +12,10 @@ export default function() {
   initStoreFav()
 
   watch(favList, () => {
-    console.log(1)
     setLocalStorage('__fav__', favList.value)
   }, { deep: true })
 
   function initStoreFav() {
-    console.log(favList.value)
     const list = getLocalStorage('__fav__') || []
     setFavList(list)
   }
