@@ -96,6 +96,7 @@ export default function({ audioRef }) {
   }
   // 当音乐加载完成后 获取总时长, 存入vuex
   const onCanPlay = (e) => {
+    console.log(2)
     audioRef.value.play()
     store.commit('setPlayState', playingState.PLAY)
     store.commit('setCurrentTotalTime', getTotalTime())

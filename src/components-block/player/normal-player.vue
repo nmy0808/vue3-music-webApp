@@ -114,18 +114,18 @@ export default {
     } = useFavorite()
     //
     onMounted(() => {
-      // bsRef.value = new BScroll(scrollWrapRef.value, {
-      //   scrollX: true,
-      //   scrollY: false,
-      //   probeType: 3,
-      //   slide: {
-      //     loop: false,
-      //     autoplay: false
-      //   }
-      // })
-      // bsRef.value.on('slideWillChange', ({ pageX }) => {
-      //   currentIndex.value = pageX
-      // })
+      bsRef.value = new BScroll(scrollWrapRef.value, {
+        scrollX: true,
+        scrollY: false,
+        probeType: 3,
+        slide: {
+          loop: false,
+          autoplay: false
+        }
+      })
+      bsRef.value.on('slideWillChange', ({ pageX }) => {
+        currentIndex.value = pageX
+      })
     })
 
     return {

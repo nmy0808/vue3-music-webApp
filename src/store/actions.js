@@ -26,8 +26,8 @@ export default {
       // const lyricRes = await getLyric({ id: obj.id })
       // obj.lyric = lyricRes.lrc.lyric
       // 歌曲url
-      // const musicUrl = await getMusic({ id: obj.id })
-      // obj.musicUrl = musicUrl.data[0].url
+      const musicUrl = await getMusic({ id: obj.id })
+      obj.musicUrl = musicUrl.data[0].url
       result.push(obj)
     }
     if (ids.length > 1) {

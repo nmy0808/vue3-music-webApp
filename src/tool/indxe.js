@@ -32,3 +32,12 @@ export const setLocalStorage = (key, value) => {
 export const getLocalStorage = (key) => {
   return JSON.parse(window.localStorage.getItem(key))
 }
+// 获取A-Z的字母
+export const getLetterChars = () => {
+  const result = []
+  for (let i = 65; i < 91; i++) {
+    const char = String.fromCharCode(i)
+    result.push(char)
+  }
+  return result
+}

@@ -1,11 +1,13 @@
 <template>
-  <scroll class='scroll-wrap' @scroll='onscroll' probe-type='3'>
-    <Banner class='banner-wrap' :banners='banners' v-if='banners.length>0' />
-    <personalized :personalized='personalized'
-                  @to-page='onToPageDetail($event,"personalized")'></personalized>
-    <album :albums='albums' v-if='albums.length>0' @to-page='onToPageDetail($event,"album")' />
-    <new-song class='newsong-wrap' :new-song='newSong' v-if='newSong.length>0' />
-    <mini-player-box></mini-player-box>
+  <scroll class='scroll-wrap' @scroll='onscroll' probe-type='3' v-load='isLoading'>
+    <div v-if='!isLoading'>
+      <Banner class='banner-wrap' :banners='banners' v-if='banners.length>0' />
+      <personalized :personalized='personalized'
+                    @to-page='onToPageDetail($event,"personalized")'></personalized>
+      <album :albums='albums' v-if='albums.length>0' @to-page='onToPageDetail($event,"album")' />
+      <new-song class='newsong-wrap' :new-song='newSong' v-if='newSong.length>0' />
+      <mini-player-box></mini-player-box>
+    </div>
   </scroll>
   <router-view v-slot='{ Component }'>
     <transition name='slide'>
@@ -27,6 +29,7 @@ import NewSong from '@/components-block/recommend/newSong'
 import Scroll from '@/components/scroll/scroll'
 import { useRouter } from 'vue-router'
 import MiniPlayerBox from '@/components/mini-player-box/mini-player-box'
+import { computed } from 'vue'
 
 export default {
   name: 'about.vue',
@@ -58,13 +61,18 @@ export default {
     const { personalized } = usePersonalized()
     const { albums } = useAlbum()
     const { newSong } = useNewSong()
+    const isLoading = computed(() => {
+      const res = banners.value.length > 0 && personalized.value.length > 0 && albums.value.length > 0 && newSong.value.length > 0
+      return !res
+    })
     return {
       onscroll,
       banners,
       personalized,
       albums,
       newSong,
-      onToPageDetail
+      onToPageDetail,
+      isLoading
     }
   }
 }
