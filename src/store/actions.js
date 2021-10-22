@@ -63,5 +63,14 @@ export default {
     }
     const musicUrl = await getMusic({ id })
     targetSong.musicUrl = musicUrl.data[0].url
+  },
+  // 只是单纯的获取music的url地址
+  async getMusicNoEffect({
+    state,
+    commit
+  }, id) {
+    if (!id) return
+    const musicUrl = await getMusic({ id })
+    return musicUrl.data[0].url
   }
 }

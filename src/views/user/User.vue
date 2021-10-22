@@ -7,12 +7,12 @@
           <div class='item' :class='{active: selected === 1}' @click='onChangeSelect(1)'>最近听的</div>
         </div>
       </sub-header>
-      <div class='play-btn'>
+      <div class='play-btn' @click='onSelectAll'>
         播放全部
         <i class='icon' :class='playModeTypeClass' ref='playModeTypeRef'></i>
       </div>
       <scroll class='user-scroll-wrap container'>
-        <user-list v-if='currentList.length' :list='currentList'></user-list>
+        <user-list v-if='currentList.length' :list='currentList' @select='onSelectItem'></user-list>
       </scroll>
     </div>
   </transition>
@@ -25,6 +25,7 @@ import { useStore } from 'vuex'
 import playModeType from '@/store/play-mode-type'
 import UserList from '@/components-block/user/user-list'
 import Scroll from '@/components/scroll/scroll'
+import usePlayMusic from '@/views/user/use-play-music'
 
 export default {
   name: 'User',
@@ -63,12 +64,40 @@ export default {
       }
       return hisList.value
     })
+    // 点击播放
+    const {
+      onPlayFavList,
+      onPlayHisList,
+      onPlayFavToId,
+      onPlayHisToId
+    } = usePlayMusic()
+    // 判断当前是历史播放还是收藏播放
+    const onSelectItem = (id) => {
+      if (selected.value === 0) {
+        onPlayFavToId(id)
+      } else {
+        onPlayHisToId(id)
+      }
+    }
+    const onSelectAll = (id) => {
+      if (selected.value === 0) {
+        onPlayFavList()
+      } else {
+        onPlayHisList()
+      }
+    }
     return {
       selected,
       onChangeSelect,
       playModeType,
       playModeTypeClass,
-      currentList
+      currentList,
+      onPlayFavList,
+      onPlayHisList,
+      onPlayFavToId,
+      onPlayHisToId,
+      onSelectItem,
+      onSelectAll
     }
   }
 }
@@ -133,7 +162,8 @@ export default {
     }
   }
 }
-.user-scroll-wrap{
+
+.user-scroll-wrap {
   position: fixed;
   top: 194px;
   left: 0;

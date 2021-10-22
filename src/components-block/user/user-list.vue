@@ -1,6 +1,6 @@
 <template>
   <ul class='user-list-wrap'>
-    <li class='item' v-for='item in list' :key='item' @click='onSelectItem(item)'>
+    <li class='item' v-for='item in list' :key='item' @click='onSelectItem(item.id)'>
       <div class='pic'>
         <img v-if='item.picUrl' v-lazy='item.picUrl'>
       </div>
@@ -21,8 +21,13 @@ export default {
   name: 'user-list',
   components: { MiniPlayerBox },
   props: ['list'],
-  setup(props) {
-
+  setup(props, { emit }) {
+    const onSelectItem = (id) => {
+      emit('select', id)
+    }
+    return {
+      onSelectItem
+    }
   }
 }
 </script>
