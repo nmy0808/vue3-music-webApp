@@ -1,4 +1,5 @@
 import netWork from '@/api/netWork'
+import { getLetterChars } from '@/tool/indxe'
 
 export const getBanner = () => netWork.get('/banner', { type: 2 })
 // 推荐歌单
@@ -18,7 +19,7 @@ export const getLyric = (data) => netWork.get('/lyric', data)
 // 获取音乐 url  `/song/url?id=405998841,33894312`
 export const getMusic = (data) => netWork.get('/song/url', data)
 // 热门歌手   `/top/artists?offset=0&limit=30`
-export const getArtists = (data) => netWork.get('/top/artists', data)
+export const getHotArtists = (data) => netWork.get('/top/artists', data)
 // 歌手分类列表  `/artist/list?type=1&area=96&initial=b`
 export const getArtistList = (data) => netWork.get('/artist/list', data)
 // 获取歌手单曲 获得歌手部分信息和热门歌曲  `/artists?id=6452`歌手id
@@ -107,4 +108,61 @@ export const getRankDetailToId = async (id) => {
     }
   })
   return obj
+}
+// 获取歌手分类列表
+export const getSingerCategory = async () => {
+  // 获取 a - z 数组
+  const category = [...getLetterChars()]
+  const requests = []
+  for (const key of category) {
+    requests.push(getSingsToCategory(key))
+  }
+  let singerlist = await netWork.all(...requests)
+  singerlist = singerlist.map(item => {
+    return item.artists
+  })
+  const result = []
+  for (let i = 0; i < category.length; i++) {
+    const obj = {}
+    let singers = {}
+    const key = category[i]
+    const currSingerList = singerlist[i]
+    singers = currSingerList.map(item => {
+      return {
+        name: item.name,
+        picUrl: item.picUrl,
+        id: item.id
+      }
+    })
+    obj.anchor = key
+    obj.singers = singers
+    result.push(obj)
+  }
+  // 增加热门
+  const hotData = await getHotArtists({
+    offset: 0,
+    limit: 10
+  })
+  let hotList = hotData.artists
+  hotList = hotList.map(song => {
+    return {
+      name: song.name,
+      picUrl: song.picUrl,
+      id: song.id
+    }
+  })
+  result.unshift({
+    anchor: '热',
+    singers: hotList
+  })
+  return result
+
+  // 根据字母获取对应的歌手数组
+  function getSingsToCategory(initial) {
+    return getArtistList({
+      type: -1,
+      area: -1,
+      initial
+    })
+  }
 }

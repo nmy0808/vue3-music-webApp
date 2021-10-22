@@ -27,5 +27,16 @@ export default {
           reject(err)
         })
     })
+  },
+  all(...arg) {
+    return new Promise((resolve, reject) => {
+      axios.all(arg)
+        .then(axios.spread(function(...val) {
+          resolve(val)
+        }))
+        .catch(err => {
+          reject(err)
+        })
+    })
   }
 }

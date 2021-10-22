@@ -36,7 +36,7 @@ const routes = [
   },
   {
     path: '/singer',
-    component: () => import('@/views/Singer.vue')
+    component: () => import('@/views/singer/Singer.vue')
   },
   {
     path: '/user',
