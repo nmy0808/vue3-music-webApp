@@ -24,7 +24,10 @@ export const getArtistList = (data) => netWork.get('/artist/list', data)
 // 获取歌手单曲 获得歌手部分信息和热门歌曲  `/artists?id=6452`歌手id
 export const getArtist = (data) => netWork.get('/artists', data)
 // 所有榜单
-export const getTopList = (data) => netWork.get('/toplist', data)
+export const getTopList = async (data) => {
+  const res = await netWork.get('/toplist', data)
+  return res.list
+}
 // 搜索  `/search?keywords= 海阔天空`
 export const getSearchKeyword = async (data) => {
   const res = await netWork.get('/search', data)
@@ -60,4 +63,48 @@ export const getHotListToKeyWord = async ({ keywords }) => {
     obj.picUrl = song.al.picUrl
   })
   return result
+}
+// 获取榜单内容摘要
+
+export const getRankList = async () => {
+  const res = await netWork.get('/toplist/detail')
+  let list = res.list.map(item => {
+    const obj = {}
+    obj.name = item.name
+    obj.id = item.id
+    obj.coverUrl = item.coverImgUrl
+    obj.songs = item.tracks.map(item => {
+      return {
+        name: item.first,
+        singer: item.second
+      }
+    })
+    return obj
+  })
+  list = list.filter(item => item.songs.length > 0)
+  return list
+}
+// 获取排行榜以及榜内每首歌曲具体信息 (除歌词, musicUrl)
+export const getRankDetailToId = async (id) => {
+  console.log(id)
+  if (!id) return
+  const obj = {}
+  const detail = await getPlayDetail({ id })
+  const target = detail.playlist
+  obj.coverUrl = target.coverImgUrl
+  obj.id = target.id
+  obj.name = target.name
+  obj.songs = target.tracks.map(song => {
+    const id = song.id
+    const name = song.name
+    const picUrl = song.al.picUrl
+    const singer = song.ar.map(it => it.name).join(' ')
+    return {
+      id,
+      picUrl,
+      name,
+      singer
+    }
+  })
+  return obj
 }

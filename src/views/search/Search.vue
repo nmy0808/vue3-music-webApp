@@ -49,6 +49,7 @@ export default {
       if (keywords.trim() !== '') {
         searchList.value = []
         isLoading.value = true
+        console.log(22222222222222222222)
         const result = await getHotListToKeyWord({ keywords })
         isLoading.value = false
         searchList.value = result

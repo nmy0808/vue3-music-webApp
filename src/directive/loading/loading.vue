@@ -24,12 +24,14 @@ export default {
     addDotNum() {
       this.dotNum++
       this.dotNum = this.dotNum % 4
-      console.log(this.dotNum)
     }
   },
   mounted() {
     this.timer = setInterval(() => {
       this.addDotNum()
+      if (!this.isShow) {
+        clearInterval(this.timer)
+      }
     }, 500)
   },
   watch: {

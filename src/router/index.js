@@ -22,7 +22,13 @@ const routes = [
   },
   {
     path: '/rank',
-    component: () => import('@/views/Rank.vue')
+    component: () => import('@/views/rank/Rank.vue'),
+    children: [
+      {
+        path: 'detail/:id',
+        component: () => import('@/views/rank/Rank-detail.vue')
+      }
+    ]
   },
   {
     path: '/search',
