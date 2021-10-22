@@ -9,13 +9,11 @@ export default function() {
   // 获取歌曲
   const { playList } = usePlayMusic()
   const playSongs = async (list) => {
-    // await store.dispatch('getSongDetail', ids)
     list.forEach(song => {
       song.picUrl = song.al.picUrl
       song.singer = song.ar.map(it => it.name).join(' ')
     })
     await playList(list)
-    // await store.dispatch('getLyrics', ids)
   }
   watchEffect(async () => {
     const { id } = currentSong.value

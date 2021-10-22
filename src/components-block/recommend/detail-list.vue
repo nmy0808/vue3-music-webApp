@@ -32,6 +32,7 @@ import usePlayModeType from '@/components-block/player/use-play-mode-type'
 import usePlaySong from '@/components-block/player/use-play-song'
 import usePlayState from '@/components-block/player/use-play-state'
 import useSongDetail from '@/components-block/player/use-song-detail'
+import usePlayMusic from '@/views/user/use-play-music'
 
 export default {
   name: 'detail-list',
@@ -48,11 +49,15 @@ export default {
       emit('scroll', e)
     }
     // 播放状态
-    const { setPlayState } = usePlayState({})
+    usePlayState({})
+    const { playListToId } = usePlayMusic()
     const onSelectItem = async (item) => {
-      await store.dispatch('getSongDetail', item.id)
-      store.commit('setFullScreen', true)
-      setPlayState(true)
+      const copyList = JSON.parse(JSON.stringify(props.list))
+      copyList.forEach(song => {
+        song.picUrl = song.al.picUrl
+        song.singer = song.ar.map(it => it.name).join(' ')
+      })
+      await playListToId(copyList, item.id)
     }
     // 当前播放类型
     const playModeTypeRef = ref(null)
@@ -61,8 +66,6 @@ export default {
     } = usePlayModeType({ playModeTypeRef })
     const { playSongs } = usePlaySong()
     const onPlayModeType = async () => {
-      const ids = props.list.map(item => item.id)
-      // await playSongs(ids)
       await playSongs(props.list)
       store.commit('setFullScreen', true)
     }

@@ -80,7 +80,7 @@ export default function() {
     setPlayState(playingState.PLAY)
     setFullScreen(true)
   }
-  // 根据歌手id获取音乐列表
+  // 根据音乐列表核心播放逻辑
   const playList = async (list) => {
     setPlayState(playingState.PAUSE)
     // 更新音乐url, 过一段时间url系统会更新
@@ -90,16 +90,20 @@ export default function() {
     setPlayState(playingState.PLAY)
     setFullScreen(true)
   }
+  // 根据音乐列表和id的核心播放逻辑
+  const playListToId = async (list, id) => {
+    const currentIndex = list.findIndex(item => item.id === id)
+    if (currentIndex === -1) return
+    setPlayState(playingState.PAUSE)
+    // 更新音乐url, 过一段时间url系统会更新
+    await updateMusicUrlNoEffect(list)
+    setSongs(list)
+    setCurrentIndex(currentIndex)
+    setPlayState(playingState.PLAY)
+    setFullScreen(true)
+  }
 
   async function updateMusicUrl(list) {
-    // for (const song of list.value) {
-    //   const id = song.id
-    //   song.musicUrl = null
-    //   // const musicUrl = await getMusic(id)
-    //   const musicUrl = await store.dispatch('getMusicNoEffect', id)
-    //   song.musicUrl = musicUrl
-    // }
-
     const id = list.value.map(song => song.id).join(',')
     const data = await getMusic({ id })
     const musicList = data.data
@@ -130,6 +134,7 @@ export default function() {
     onPlayHisToId,
     setCurrentIndex,
     onPlayRankToId,
-    playList
+    playList,
+    playListToId
   }
 }
