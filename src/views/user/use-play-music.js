@@ -104,12 +104,13 @@ export default function() {
   }
 
   async function updateMusicUrl(list) {
-    const id = list.value.map(song => song.id).join(',')
+    const id = list.value.map(song => song.id).join(',').replace(/,,/, ',')
     const data = await getMusic({ id })
     const musicList = data.data
     list.value.forEach(song => {
       const currId = song.id
-      const musicUrl = musicList.find(item => item.id === currId).url
+      const music = musicList.find(item => item.id === currId)
+      const musicUrl = music.url
       song.musicUrl = musicUrl
     })
   }
