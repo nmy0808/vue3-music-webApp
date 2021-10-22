@@ -130,7 +130,7 @@ export const getSingerCategory = async () => {
     singers = currSingerList.map(item => {
       return {
         name: item.name,
-        picUrl: item.picUrl,
+        picUrl: item.img1v1Url,
         id: item.id
       }
     })
@@ -147,7 +147,7 @@ export const getSingerCategory = async () => {
   hotList = hotList.map(song => {
     return {
       name: song.name,
-      picUrl: song.picUrl,
+      picUrl: song.img1v1Url,
       id: song.id
     }
   })
@@ -165,4 +165,19 @@ export const getSingerCategory = async () => {
       initial
     })
   }
+}
+// 根据歌手id获取对应的歌曲信息
+export const getSongsToSingerId = async (id) => {
+  const obj = {}
+  const data = await getArtist({ id })
+  obj.coverImgUrl = data.artist.picUrl
+  obj.name = data.artist.name
+  obj.songs = data.hotSongs
+  // obj.songs.map(song=>{
+  //   console.log(song)
+  //   return{
+  //     name:
+  //   }
+  // })
+  return obj
 }

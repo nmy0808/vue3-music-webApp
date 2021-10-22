@@ -23,9 +23,8 @@ export default {
         obj.singer += (' ' + item.name)
       })
       // 歌词
-      // const lyricRes = await getLyric({ id: obj.id })
-      // obj.lyric = lyricRes.lrc.lyric
-      // 歌曲url
+      const lyricRes = await getLyric({ id: obj.id })
+      obj.lyric = lyricRes.lrc.lyric
       const musicUrl = await getMusic({ id: obj.id })
       obj.musicUrl = musicUrl.data[0].url
       result.push(obj)

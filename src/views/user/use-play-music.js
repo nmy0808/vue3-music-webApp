@@ -80,6 +80,16 @@ export default function() {
     setPlayState(playingState.PLAY)
     setFullScreen(true)
   }
+  // 根据歌手id获取音乐列表
+  const playList = async (list) => {
+    setPlayState(playingState.PAUSE)
+    // 更新音乐url, 过一段时间url系统会更新
+    await updateMusicUrlNoEffect(list)
+    setSongs(list)
+    setCurrentIndex(0)
+    setPlayState(playingState.PLAY)
+    setFullScreen(true)
+  }
 
   async function updateMusicUrl(list) {
     // for (const song of list.value) {
@@ -119,6 +129,7 @@ export default function() {
     onPlayFavToId,
     onPlayHisToId,
     setCurrentIndex,
-    onPlayRankToId
+    onPlayRankToId,
+    playList
   }
 }

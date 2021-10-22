@@ -62,7 +62,8 @@ export default {
     const { playSongs } = usePlaySong()
     const onPlayModeType = async () => {
       const ids = props.list.map(item => item.id)
-      await playSongs(ids)
+      // await playSongs(ids)
+      await playSongs(props.list)
       store.commit('setFullScreen', true)
     }
     // 当前播放信息

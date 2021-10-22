@@ -1,5 +1,5 @@
 <template>
-  <div class='wrap'>
+  <div class='wrap global-bg'>
     <detail-cover :isFixed='isFixed' v-if='playlist' :pic='playlist.coverImgUrl' ref='coverRef'>
       <sub-header>
         {{ playlist && playlist.name }}
@@ -17,7 +17,7 @@ import SubHeader from '@/components/header/sub-header'
 import DetailCover from '@/components/cover/detail-cover'
 import DetailList from '@/components-block/recommend/detail-list'
 import { ref, watchEffect } from 'vue'
-import { getAlbumDetail, getPlayDetail } from '@/api'
+import { getAlbumDetail, getPlayDetail, getSongsToSingerId } from '@/api'
 import { useRoute } from 'vue-router'
 
 export default {
@@ -29,7 +29,7 @@ export default {
   },
   setup() {
     const route = useRoute()
-    const playlist = ref(null)
+    const playlist = ref({})
     const coverRef = ref(null)
     const scrollRef = ref(null)
     const isFixed = ref(false)
@@ -70,6 +70,13 @@ export default {
         const data = await getAlbumDetail({ id })
         playlist.value = data.album
         playlist.value.coverImgUrl = data.album.blurPicUrl
+        playlist.value.tracks = data.songs
+      }
+      if (type === 'singer') {
+        isPic.value = true
+        const data = await getSongsToSingerId(id)
+        playlist.value.coverImgUrl = data.coverImgUrl
+        playlist.value.name = data.name
         playlist.value.tracks = data.songs
       }
     })

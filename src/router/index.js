@@ -36,7 +36,14 @@ const routes = [
   },
   {
     path: '/singer',
-    component: () => import('@/views/singer/Singer.vue')
+    component: () => import('@/views/singer/Singer.vue'),
+    children: [
+      {
+        path: 'detail/:id/:type',
+        name: 'singer-detail',
+        component: () => import('@/views/recommend/Recommend-detail')
+      }
+    ]
   },
   {
     path: '/user',

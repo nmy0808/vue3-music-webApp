@@ -52,8 +52,8 @@ export default {
       box-shadow: 0px 12px 18px 0px rgba(22, 33, 42, 0.5);
 
       img {
-        width: 100%;
         height: 100%;
+        width: 100%;
       }
     }
 
