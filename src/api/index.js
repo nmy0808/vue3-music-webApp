@@ -1,4 +1,5 @@
 import netWork from '@/api/netWork'
+
 export const getBanner = () => netWork.get('/banner', { type: 2 })
 // 推荐歌单
 export const getPersonalized = () => netWork.get('/personalized', { limit: 6 })
@@ -25,6 +26,38 @@ export const getArtist = (data) => netWork.get('/artists', data)
 // 所有榜单
 export const getTopList = (data) => netWork.get('/toplist', data)
 // 搜索  `/search?keywords= 海阔天空`
-export const getSearchKeyword = (data) => netWork.get('/search', data)
+export const getSearchKeyword = async (data) => {
+  const res = await netWork.get('/search', data)
+  return res.result.songs
+}
 // 热搜列表(简略)
-export const getHotList = (data) => netWork.get('/search/hot', data)
+export const getHotList = async (data) => {
+  const res = await netWork.get('/search/hot', data)
+  return res.result.hots
+}
+// 根据关键词获取搜索列表
+export const getHotListToKeyWord = async ({ keywords }) => {
+  const result = []
+  const songs = await getSearchKeyword({ keywords })
+  if (!songs) {
+    return []
+  }
+  for (const song of songs) {
+    const obj = {}
+    obj.name = song.name
+    obj.id = song.id
+    obj.singer = song.artists[0].name + ' - ' + song.album.name
+    obj.picUrl = song.artists[0].img1v1Url
+    if (obj.name.toLowerCase() !== ('null')) {
+      result.push(obj)
+    }
+  }
+  // 根据id获取对应封面
+  const ids = songs.map(item => item.id).join(',')
+  const songDetail = await getSongDetail({ ids })
+  songDetail.songs.forEach(song => {
+    const obj = result.find(item => item.id === song.id)
+    obj.picUrl = song.al.picUrl
+  })
+  return result
+}

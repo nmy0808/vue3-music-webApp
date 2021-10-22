@@ -1,6 +1,6 @@
 import { useStore } from 'vuex'
 import playingState from '@/store/playing-state'
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 
 export default function() {
   const store = useStore()
@@ -9,6 +9,7 @@ export default function() {
   const setSongs = (songs) => {
     store.commit('setSongs', songs)
   }
+  const currentSongs = computed(() => store.state.songs)
   const setPlayState = (flag) => {
     store.commit('setPlayState', flag)
   }

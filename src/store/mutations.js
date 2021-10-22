@@ -106,10 +106,9 @@ export default {
   },
   addHistory(state, song) {
     const currentIndex = state.historyList.findIndex(item => item.id === song.id)
-    if (currentIndex !== -1) {
-      state.historyList.splice(currentIndex, 1)
+    if (currentIndex === -1) {
+      state.historyList.push(song)
     }
-    state.historyList.unshift(song)
   },
   clearHistoryList(state, item) {
     state.historyList = []

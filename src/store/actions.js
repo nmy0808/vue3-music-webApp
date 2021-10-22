@@ -40,9 +40,11 @@ export default {
     state,
     commit
   }, id) {
-    const targetSong = state.songs.find(song => song.id === id)
-    if (targetSong.lyric) {
-      return
+    if (state.songs.length > 0) {
+      const targetSong = state.songs.find(song => song.id === id)
+      if (targetSong.lyric) {
+        return
+      }
     }
     const lyricRes = await getLyric({ id })
     const lyric = lyricRes.lrc.lyric
@@ -51,6 +53,7 @@ export default {
       id,
       lyric
     })
+    return lyric
   },
   async getMusicUrl({
     state,

@@ -26,7 +26,7 @@ const routes = [
   },
   {
     path: '/search',
-    component: () => import('@/views/Search.vue')
+    component: () => import('@/views/search/Search.vue')
   },
   {
     path: '/singer',
