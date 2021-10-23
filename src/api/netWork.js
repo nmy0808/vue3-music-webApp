@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://api.music.nmymay.top'
+// axios.defaults.baseURL = 'http://api.music.nmymay.top'
+
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '/api' : 'http://api.music.nmymay.top'
 axios.defaults.timeout = 3000
 
 export default {

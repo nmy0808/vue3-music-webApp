@@ -43,6 +43,7 @@ export default {
   @include bg-image('~@/assets/imgs/back');
   background-size: 48px 48px;
   background-position: -10px center;
+  background-repeat: no-repeat;
 }
 
 .right-box {
