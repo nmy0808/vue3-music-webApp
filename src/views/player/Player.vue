@@ -5,7 +5,7 @@
   <transition @enter='onMiniEnter' @leave='onMiniLeave'>
     <mini-player v-if='isMiniPlayer' :prevPlay='prevPlay' :nextPlay='nextPlay'></mini-player>
   </transition>
-  <audio @durationchange='onCanPlay' autoplay @timeupdate='onTimeUpdate' ref='audioRef' :src='currentSong.musicUrl'></audio>
+  <audio @durationchange='onCanPlay' @ended='onEnded' autoplay @timeupdate='onTimeUpdate' ref='audioRef' :src='currentSong.musicUrl'></audio>
 </template>
 
 <script>
@@ -79,6 +79,7 @@ export default {
       prevPlay,
       nextPlay,
       onCanPlay,
+      onEnded,
       onTimeUpdate
     } = usePlayer({ audioRef })
     //
@@ -96,6 +97,7 @@ export default {
       prevPlay,
       nextPlay,
       onCanPlay,
+      onEnded,
       onTimeUpdate
     }
   }

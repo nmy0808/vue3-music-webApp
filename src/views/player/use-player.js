@@ -100,6 +100,16 @@ export default function({ audioRef }) {
     store.commit('setPlayState', playingState.PLAY)
     store.commit('setCurrentTotalTime', getTotalTime())
   }
+  //
+  const onEnded = (e) => {
+    const currType = currentPlayModeType.value
+    if (currType === playModeType.SINGLE) {
+      audioRef.value.currentTime = 0
+      audioRef.value.play()
+    } else {
+      nextPlay()
+    }
+  }
   // 当前音乐时间变化和计算当前比例, 存入vuex
   const onTimeUpdate = () => {
     store.commit('setCurrentTime', getCurrentTime())
@@ -126,6 +136,7 @@ export default function({ audioRef }) {
     prevPlay,
     nextPlay,
     onCanPlay,
+    onEnded,
     onTimeUpdate
   }
 }

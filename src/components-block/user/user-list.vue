@@ -9,7 +9,7 @@
         <h4 class='singer'>{{ item.singer }}</h4>
       </div>
     </li>
-    <mini-player-box></mini-player-box>
+    <mini-player-box v-if='isShowBottomBox'></mini-player-box>
   </ul>
 </template>
 
@@ -20,7 +20,16 @@ import MiniPlayerBox from '@/components/mini-player-box/mini-player-box'
 export default {
   name: 'user-list',
   components: { MiniPlayerBox },
-  props: ['list'],
+  props: {
+    list: {
+      type: Array,
+      default: () => ([])
+    },
+    isShowBottomBox: {
+      type: Boolean,
+      default: true
+    }
+  },
   setup(props, { emit }) {
     const onSelectItem = (id) => {
       emit('select', id)
