@@ -29,6 +29,7 @@ export default function({ audioRef }) {
   // 监听换歌
   watch(currentIndex, async (newIndex, oldIndex) => {
     await nextTick()
+    //
     if (newIndex !== oldIndex) {
       audioRef.value.oncanplay = () => {
         audioRef.value.play()

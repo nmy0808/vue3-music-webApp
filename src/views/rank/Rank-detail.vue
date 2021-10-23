@@ -86,7 +86,6 @@ export default {
     height: 472px;
     overflow: hidden;
     transform-origin: top;
-
     &.fixed {
       position: fixed;
       left: 0;
@@ -97,7 +96,7 @@ export default {
 
     img {
       width: 101%;
-      transform: translate3d(0,0,0);
+      transform: translate3d(0, 0, 0);
     }
   }
 

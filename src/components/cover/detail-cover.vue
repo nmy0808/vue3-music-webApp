@@ -1,10 +1,10 @@
 <template>
+  <div class='header-top'>
+    <slot></slot>
+  </div>
   <div class='cover-wrap' :class='{"has-fixed": isFixed}'>
-    <div class='header-top'>
-      <slot></slot>
-    </div>
-    <img ref='picRef' :src='pic'>
     <div class='mask' ref='maskRef'></div>
+    <img ref='picRef' :src='pic' @load='onImgLoad'>
     <h4 class='singer'>{{ singer }}</h4>
   </div>
 </template>
@@ -15,12 +15,22 @@ import { ref } from 'vue'
 export default {
   name: 'detail-cover',
   props: ['pic', 'singer', 'isFixed'],
-  setup() {
+  emits: ['img-load'],
+  setup(props, { emit }) {
+    const isShow = ref(true)
     const picRef = ref(null)
     const maskRef = ref(null)
+    const onImgLoad = (e) => {
+      emit('img-load')
+      if (maskRef.value) {
+        maskRef.value.style.height = e.target.clientHeight + 'px'
+      }
+    }
     return {
       picRef,
-      maskRef
+      maskRef,
+      isShow,
+      onImgLoad
     }
   }
 }
@@ -36,19 +46,15 @@ export default {
   top: 0;
   left: 0;
   z-index: -1;
+  transform-origin: top;
+  background: #26303c;
 
-  &.has-fixed {
-    height: 88px;
-    z-index: 3;
-  }
-
-  .header-top {
+  &.fixed {
     position: fixed;
-    top: 0;
     left: 0;
     width: 100%;
     height: 88px;
-    z-index: 111;
+    z-index: 19;
   }
 
   img {
@@ -58,12 +64,12 @@ export default {
 
   .mask {
     width: 100%;
-    height: 100%;
     background: #000;
     position: absolute;
     left: 0;
     top: 0;
-    z-index: -1;
+    z-index: 1;
+    opacity: 0.5;
   }
 
   .singer {
@@ -73,6 +79,15 @@ export default {
     font-size: 64px;
     color: #FFFFFF;
     opacity: 0.6;
+  }
+
+  .header-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 88px;
+    z-index: 111;
   }
 }
 </style>

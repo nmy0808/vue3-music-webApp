@@ -13,10 +13,14 @@
       </div>
       <mini-player-box></mini-player-box>
     </scroll>
-    <div class='singer-right' ref='singerRightWrap' @touchstart='onTouchStart'  @touchmove='onTouchMove' @touchend='onTouchEnd'>
-      <div class='singer-right-anchor' :class='{active:currentIndex===index}' v-for='(item,index) in list' :key='item.anchor'>{{ item.anchor }}</div>
+    <div class='singer-right' v-if='list.length!==0' ref='singerRightWrap' @touchstart='onTouchStart'
+         @touchmove='onTouchMove'
+         @touchend='onTouchEnd'>
+      <div class='singer-right-anchor' :class='{active:currentIndex===index}' v-for='(item,index) in list'
+           :key='item.anchor'>{{ item.anchor }}
+      </div>
     </div>
-    <div class='singer-flex-anchor  container'></div>
+    <div class='singer-flex-anchor  container' v-if='list.length!==0' >热</div>
   </div>
 </template>
 
@@ -110,12 +114,14 @@ export default {
 .singer-right {
   position: fixed;
   right: 16px;
-  @extend .center-v;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
   width: 40px;
-  background: rgba(#000000,50%);
+  background: rgba(#000000, 50%);
   z-index: 300;
   border-radius: 20px;
   padding: 15px 0;
+
   .singer-right-anchor {
     width: 40px;
     height: 34px;
@@ -124,7 +130,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    &.active{
+
+    &.active {
       color: $color-main;
     }
   }

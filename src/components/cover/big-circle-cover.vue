@@ -1,6 +1,6 @@
 <template>
   <div class='circle-cover-wrap ' ref='wrapRef'>
-    <img :src='picUrl' ref='picRef'>
+    <img id='big-cover-img' :src='picUrl' ref='picRef' >
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
 
   img {
     width: 100%;
-    height: 100%;
+    //height: 100%;
     border-radius: 50%;
   }
 }

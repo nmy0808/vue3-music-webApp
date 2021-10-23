@@ -6,6 +6,7 @@
     <div class='loading-word'>请稍等
       <template v-for='(item , index) in dotNum' :key='index'><span>.</span></template>
     </div>
+    <div class='loading-mask'></div>
   </div>
 
 </template>
@@ -24,6 +25,12 @@ export default {
     addDotNum() {
       this.dotNum++
       this.dotNum = this.dotNum % 4
+    },
+    show() {
+      this.isShow = true
+    },
+    hide() {
+      this.isShow = false
     }
   },
   mounted() {
@@ -77,7 +84,13 @@ export default {
   background-color: $color-main;
   animation: loader-inner 4s infinite ease-in;
 }
-
+.loading-mask{
+  position: fixed;
+  top: 170px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 @keyframes loader {
   0% {
     transform: rotate(0deg);

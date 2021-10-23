@@ -29,10 +29,14 @@ export default function(wrap, pic, type) {
         } else {
           curr = picStyle
         }
-        picEl.classList.remove('circle-animation')
+        setTimeout(() => {
+          picEl.classList.remove('circle-animation')
+        })
         setStoreMatrix(curr)
       } else {
-        picEl.classList.add('circle-animation')
+        setTimeout(() => {
+          picEl.classList.add('circle-animation')
+        })
       }
     }, { immediate: true })
     watch(matrix, (val) => {

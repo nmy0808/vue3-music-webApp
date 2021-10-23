@@ -1,6 +1,6 @@
 <template>
   <div class='rank-list'>
-    <div class='rank-item' v-for='item in list' :key='item.id' @click='onToPageDetail(item.id)'>
+    <div class='rank-item' v-for='item in list' :key='item.id' @click.prevent='onToPageDetail(item.id)'>
       <div class='pic'>
         <img :src='item.coverUrl'>
       </div>

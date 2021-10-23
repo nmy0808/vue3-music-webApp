@@ -10,7 +10,7 @@
       <div class='content'>
         <div class='item' v-for='item in list' :key='item.id' @click='onSelectItem(item)'>
           <div class='pic' v-if='isPic'>
-            <img ref='pic' :src='item.al.picUrl'>
+            <img ref='pic' v-lazy='item.al.picUrl'>
           </div>
           <div class='desc'>
             <h4 class='name' :class='{active: currentSong.id === item.id}'>{{ item.name }}</h4>
@@ -91,11 +91,11 @@ export default {
   left: 0;
   bottom: 0;
   width: 100%;
-  background: #26303c;
 
   .wrap-bg {
     background: #26303c;
     padding: 32px;
+    min-height: calc(100vh - 496px);
     box-sizing: border-box;
   }
 
@@ -157,7 +157,6 @@ export default {
         height: 120px;
         border-radius: 30px;
         overflow: hidden;
-        background: #000;
         margin-right: 16px;
 
         img {
