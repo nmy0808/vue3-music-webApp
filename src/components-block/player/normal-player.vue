@@ -9,21 +9,25 @@
         <div class='singer'>{{ currentSong.singer }}</div>
       </div>
     </sub-header>
-        <div class='scroll-wrap' ref='scrollWrapRef'>
-          <div class='scroll-inner'>
-            <div class='item'>
-              <big-circle-cover class='big-cover-wrap'
-                                :pic-url='currentSong.picUrl'></big-circle-cover>
-              <div class='left-lyrics'>我是一段歌词</div>
-            </div>
-            <div class='item'>
-              <!--右侧歌词-->
-              <scroll class='right-lyrics'>
-                我是歌词...
-              </scroll>
-            </div>
+    <div class='scroll-wrap' ref='scrollWrapRef'>
+      <div class='scroll-inner'>
+        <div class='item'>
+          <big-circle-cover class='big-cover-wrap'
+                            :pic-url='currentSong.picUrl'></big-circle-cover>
+          <div class='left-lyrics' v-for='(item, index) in currentLyric' :key='index'>
+            <p v-if='lyricIndex === index'>{{item}}</p>
           </div>
         </div>
+        <div class='item'>
+          <!--右侧歌词-->
+          <scroll class='right-lyrics' ref='rightScrollRef'>
+            <p class='lyric-item' :class='{active:lyricIndex === index}' v-for='(item, index) in currentLyric'
+               :key='index'>{{ index }} - {{ item }}</p>
+            <div class='lyric-item-box'></div>
+          </scroll>
+        </div>
+      </div>
+    </div>
     <div class='dot-wrap'>
       <span class='dot-item' :class='{active: index===currentIndex}' v-for='(item,index) in 2' :key='index'></span>
     </div>
@@ -67,6 +71,7 @@ import useSongDetail from '@/components-block/player/use-song-detail'
 import useAudioTime from '@/components-block/player/use-audio-time'
 import useTouchEvent from './use-touch-event'
 import useFavorite from './use-favorite'
+import useLyric from './use-lyric'
 
 BScroll.use(Slide)
 
@@ -112,6 +117,12 @@ export default {
       toggleFavState,
       judgeCurrentFavState
     } = useFavorite()
+    // 歌词
+    const {
+      rightScrollRef,
+      currentLyric,
+      lyricIndex
+    } = useLyric()
     //
     onMounted(() => {
       bsRef.value = new BScroll(scrollWrapRef.value, {
@@ -145,7 +156,10 @@ export default {
       onClickProgress,
       progressWrapRef,
       toggleFavState,
-      judgeCurrentFavState
+      judgeCurrentFavState,
+      rightScrollRef,
+      currentLyric,
+      lyricIndex
     }
   }
 }
@@ -375,6 +389,11 @@ export default {
     margin-top: 90px;
     font-size: $font-size-medium;
   }
+
+  .lyric-item-box {
+    height: 30vh;
+    background: #000;
+  }
 }
 
 .item {
@@ -391,10 +410,19 @@ export default {
     text-align: center;
     margin-top: 90px;
     font-size: $font-size-medium;
-    // 当前歌词
-    .active {
+
+  }
+
+  .lyric-item {
+    size: $font-size-small;
+    height: 80px;
+    line-height: 80px;
+
+    &.active {
+      // 当前歌词
       color: $color-main;
       opacity: 1;
+      font-weight: bold;
     }
   }
 }

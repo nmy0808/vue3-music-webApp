@@ -11,7 +11,8 @@ export default {
   currentIndex: 0,
   currentLyric: [],
   currentTotalTime: '',
-  currentTime: '',
+  // currentTime: '',
+  currentTime: 0,
   currentPercent: 0,
   favoriteList: [],
   historyList: []
