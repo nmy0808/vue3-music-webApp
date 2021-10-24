@@ -4,7 +4,11 @@
     <TabBar></TabBar>
   </div>
   <!--  @scroll: navigation滑动动效-->
-  <router-view @scroll='onscroll'></router-view>
+  <router-view v-slot='{ Component }' @scroll='onscroll'>
+    <keep-alive include='["Rank","Search","Singer"]'>
+      <component :is='Component' />
+    </keep-alive>
+  </router-view>
   <player></player>
 </template>
 

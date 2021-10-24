@@ -440,7 +440,6 @@ export default {
 .player-bg {
   height: 100vh;
   filter: blur(40px);
-  background: #000;
   position: fixed;
   top: 0;
   left: -50%;

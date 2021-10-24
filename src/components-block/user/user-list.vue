@@ -74,12 +74,13 @@ export default {
       justify-content: center;
 
       h4 {
-        margin: 6px 0;
+        margin: 10px 0;
 
         &.name {
           color: $color-light;
           font-size: $font-size-medium;
           @include clamp(1);
+          height: 24px;
         }
 
         &.singer {

@@ -14,7 +14,7 @@ import RankList from '@/components-block/rank/rank-list'
 import Scroll from '@/components/scroll/scroll'
 
 export default {
-  name: 'rank.vue',
+  name: 'Rank',
   components: {
     Scroll,
     RankList

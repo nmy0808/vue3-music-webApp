@@ -74,6 +74,7 @@ export default {
   box-sizing: border-box;
   height: 100%;
 
+
   img {
     width: 100%;
     border-radius: 30px;
