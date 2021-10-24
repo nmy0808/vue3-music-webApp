@@ -1,6 +1,8 @@
-import { ref } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default function() {
+  const route = useRoute()
   const isShadow = ref(false)
   const nav = ref(null)
   const top = ref(0)
@@ -17,6 +19,12 @@ export default function() {
     }
     top.value = topTemp
   }
+  // 切换路由时顶部top为0
+  watch(route, (val) => {
+    if (!val.path.includes('/recommend')) {
+      top.value = 0
+    }
+  }, { deep: true })
   return {
     onscroll,
     isShadow,
