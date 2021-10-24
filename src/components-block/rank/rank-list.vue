@@ -7,7 +7,10 @@
       <div class='desc'>
         <template v-for='(song,index) in item.songs' :key='song.id'>
           <div class='song-item' v-if='index<3'>
-            <h4><span class='num'>{{ index + 1 }}.</span>{{ song.name }}</h4>
+            <h4>
+              <span class='num'>{{ index + 1 }}.</span>
+              {{ song.name }}
+            </h4>
           </div>
         </template>
       </div>

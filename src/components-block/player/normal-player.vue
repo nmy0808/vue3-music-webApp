@@ -14,15 +14,19 @@
         <div class='item'>
           <big-circle-cover class='big-cover-wrap'
                             :pic-url='currentSong.picUrl'></big-circle-cover>
-          <div class='left-lyrics' v-for='(item, index) in currentLyric' :key='index'>
-            <p v-if='lyricIndex === index'>{{item}}</p>
-          </div>
+          <!--左侧歌词-->
+          <template v-for='(item, index) in currentLyric' :key='index'>
+            <div class='left-lyrics' v-if='lyricIndex === index'>
+              <p>{{ item }}</p>
+            </div>
+          </template>
+
         </div>
         <div class='item'>
           <!--右侧歌词-->
           <scroll class='right-lyrics' ref='rightScrollRef'>
             <p class='lyric-item' :class='{active:lyricIndex === index}' v-for='(item, index) in currentLyric'
-               :key='index'>{{ index }} - {{ item }}</p>
+               :key='index'>{{ item }}</p>
             <div class='lyric-item-box'></div>
           </scroll>
         </div>
@@ -350,16 +354,19 @@ export default {
 
   .player-box {
     text-align: center;
-
+    padding:32px;
+    box-sizing: border-box;
     .name {
       font-size: $font-size-large;
       color: $color-light;
+      @include clamp(1);
     }
 
     .singer {
       margin-top: 4px;
       font-size: $font-size-large;
       color: $color-light;
+      @include clamp(1);
     }
   }
 }
@@ -386,13 +393,15 @@ export default {
     color: $color-light;
     opacity: 0.5;
     text-align: center;
-    margin-top: 90px;
+    margin: 90px auto 0;
     font-size: $font-size-medium;
+    @include clamp(1);
+    width: 80vw;
+    line-height: 40px;
   }
 
   .lyric-item-box {
     height: 30vh;
-    background: #000;
   }
 }
 
@@ -417,6 +426,7 @@ export default {
     size: $font-size-small;
     height: 80px;
     line-height: 80px;
+    @include clamp(1);
 
     &.active {
       // 当前歌词

@@ -59,7 +59,7 @@ export default {
       border-radius: 30px;
       overflow: hidden;
       box-shadow: 0px 12px 18px 0px rgba(22, 33, 42, 0.5);
-
+      flex-shrink: 0;
       img {
         height: 100%;
         width: 100%;
@@ -79,11 +79,13 @@ export default {
         &.name {
           color: $color-light;
           font-size: $font-size-medium;
+          @include clamp(1);
         }
 
         &.singer {
           color: $color-sub;
           font-size: $font-size-medium;
+          @include clamp(1);
         }
       }
     }
