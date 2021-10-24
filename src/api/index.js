@@ -87,7 +87,6 @@ export const getRankList = async () => {
 }
 // 获取排行榜以及榜内每首歌曲具体信息 (除歌词, musicUrl)
 export const getRankDetailToId = async (id) => {
-  console.log(id)
   if (!id) return
   const obj = {}
   const detail = await getPlayDetail({ id })

@@ -26,7 +26,6 @@ export default {
     const isLoading = computed(() => categoryData.value.length === 0)
     //
     const onSelectItem = (id) => {
-      console.log(id)
       router.push({
         name: 'singer-detail',
         params: {
