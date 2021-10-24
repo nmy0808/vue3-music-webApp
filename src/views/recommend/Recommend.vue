@@ -1,5 +1,5 @@
 <template>
-  <scroll class='scroll-wrap' @scroll='onscroll' probe-type='3' v-load='isLoading'>
+  <scroll class='scroll-wrap' ref='scrollRef' @scroll='onscroll' :bounce='true' probe-type='3' v-load='isLoading'>
     <div v-if='!isLoading'>
       <Banner class='banner-wrap' :banners='banners' v-if='banners.length>0' />
       <personalized :personalized='personalized'
@@ -29,7 +29,7 @@ import NewSong from '@/components-block/recommend/newSong'
 import Scroll from '@/components/scroll/scroll'
 import { useRouter } from 'vue-router'
 import MiniPlayerBox from '@/components/mini-player-box/mini-player-box'
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 
 export default {
   name: 'about.vue',
@@ -65,6 +65,11 @@ export default {
       const res = banners.value.length > 0 && personalized.value.length > 0 && albums.value.length > 0 && newSong.value.length > 0
       return !res
     })
+    const scrollRef = ref(null)
+    // 销毁scroll
+    onBeforeUnmount(() => {
+      scrollRef.value.bsRef.destroy()
+    })
     return {
       onscroll,
       banners,
@@ -72,7 +77,8 @@ export default {
       albums,
       newSong,
       onToPageDetail,
-      isLoading
+      isLoading,
+      scrollRef
     }
   }
 }

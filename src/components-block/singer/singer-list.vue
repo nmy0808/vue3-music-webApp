@@ -87,7 +87,7 @@ export default {
     }
 
     .singer-anchor {
-      width: 750px;
+      width: 100%;
       height: 60px;
       background: #000;
       display: flex;
@@ -99,7 +99,7 @@ export default {
 }
 
 .singer-flex-anchor {
-  width: 750px;
+  width: 100%;
   height: 60px;
   display: flex;
   align-items: center;
@@ -114,10 +114,10 @@ export default {
 .singer-right {
   position: fixed;
   right: 16px;
-  top: 50%;
+  top: 52%;
   transform: translate3d(0, -50%, 0);
   width: 40px;
-  background: rgba(#000000, 50%);
+  background: rgba(#000000, 30%);
   z-index: 300;
   border-radius: 20px;
   padding: 15px 0;

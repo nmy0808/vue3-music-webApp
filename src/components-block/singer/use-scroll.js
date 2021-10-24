@@ -1,4 +1,4 @@
-import { nextTick, ref, watch } from 'vue'
+import { nextTick, ref, watch, onActivated } from 'vue'
 
 export default function(props) {
   const scrollRef = ref(null)
@@ -6,6 +6,9 @@ export default function(props) {
   const currentIndex = ref(0)
   let isTouch = false //touch操作的时候 不要触发onScroll事件
   let scrollEl, normalAnchors, fixedAnchor, anchorTopArr, anchorHeight, rightAnchorWrap, rightAnchors, rightAnchorTopArr
+  onActivated(() => {
+    scrollRef.value.bsRef.refresh()
+  })
   // init El
   watch(() => props.list, async () => {
     await nextTick()
@@ -84,6 +87,7 @@ export default function(props) {
       isTouch = false
     }, 200)
   }
+
   return {
     scrollRef,
     onScroll,

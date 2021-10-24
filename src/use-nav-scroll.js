@@ -23,6 +23,8 @@ export default function() {
   watch(route, (val) => {
     if (!val.path.includes('/recommend')) {
       top.value = 0
+      isShadow.value = false
+      isBgClass.value = false
     }
   }, { deep: true })
   return {

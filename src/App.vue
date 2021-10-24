@@ -5,7 +5,7 @@
   </div>
   <!--  @scroll: navigation滑动动效-->
   <router-view v-slot='{ Component }' @scroll='onscroll'>
-    <keep-alive include='["Rank","Search","Singer"]'>
+    <keep-alive :include='["Rank","Search","Singer"]'>
       <component :is='Component' />
     </keep-alive>
   </router-view>
@@ -56,6 +56,7 @@ export default {
 
   &.active {
     background: #334049;
+    transform: translate3d(0, 0, 0);
   }
 
   &.has-shadow {

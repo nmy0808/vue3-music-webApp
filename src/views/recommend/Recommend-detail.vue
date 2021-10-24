@@ -25,6 +25,7 @@ import { ref, watchEffect } from 'vue'
 import { getAlbumDetail, getPlayDetail, getSongsToSingerId } from '@/api'
 import { useRoute } from 'vue-router'
 import useDetailCover from './use-detail-cover'
+import { onMounted } from '@vue/runtime-core'
 
 export default {
   name: 'Recommend-detail',
@@ -55,34 +56,6 @@ export default {
       navRef,
       scrollRef
     } = useDetailCover()
-    // 上面bar的高度
-    // const TOPBAR_HEIGHT = 44
-    // const onListScroll = ({ y }) => {
-    //   if (!coverRef.value) return
-    //   const pic = coverRef.value.picRef
-    //   const height = scrollRef.value.$el.getBoundingClientRect().top
-    //   const disTop = height + y
-    //   const percent = 1 + (height - Math.abs(disTop)) / height
-    //   let sepia = percent
-    //   if (sepia > 1) {
-    //     sepia = 1
-    //   }
-    //   pic.style.filter = `sepia(${sepia / 0.3})`
-    //   // 如果达到上面bar的高度限制, bar浮起来的效果
-    //   if (disTop <= TOPBAR_HEIGHT) {
-    //     isFixed.value = true
-    //   } else {
-    //     isFixed.value = false
-    //   }
-    //   if (disTop >= height) {
-    //     pic.style.transform = `scale(${2 - percent})`
-    //     // 向下拉时将scroll的背景清除
-    //     scrollRef.value.$el.style.background = 'rgba(0,0,0,0)'
-    //     pic.style.filter = `sepia(0)`
-    //   } else {
-    //     scrollRef.value.$el.style.background = 'white'
-    //   }
-    // }
     watchEffect(async () => {
       const id = route.params.id
       const type = route.params.type
@@ -105,6 +78,7 @@ export default {
         playlist.value.tracks = data.songs
       }
     })
+
     return {
       playlist,
       coverRef,

@@ -3,6 +3,7 @@
  * */
 module.exports = {
   lintOnSave: false,
+  outputDir: 'vue3-music',
   pages: {
     index: {
       // page 的入口
@@ -30,5 +31,6 @@ module.exports = {
         `
       }
     }
-  }
+  },
+  productionSourceMap: false
 }

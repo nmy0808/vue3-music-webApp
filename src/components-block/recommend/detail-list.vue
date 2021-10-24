@@ -173,10 +173,10 @@ export default {
 
         .name {
           width: 100%;
+          height: 20px;
           color: $color-light;
           font-size: $font-size-medium;
           @include clamp(1);
-
           &.active {
             color: $color-main;
           }
@@ -185,6 +185,7 @@ export default {
         .sub-name {
           margin-top: 16px;
           width: 100%;
+          height: 20px;
           color: $color-sub;
           font-size: $font-size-medium;
           @include clamp(1);
