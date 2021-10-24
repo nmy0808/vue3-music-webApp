@@ -25,7 +25,6 @@ import { ref, watchEffect } from 'vue'
 import { getAlbumDetail, getPlayDetail, getSongsToSingerId } from '@/api'
 import { useRoute } from 'vue-router'
 import useDetailCover from './use-detail-cover'
-import { onMounted } from '@vue/runtime-core'
 
 export default {
   name: 'Recommend-detail',
