@@ -1,11 +1,11 @@
 <template>
-  <div class='header-top'>
+  <div class="header-top">
     <slot></slot>
   </div>
-  <div class='cover-wrap' :class='{"has-fixed": isFixed}'>
-    <div class='mask' ref='maskRef'></div>
-    <img ref='picRef' :src='pic' @load='onImgLoad'>
-    <h4 class='singer'>{{ singer }}</h4>
+  <div class="cover-wrap" :class="{ 'has-fixed': isFixed }">
+    <div class="mask" ref="maskRef"></div>
+    <img ref="picRef" :src="pic" @load="onImgLoad" />
+    <h4 class="singer">{{ singer }}</h4>
   </div>
 </template>
 
@@ -36,25 +36,27 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .cover-wrap {
-  width: 100%;
+  width: 750px;
   height: 100px;
   height: 750px;
   overflow: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
+  // position: fixed;
+  // top: 0;
+  // left: calc(50% - 5rem);
+  position: relative;
   z-index: -1;
   transform-origin: top;
   background: #26303c;
-
+  box-sizing: border-box;
   &.fixed {
     position: fixed;
-    left: 0;
-    width: 100%;
+    left: calc(50% - 5rem);
+    width: 750px;
     height: 88px;
     z-index: 19;
+    box-sizing: border-box;
   }
 
   img {
@@ -77,7 +79,7 @@ export default {
     top: 300px;
     left: 32px;
     font-size: 64px;
-    color: #FFFFFF;
+    color: #ffffff;
     opacity: 0.6;
   }
 

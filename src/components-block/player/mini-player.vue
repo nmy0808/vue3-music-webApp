@@ -77,6 +77,7 @@ export default {
 <style scoped lang='scss'>
 .mini-box {
   position: relative;
+  width: 750px;
   z-index: 100;
 }
 
@@ -85,7 +86,7 @@ export default {
   width: 100%;
   position: fixed;
   z-index: -11; //需要比list小
-  left: 0;
+  left: calc(50% - 5rem);
   bottom: 0;
   background: $color-main;
   display: flex;

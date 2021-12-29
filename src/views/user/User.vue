@@ -166,7 +166,7 @@ export default {
 .user-scroll-wrap {
   position: fixed;
   top: 194px;
-  left: 0;
+  left: calc(50% - 5rem);
   width: 100%;
   bottom: 0;
   overflow: hidden;

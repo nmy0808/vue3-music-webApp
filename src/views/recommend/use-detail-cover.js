@@ -20,6 +20,7 @@ export default function() {
     if (y > 0) {
       picEl.style.transform = `scale(${1 + y / picHeight})`
     } else {
+      picEl.style.transform = `scale(${1})`
       let val = -y / picHeight
       if (val > 1.2) {
         val = 1

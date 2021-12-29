@@ -37,7 +37,7 @@ export default {
 .rank-wrap {
   width: 100%;
   position: fixed;
-  left: 0;
+  left: calc(50% - 5rem);
   top: 176px;
   bottom: 0;
   overflow: hidden;

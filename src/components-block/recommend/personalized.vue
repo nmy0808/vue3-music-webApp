@@ -34,6 +34,7 @@ export default {
 
 <style scoped lang='scss'>
 .wrap {
+
   .list {
     display: flex;
     flex-wrap: wrap;

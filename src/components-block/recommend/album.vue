@@ -68,9 +68,12 @@ export default {
 .wrap {
   padding-top: 28px;
 }
-
+.scroll-wrap{
+  width: 750px;
+  overflow: hidden;
+}
 .scroll-box {
-  width: 100vw;
+  width: 750px;
 }
 
 .list {

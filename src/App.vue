@@ -53,7 +53,7 @@ export default {
   position: relative;
   top: 0;
   z-index: 1;
-
+  max-width: 750px;
   &.active {
     background: #334049;
     transform: translate3d(0, 0, 0);

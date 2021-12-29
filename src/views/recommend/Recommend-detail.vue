@@ -1,17 +1,26 @@
 <template>
-  <div class='wrap global-bg'>
-    <detail-cover :isFixed='isFixed' @img-load='onImgLoad' :pic='playlist.coverImgUrl' ref='picRef'>
-      <sub-header class='sub-header' ref='navRef'>
+  <div class="wrap global-bg">
+    <!-- 123123 -->
+      <detail-cover
+      :isFixed="isFixed"
+      @img-load="onImgLoad"
+      :pic="playlist.coverImgUrl"
+      ref="picRef"
+    >
+      <sub-header class="sub-header" ref="navRef">
         {{ playlist && playlist.name }}
       </sub-header>
     </detail-cover>
     <!--    如果是专辑推荐列表 不显示图片-->
-    <detail-list @scroll='onScroll' v-if='playlist' :isPic='isPic' :list='playlist.tracks'
-                 ref='scrollRef'></detail-list>
-    <div class='detail-mask' ref='maskRef'>
-      <div class='detail-mask-inner' v-load='!isPicLoad'>
-
-      </div>
+    <detail-list
+      @scroll="onScroll"
+      v-if="playlist"
+      :isPic="isPic"
+      :list="playlist.tracks"
+      ref="scrollRef"
+    ></detail-list>
+    <div class="detail-mask" ref="maskRef">
+      <div class="detail-mask-inner" v-load="!isPicLoad"></div>
     </div>
   </div>
 </template>
@@ -49,12 +58,7 @@ export default {
       })
     }
     //
-    const {
-      onScroll,
-      picRef,
-      navRef,
-      scrollRef
-    } = useDetailCover()
+    const { onScroll, picRef, navRef, scrollRef } = useDetailCover()
     watchEffect(async () => {
       const id = route.params.id
       const type = route.params.type
@@ -98,14 +102,16 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .wrap {
   position: fixed;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: calc(50% - 5rem);
   right: 0;
+  width: 10rem;
   z-index: 22;
+  overflow: hidden;
 }
 
 .sub-header {

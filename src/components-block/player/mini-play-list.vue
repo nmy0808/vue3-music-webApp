@@ -157,7 +157,7 @@ export default {
   width: 100%;
   position: fixed;
   bottom: 0px;
-  left: 0;
+  left: calc(50% - 5rem);
   z-index: -10;
   background: #26303c;
 

@@ -22,7 +22,7 @@ export default {
 .header {
   position: relative;
   height: 88px;
-  width: 100%;
+  width: 750px;
   //z-index: 2;
 
 }

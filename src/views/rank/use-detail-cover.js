@@ -17,9 +17,10 @@ export default function() {
   const onScroll = ({ y }) => {
     // 下拉放大
     if (y > 0) {
-      picEl.style.transform = `scale(${1 + y / picHeight})`
+      picEl.style.transform = `scale(${(1 + y / picHeight)})`
     } else {
       let val = -y / picHeight
+      picEl.style.transform = `scale(${1})`
       if (val > 1) {
         val = 1
       }

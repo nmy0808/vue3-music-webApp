@@ -33,7 +33,7 @@ export default {
   color: $color-light;
   position: fixed;
   top: 0;
-  left: 0;
+  left: calc(50% - 5rem);
 }
 
 .back {

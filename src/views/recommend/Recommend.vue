@@ -89,7 +89,7 @@ export default {
   position: fixed;
   top: 176px;
   bottom: 0;
-  width: 100%;
+  width: 750px;
 }
 
 .banner-wrap {

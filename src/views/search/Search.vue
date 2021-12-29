@@ -1,16 +1,32 @@
 <template>
-  <div class='search-wrap container' v-load='isLoading'>
-    <div class='input-box' @click='onFocusToInput'>
-      <input type='text' v-model='keyWord' ref='inputRef'>
-      <i class='icon-search'></i>
-      <i class='icon-close' v-show='keyWord!==""' @click.stop='onClearKeyWord'></i>
+  <div class="search-wrap container" v-load="isLoading">
+    <div class="input-box" @click="onFocusToInput">
+      <input type="text" v-model="keyWord" ref="inputRef" />
+      <i class="icon-search"></i>
+      <i
+        class="icon-close"
+        v-show="keyWord !== ''"
+        @click.stop="onClearKeyWord"
+      ></i>
     </div>
-    <div class='hot-word' v-show='!isHotShow'>
-      <div class='hot-item'>热门搜索</div>
-      <div class='hot-item' v-for='item in hots' :key='item' @click='onSelectHotItem(item)'>{{ item.first }}</div>
+    <div class="hot-word" v-show="!isHotShow">
+      <div class="hot-item">热门搜索</div>
+      <div
+        class="hot-item"
+        v-for="item in hots"
+        :key="item"
+        @click="onSelectHotItem(item)"
+      >
+        {{ item.first }}
+      </div>
     </div>
-    <scroll class='search-scroll-wrap container' v-if='isHotShow' :bounce='true' ref='scrollRef'>
-      <user-list :list='searchList' @select='onSelectItem'></user-list>
+    <scroll
+      class="search-scroll-wrap container"
+      v-if="isHotShow"
+      :bounce="true"
+      ref="scrollRef"
+    >
+      <user-list :list="searchList" @select="onSelectItem"></user-list>
     </scroll>
   </div>
 </template>
@@ -85,13 +101,12 @@ export default {
       onClearKeyWord,
       onFocusToInput,
       onSelectItem
-
     }
   }
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .search-wrap {
   position: fixed;
   left: 0;
@@ -163,7 +178,7 @@ export default {
   .search-scroll-wrap {
     width: 100%;
     position: fixed;
-    left: 0;
+    left: calc(50% - 5rem);
     top: 290px;
     bottom: 0;
     overflow: hidden;

@@ -60,9 +60,9 @@ export default {
 
 <style scoped lang='scss'>
 .rank-detail-wrap {
-  width: 100%;
+  width: 10rem;
   position: fixed;
-  left: 0;
+  left: calc(50% - 5rem);
   top: 0;
   bottom: 0;
   overflow: hidden;
@@ -88,8 +88,8 @@ export default {
     transform-origin: top;
     &.fixed {
       position: fixed;
-      left: 0;
-      width: 100%;
+      left: calc(50% - 5rem);
+      width: 750px;
       height: 88px;
       z-index: 19;
     }

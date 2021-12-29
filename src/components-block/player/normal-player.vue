@@ -172,11 +172,11 @@ export default {
 <style scoped lang='scss'>
 .player-wrap {
   height: 100%;
-  width: 100vw;
+  width: 750px;
   background: #000;
   position: fixed;
   top: 0;
-  left: 0;
+  left: calc(50% - 5rem);
   z-index: 100;
 
   .dot-wrap {
@@ -442,12 +442,13 @@ export default {
   filter: blur(40px);
   position: fixed;
   top: 0;
-  left: -50%;
+  left: calc(50% - 5rem);
   z-index: -2;
+  width: 750px;
 }
 
 .mask {
-  width: 100vw;
+  width: 750px;
   height: 100vh;
   background: #000;
   position: fixed;

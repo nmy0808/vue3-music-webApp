@@ -88,9 +88,10 @@ export default {
 .list-wrap {
   position: fixed;
   top: 496px;
-  left: 0;
+  // left: 0;
+  left: calc(50% - 5rem);
+  width: 10rem;
   bottom: 0;
-  width: 100%;
 
   .wrap-bg {
     background: #26303c;
