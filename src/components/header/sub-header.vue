@@ -44,6 +44,8 @@ export default {
   background-size: 48px 48px;
   background-position: -10px center;
   background-repeat: no-repeat;
+  position: relative;
+  z-index: 99;
 }
 
 .right-box {

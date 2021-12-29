@@ -126,7 +126,8 @@ export default {
 
   .control {
     margin-left: auto;
-
+    display: flex;
+    align-items: center;
     .icon-play {
       @include bg-image('~@/assets/imgs/play-bar-btn');
 

@@ -5,15 +5,21 @@ html {
     sans-serif, 'Droid Sans Fallback';
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  width: 750px;
   height: 100%;
   touch-action: none;
   overflow: hidden;
   margin: 0 auto;
-} 
+}
 body {
   font-size: $font-size-medium;
   color: $color-light;
-  background: linear-gradient(180deg, #37474F 0%, #232F3C 100%);
+  background: linear-gradient(180deg, #37474f 0%, #232f3c 100%);
   position: relative;
+}
+@media screen and (min-width:750px) {
+  html, body {
+    width: 10rem !important;
+    position: absolute;
+    left: calc(50% - 5rem);
+  }
 }
